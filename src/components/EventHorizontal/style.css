@@ -1,0 +1,115 @@
+.eventHorizontal {
+    border: 1px solid rgb(149, 149, 149);
+    /* box-shadow: 0px 0px 3px grey; */
+    display: flex;
+    padding: 5px;
+    align-items: center;
+    justify-content: space-between;
+    width: 650px;
+    background-color: whitesmoke;
+}
+
+.eventImage {
+    background-image: url('../../assets/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 160px;
+    width: 150px;
+}
+
+.eventContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 170px);
+    padding: 5px;
+}
+
+.firstRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.eventProfileSection {
+    display: flex;
+    align-items: center;
+}
+
+.eventProfileSection p {
+    color: dodgerblue;
+    font-weight: 700;
+    margin-left: 10px;
+    font-size: 12px;
+}
+
+.eventTimePosted p {
+    color: grey;
+    font-style: italic;
+    font-size: 11px;
+}
+
+.anonimity {
+    font-weight: 700;
+    color: dodgerblue;
+    font-size: 11px;
+    align-self: flex-start;
+}
+
+.eventTitle {
+    margin: 0;
+    margin: 10px 0 10px 30px;
+    font-weight: 700;
+}
+
+.thirdRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: center;
+    color: dodgerblue;
+    font-size: 11px;
+    font-weight: 400;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.eventPlace {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.fourthRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fourthRow p {
+    width: 70%;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.timeUntil {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90px;
+    align-self: flex-end;
+    color: grey;
+}
+
+.timeUntil p {
+    font-size: 10px;
+    font-weight: 700;
+}
+
+

@@ -1,0 +1,47 @@
+.calendarWrapper {
+    border-radius: 28px !important;
+    box-shadow:  5px 5px 15px #656565,
+             -5px -5px 15px #ffffff;
+    height: fit-content;
+    width: fit-content;
+}
+
+.css-3eghsz-PrivatePickersYear-button.Mui-selected {
+    background-color: purple !important;
+}
+
+.css-dplwbx-MuiPickersCalendarHeader-label {
+    color: purple;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.css-12mkn7b-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+    color: purple !important;
+}
+
+.css-xelq0e-MuiPickerStaticWrapper-content {
+    border-radius: 15px;
+}
+
+.css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition {
+    min-height: 200px !important;
+}
+
+.MuiPickersDay-today {
+    border: 2px solid purple !important;
+}
+
+.css-xb7uwb-MuiPickersArrowSwitcher-spacer {
+    width: 10px !important;
+}
+
+.css-nk89i7-MuiPickersCalendarHeader-root {
+    border-bottom: 2px solid purple;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    width: 85%;
+    align-self: center;
+    padding: 0 10px !important;
+}
