@@ -1,0 +1,27 @@
+nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.navLinks {
+    width: 170px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logoNav {
+    width: 100px;
+}
+
+.personIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 8px;
+    border-radius: 3px;
+    border: 1.5px solid purple;
+}
+
