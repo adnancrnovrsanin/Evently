@@ -7,6 +7,7 @@
     justify-content: space-between;
     width: 650px;
     background-color: whitesmoke;
+    /* margin-bottom: 20px; */
 }
 
 .eventImage {
@@ -19,11 +20,12 @@
 }
 
 .eventContent {
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     width: calc(100% - 170px);
-    padding: 5px;
+    padding: 3px;
 }
 
 .firstRow {
@@ -56,6 +58,10 @@
     color: dodgerblue;
     font-size: 11px;
     align-self: flex-start;
+}
+
+.invite {
+    color: darkblue;
 }
 
 .eventTitle {

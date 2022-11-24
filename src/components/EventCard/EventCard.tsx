@@ -1,9 +1,14 @@
 import { Avatar } from "@mui/material";
 import { deepPurple } from "@mui/material/colors";
 import eventImage from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
+import { IEvent } from "../../models/event";
 import './style.css';
 
-export default function EventCard() {
+interface Props {
+    event: IEvent;
+}
+
+export default function EventCard({ event }: Props) {
     return (
         <div className="eventCard">
             <div className="firstRowCard">
@@ -13,20 +18,20 @@ export default function EventCard() {
                 </div>
 
                 <div className="eventTimePostedCard">
-                    <p>5h ago</p>
+                    <p>posted: 5h ago</p>
                 </div>
             </div>
 
             <h3>
-                ALISHA'S PARTY
+                {event.title}
             </h3>
 
             <p className="categoryCard">
-                Category: Party Event
+                Category: {event.category}
             </p>
 
             <p className="descriptionCard">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deleniti accusamus consectetur amet natus cupiditate, delectus perferendis ex magnam nam 
+                {event.description} 
             </p>
 
             <img src={eventImage} alt="event image" className="eventImageCard" />

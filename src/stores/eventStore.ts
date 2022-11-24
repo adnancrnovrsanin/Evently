@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../api/agent";
 import { IEvent } from "../models/event";
 import { v4 as uuid } from 'uuid';
+import dayjs from "dayjs";
 
 export default class EventStore {
     eventRegistry = new Map<string, IEvent>();
@@ -16,13 +17,13 @@ export default class EventStore {
     }
 
     get eventsByDate() {
-        return Array.from(this.eventRegistry.values()).sort((a, b) => a.date!.getTime() - b.date!.getTime());
+        return Array.from(this.eventRegistry.values()).sort((a, b) => a.date!.diff(b.date!, 'millisecond', true));
     }
 
     get groupedEvents() {
         return Object.entries (
             this.eventsByDate.reduce((events, event) => {
-                const date = format(event.date!, 'dd MM yyyy');
+                const date = event.date!.format('DD MM YYYY');
                 events[date] = events[date] ? [...events[date], event] : [event];
                 return events;
             }, {} as {[key: string]: IEvent[]})
@@ -66,7 +67,7 @@ export default class EventStore {
     }
 
     private setEvent = (event: IEvent) => {
-        event.date = new Date(event.date!)
+        event.date = dayjs(event.date!)
         this.eventRegistry.set(event.id, event);
     }
 
