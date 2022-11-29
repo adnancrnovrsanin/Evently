@@ -12,7 +12,7 @@ function EventList() {
     return (
         <>
             {eventsByDate.map((event: IEvent) => (
-                <EventCard key={event.id} event={event}/>
+                <EventHorizontal key={event.id} event={event}/>
             ))}
         </>
     );
