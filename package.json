@@ -22,7 +22,7 @@
     "mobx-react-lite": "^3.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.3",
+    "react-router-dom": "^6.4.5",
     "relative-time-format": "^1.1.6",
     "uuid": "^9.0.0"
   },
