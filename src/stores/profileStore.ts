@@ -11,7 +11,7 @@ export default class ProfileStore {
     loading = false;
     followings: Profile[] = [];
     loadingFollowings = false;
-    activeTab: number = 0;
+    activeTab: string = '1';
     userEvents: UserEvent[] = [];
     loadingEvents = false;
 
@@ -21,8 +21,8 @@ export default class ProfileStore {
         reaction(
             () => this.activeTab,
             activeTab => {
-                if (activeTab === 3 || activeTab === 4) {
-                    const predicate = activeTab === 3 ? 'followers' : 'following';
+                if (activeTab === '3' || activeTab === '4') {
+                    const predicate = activeTab === '3' ? 'followers' : 'following';
                     this.loadFollowings(predicate);
                 } else {
                     this.followings = [];

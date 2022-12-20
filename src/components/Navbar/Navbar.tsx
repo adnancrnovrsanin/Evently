@@ -37,7 +37,7 @@ function Navbar() {
                         fontSize: "15px", fontWeight: 600,
                         textDecoration: "none", color: "black",
                     }}>SEARCH</Typography>
-                    <IconButton component={Link} to={'/createEvent'}>
+                    <IconButton component={Link} to={'/events/create'}>
                         <AddCircleIcon sx={{ fontSize: "32px", color: "purple" }}/>
                     </IconButton>
                     <IconButton

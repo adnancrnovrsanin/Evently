@@ -3,6 +3,7 @@ import App from "../App";
 import RequireAuth from "./RequireAuth";
 import NotFound from "../pages/NotFound/NotFound";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import EventFormPage from "../pages/EventFormPage/EventFormPage";
 
 export const routes: RouteObject[] = [
     {
@@ -10,7 +11,8 @@ export const routes: RouteObject[] = [
         element: <App />,
         children: [
             {element: <RequireAuth />, children: [
-                {path: '/profile/:username', element: <ProfilePage />}
+                {path: '/profile/:username', element: <ProfilePage />},
+                {path: '/events/create', element: <EventFormPage />},
             ]},
             {path: 'not-found', element: <NotFound />},
             // {path: 'server-error', element: <ServerError />},

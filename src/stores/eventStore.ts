@@ -132,8 +132,8 @@ export default class EventStore {
     }
 
     createEvent = async (event: EventFormValues) => {
-        const user = store.userStore.user;
-        const profile = new Profile(user);
+        const user = store.userStore!.user;
+        const profile = new Profile(user!);
 
         try {
             await agent.Events.create(event);

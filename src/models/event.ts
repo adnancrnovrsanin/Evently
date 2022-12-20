@@ -6,8 +6,10 @@ export interface IEvent {
     description: string;
     category: string;
     date: Date | null;
+    country: string;
     city: string;
     venue: string;
+    anonimity: string;
     hostUsername?: string;
     isCancelled?: boolean;
     isGoing?: boolean;
@@ -23,8 +25,10 @@ export class EventFormValues
     category: string = '';
     description: string = '';
     date: Date | null = null;
+    country: string = '';
     city: string = '';
     venue: string = '';
+    anonimity: string = '';
 
 	  constructor(event?: EventFormValues) {
       if (event) {
@@ -33,8 +37,10 @@ export class EventFormValues
         this.category = event.category;
         this.description = event.description;
         this.date = event.date;
+        this.country = event.country;
         this.venue = event.venue;
         this.city = event.city;
+        this.anonimity = event.anonimity;
       }
     }
 
