@@ -1,47 +1,95 @@
-import { format } from "date-fns";
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
+import { Pagination, PagingParams } from "../models/pagination";
 import agent from "../api/agent";
-import { IEvent } from "../models/event";
-import { v4 as uuid } from 'uuid';
-import dayjs from "dayjs";
+import { EventFormValues, IEvent } from "../models/event";
+import { Profile } from "../models/profile";
+import { store } from "./store";
 
 export default class EventStore {
     eventRegistry = new Map<string, IEvent>();
-    selectedEvent: IEvent | undefined = undefined;
+    selectedEvent?: IEvent = undefined;
     editMode = false;
+    loadingInitial = false;
     loading = false;
-    loadingInitial = true;
+    pagination: Pagination | null = null;
+    predicate = new Map().set('all', true);
+    pagingParams = new PagingParams();
 
     constructor() {
         makeAutoObservable(this);
-    }
 
-    get eventsByDate() {
-        return Array.from(this.eventRegistry.values()).sort((a, b) => a.date!.diff(b.date!, 'millisecond', true));
-    }
-
-    get groupedEvents() {
-        return Object.entries (
-            this.eventsByDate.reduce((events, event) => {
-                const date = event.date!.format('DD MM YYYY');
-                events[date] = events[date] ? [...events[date], event] : [event];
-                return events;
-            }, {} as {[key: string]: IEvent[]})
+        reaction(
+            () => this.predicate.keys(),
+            () => {
+                this.pagingParams = new PagingParams();
+                this.eventRegistry.clear();
+                this.loadEvents();
+            }
         )
     }
 
-    loadEvents = async () => {
-        try {
-            const events = await agent.Events.list();
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
 
-            events.forEach(event => {
+    setPredicate = (predicate: string, value: string | Date) => {
+        const resetPredicate = () => {
+            this.predicate.forEach((value, key) => {
+                if (key !== 'startDate') this.predicate.delete(key);
+            })
+        }
+
+        switch (predicate) {
+            case 'all':
+                resetPredicate();
+                this.predicate.set('all', true);
+                break;
+            case 'isGoing':
+                resetPredicate();
+                this.predicate.set('isGoing', true);
+                break;
+            case 'isHost':
+                resetPredicate();
+                this.predicate.set('isHost', true);
+                break;
+            case 'startDate':
+                this.predicate.delete('startDate');
+                this.predicate.set('startDate', value);
+                break;
+        }
+    }
+
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append('pageNumber', this.pagingParams.pageNumber.toString());
+        params.append('pageSize', this.pagingParams.pageSize.toString());
+        this.predicate.forEach((value, key) => {
+            if (key === 'startDate') {
+                params.append(key, (value as Date).toISOString());
+            } else {
+                params.append(key, value);
+            }
+        })
+        return params;
+    }
+
+    loadEvents = async () => {
+        this.loadingInitial = true;
+        try {
+            const result = await agent.Events.list(this.axiosParams);
+            result.data.forEach(event => {
                 this.setEvent(event);
             })
+            this.setPagination(result.pagination);
             this.setLoadingInitial(false);
         } catch (error) {
             console.log(error);
             this.setLoadingInitial(false);
         }
+    }
+
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     }
 
     loadEvent = async (id: string) => {
@@ -50,14 +98,12 @@ export default class EventStore {
             this.selectedEvent = event;
             return event;
         } else {
-            this.loadingInitial = true;
+            this.setLoadingInitial(true);
             try {
                 event = await agent.Events.details(id);
                 this.setEvent(event);
-                runInAction(() => {
-                    this.selectedEvent = event;
-                })
-                this.selectedEvent = event;
+                runInAction(() => this.selectedEvent = event);
+                this.setLoadingInitial(false);
                 return event;
             } catch (error) {
                 console.log(error);
@@ -67,7 +113,13 @@ export default class EventStore {
     }
 
     private setEvent = (event: IEvent) => {
-        event.date = dayjs(event.date!)
+        const user = store.userStore.user;
+        if (user) {
+            event.isGoing = event.attendees?.some(a => a.username === user.username);
+            event.isHost = event.hostUsername === user.username;
+            event.host = event.attendees?.find(a => a.username === event.hostUsername);
+        }
+        event.date = new Date(event.date!);
         this.eventRegistry.set(event.id, event);
     }
 
@@ -79,40 +131,36 @@ export default class EventStore {
         this.loadingInitial = state;
     }
 
-    createEvent = async (event: IEvent) => {
-        this.loading = true;
-        event.id = uuid();
+    createEvent = async (event: EventFormValues) => {
+        const user = store.userStore.user;
+        const profile = new Profile(user);
+
         try {
             await agent.Events.create(event);
+            const newEvent = new IEvent(event);
+            newEvent.hostUsername = user?.username;
+            newEvent.host = profile;
+            this.setEvent(newEvent);
             runInAction(() => {
-                this.eventRegistry.set(event.id, event);
-                this.selectedEvent = event;
-                this.editMode = false;
-                this.loading = false;
-            })
+                this.selectedEvent = newEvent;
+            });
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 
-    updateEvent = async (event: IEvent) => {
-        this.loading = true;
+    updateEvent = async (event: EventFormValues) => {
         try {
             await agent.Events.update(event);
             runInAction(() => {
-                this.eventRegistry.set(event.id, event);
-                this.selectedEvent = event;
-                this.editMode = false;
-                this.loading = false;
-            })
+                if (event.id) {
+                    let updatedEvent = { ...this.getEvent(event.id), ...event };
+                    this.eventRegistry.set(event.id, updatedEvent as IEvent);
+                    this.selectedEvent = updatedEvent as IEvent;
+                }
+            });
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
         }
     }
 
@@ -126,9 +174,60 @@ export default class EventStore {
             })
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loading = false;
-            })
+            runInAction(() => this.loading = false);
         }
+    }
+
+    updateAttendeance = async () => {
+        const user = store.userStore.user;
+        this.loading = true;
+        try {
+            await agent.Events.attend(this.selectedEvent!.id);
+            runInAction(() => {
+                if (this.selectedEvent?.isGoing) {
+                    this.selectedEvent.attendees = this.selectedEvent.attendees?.filter(a => a.username !== user?.username);
+                    this.selectedEvent.isGoing = false;
+                } else {
+                    const attendee = new Profile(user!);
+                    this.selectedEvent?.attendees?.push(attendee);
+                    this.selectedEvent!.isGoing = true;
+                }
+                this.eventRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
+    }
+
+    cancelEventToggle = async () => {
+        this.loading = true;
+        try {
+            await agent.Events.attend(this.selectedEvent!.id);
+            runInAction(() => {
+                this.selectedEvent!.isCancelled = !this.selectedEvent!.isCancelled;
+                this.eventRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
+    }
+
+    clearSelectedEvent = () => {
+        this.selectedEvent = undefined;
+    }
+
+    updateAttendeeFollowing = (username: string) => {
+        this.eventRegistry.forEach(event => {
+            event.attendees?.forEach(attendee => {
+                if (attendee.username === username) {
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+                    attendee.following = !attendee.following;
+                }
+            })
+        })
     }
 }

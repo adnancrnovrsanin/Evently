@@ -1,30 +1,38 @@
 import { observer } from 'mobx-react-lite';
-import { useEffect } from 'react';
-import { Routes } from 'react-router-dom';
-import { Route } from 'react-router-dom';
 import './App.css';
-import Calendar from './components/Calendar/Calendar';
-import EventHorizontal from './components/EventHorizontal/EventHorizontal';
-import EventList from './components/EventList/EventList';
-import Navbar from './components/Navbar/Navbar';
-import HomePage from './pages/HomePage/HomePage';
+import { ToastContainer } from 'react-toastify';
 import { useStore } from './stores/store';
+import { useEffect } from 'react';
+import HomePage from './pages/HomePage/HomePage';
+import { Outlet, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import LoginDialog from './components/LoginDialog/LoginDialog';
+import RegisterDialog from './components/RegisterDialog/RegisterDialog';
+import InitialLoader from './components/InitialLoader/InitialLoader';
 
 function App() {
-  const { eventStore } = useStore();
-  const { loadEvents, eventRegistry } = eventStore;
+  const { commonStore, userStore, loginDialogStore, registerDialogStore } = useStore();
+  const location = useLocation();
 
   useEffect(() => {
-    if (eventRegistry.size <= 1) loadEvents();
-  }, [eventRegistry.size, loadEvents])
+    if (commonStore.token) {
+      userStore.getUser().finally(() => commonStore.setAppLoaded());
+    } else {
+      commonStore.setAppLoaded();
+    }
+  }, [commonStore, userStore])
+
+  if (!commonStore.appLoaded) return (
+    <InitialLoader adding={"App"}/>
+  );
 
   return (
     <div className="App">
+      <ToastContainer position='bottom-right' hideProgressBar theme='colored'/>
       <Navbar />
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        {/* <PrivateRoute exact path='/' com /> */}
-      </Routes>
+      {loginDialogStore.loginDialog.open && <LoginDialog />}
+      {registerDialogStore.registerDialog.open && <RegisterDialog />}
+      {location.pathname === '/' ? <HomePage /> : <Outlet />}
     </div>
   )
 }

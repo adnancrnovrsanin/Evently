@@ -1,0 +1,14 @@
+.registerHeader {
+    height: 40px;
+    width: 250px;
+    background-color: rgb(190, 242, 255);
+    border: 2px solid dodgerblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}

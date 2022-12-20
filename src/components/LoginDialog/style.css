@@ -1,0 +1,15 @@
+.loginHeader {
+    width: 250px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-weight: bold;
+    font-size: 10px;
+    margin-bottom: 50px;
+    color: white;
+    background-color: purple;
+    border-radius: 15px;
+    border: 2px solid rgb(203, 58, 255);
+}
