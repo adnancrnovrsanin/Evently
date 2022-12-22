@@ -8,15 +8,17 @@ import EditProfileTextInput from "../../common/form/EditProfileTextInput/EditPro
 import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import profilePic from '../../assets/profilna.jpg';
 import { LoadingButton } from "@mui/lab";
+import { Profile } from "../../models/profile";
 
 interface Props {
     setEditMode: (editMode: boolean) => void;
+    profile: Profile;
 }
 
 
 
-function EditProfileForm({ setEditMode }: Props) {
-    const { profileStore: { profile, updateProfile } } = useStore();
+function EditProfileForm({ setEditMode, profile }: Props) {
+    const { profileStore: { updateProfile } } = useStore();
 
     if (!profile) return <h2>Problem loading profile</h2>
 

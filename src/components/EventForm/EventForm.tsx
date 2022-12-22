@@ -101,7 +101,7 @@ function EventForm() {
                                 fontStyle: "italic",
                                 color: "darkblue",
                                 fontWeight: "400",
-                                boxShadow: "0px 1px 5px 0px rgba(0,0,0,0.75)",
+                                // boxShadow: "0px 1px 5px 0px rgba(0,0,0,0.75)",
                             }}>
                                 Pick a date for your event
                             </Typography>

@@ -3,6 +3,7 @@ import { deepPurple } from "@mui/material/colors";
 import eventImage from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
 import { IEvent } from "../../models/event";
 import './style.css';
+import { UserEvent } from "../../models/profile";
 
 interface Props {
     event: IEvent;

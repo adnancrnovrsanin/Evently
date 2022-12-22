@@ -13,6 +13,8 @@ import Box from '@mui/material/Box';
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { Button } from "@mui/material";
 import { UserEvent } from "../../models/profile";
+import ProfileEvents from "../../components/ProfileEvents/ProfileEvents";
+import ProfileFollowings from "../../components/ProfileFollowings/ProfileFollowings";
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -43,16 +45,7 @@ const AntTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} /
         marginRight: theme.spacing(1),
         color: 'rgba(0, 0, 0, 0.85)',
         fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
+            'Montserrat, sans-serif',
         ].join(','),
         '&:hover': {
             opacity: 1,
@@ -101,7 +94,7 @@ function ProfilePage() {
                     {editMode ? 'Cancel' : 'Edit'}
                 </button>
             )}
-            {editMode ? <EditProfileForm setEditMode={setEditMode} /> : <ProfileInfo />}
+            {editMode ? <EditProfileForm profile={profile} setEditMode={setEditMode} /> : <ProfileInfo profile={profile}/>}
 
             <Box sx={{ bgcolor: '#fff', marginTop: "50px", border: "1px solid purple" }}>
                 <TabContext value={activeTab}>
@@ -113,7 +106,7 @@ function ProfilePage() {
                     </TabList>
                     <Box sx={{ p: 3 }}>
                         <TabPanel value="1">
-                            Events
+                            <ProfileEvents profile={profile}/>
                         </TabPanel>
 
                         <TabPanel value="2">
@@ -121,11 +114,11 @@ function ProfilePage() {
                         </TabPanel>
 
                         <TabPanel value="3">
-                            Followers
+                            <ProfileFollowings profile={profile}/>
                         </TabPanel>
 
                         <TabPanel value="4">
-                            Following
+                            <ProfileFollowings profile={profile} />
                         </TabPanel>
                     </Box>
                 </TabContext>

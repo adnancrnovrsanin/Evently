@@ -3,10 +3,14 @@ import profilePic from "../../assets/profilna.jpg";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import '../../pages/ProfilePage/style.css';
+import FollowButton from "../FollowButton/FollowButton";
+import { Profile } from "../../models/profile";
 
-function ProfileInfo() {
-    const { profileStore } = useStore();
-    const { profile } = profileStore;
+interface Props {
+    profile: Profile;
+}
+
+function ProfileInfo({ profile }: Props) {
     const lorem = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt, consequuntur qui ex eum cumque itaque ut magnam obcaecati explicabo doloribus porro, nulla eveniet maxime quam tenetur fugit, blanditiis saepe ducimus?";
 
     if (!profile) return <h2>Problem loading profile</h2>
@@ -46,6 +50,8 @@ function ProfileInfo() {
                             <p>following</p>
                         </div>
                     </div>
+
+                    <FollowButton profile={profile} />
                 </div>
             </div>
             
