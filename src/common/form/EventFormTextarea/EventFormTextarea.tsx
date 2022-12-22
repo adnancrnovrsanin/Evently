@@ -1,25 +1,29 @@
 import { TextField } from "@mui/material";
 import { useField } from "formik";
-import '../../../components/EventForm/style.css'
 
 interface Props {
     placeholder: string;
     name: string;
+    rows: number;
     label?: string;
-    type?: string;
 }
 
-export default function EventFormTextInput(props: Props) {
+export default function EventFormTextarea(props: Props) {
     const [field, meta] = useField(props.name);
     return (
-        <TextField 
-            {...props}
+        <TextField
+            id="outlined-multiline-static"
             {...field}
+            {...props}
+            multiline
+            rows={props.rows}
+            sx={{ 
+                borderRadius: "1px",
+                backgroundColor: "white",
+                marginTop: "20px"
+            }}
             error={meta.touched && !!meta.error}
-            id="standard-error-helper-text"
-            variant="standard"
             helperText={meta.touched && meta.error}
-            sx={{ fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}
         />
     );
 }

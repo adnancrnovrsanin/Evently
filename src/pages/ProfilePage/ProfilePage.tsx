@@ -11,6 +11,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { Button } from "@mui/material";
+import { UserEvent } from "../../models/profile";
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -69,7 +71,7 @@ const AntTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} /
 function ProfilePage() {
     const { username } = useParams();
     const { profileStore } = useStore();
-    const { loadingProfile, loadProfile, profile, setActiveTab, activeTab} = profileStore;
+    const { loadingProfile, loadProfile, profile, setActiveTab, activeTab, loadUserEvents, userEvents } = profileStore;
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {

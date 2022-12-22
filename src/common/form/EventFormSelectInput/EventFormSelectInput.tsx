@@ -13,8 +13,8 @@ interface Props {
 export default function EventFormSelectInput(props: Props) {
     const [field, meta, helpers] = useField(props.name);
     return (
-        <FormControl variant="standard" sx={{ minWidth: 120, margin: "20px 0 30px 0" }}>
-            <InputLabel id="demo-simple-select-standard-label" sx={{ color: "darkblue", fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}>Category of your event</InputLabel>
+        <FormControl variant="standard" sx={{ minWidth: 120, margin: "20px 0 20px 0" }}>
+            <InputLabel id="demo-simple-select-standard-label" sx={{ color: "darkblue", fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}>{props.label}</InputLabel>
             <Select
                 labelId="demo-simple-select-standard-label"
                 id="demo-simple-select-standard"

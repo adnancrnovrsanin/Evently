@@ -1,11 +1,12 @@
 import { TextField } from "@mui/material";
-import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
+import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDatePicker, StaticDateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
 import { useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import './style.css';
+import { useField } from "formik";
 
 const probaDate = dayjs('2022-11-10');
 
@@ -53,13 +54,17 @@ const ArrowRight = () => {
   );
 };
 
-export default function Calendar() {
-    const [value, setValue] = useState<Dayjs | null>(dayjs());
+interface Props {
+    name: string;
+}
+
+export default function Calendar(props: Props) {
+    const [meta, field, helpers] = useField(props.name);
 
     return (
         <div className="calendarWrapper">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <StaticDatePicker
+                <StaticDateTimePicker
                     components={{
                         LeftArrowIcon: ArrowLeft,
                         RightArrowIcon: ArrowRight
@@ -67,9 +72,9 @@ export default function Calendar() {
                     renderDay={renderWeekPickerDay}
                     displayStaticWrapperAs="desktop"
                     openTo="day"
-                    value={value}
+                    value={field.value}
                     onChange={(newValue) => {
-                        setValue(dayjs(newValue));
+                        helpers.setValue(new Date(newValue?.toISOString()!));
                     }}
                     renderInput={(params) => <TextField {...params} />}
                 />

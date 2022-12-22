@@ -16,9 +16,10 @@
 }
 
 .createEvent {
-    width: 80%;
+    width: 800px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
@@ -58,4 +59,17 @@
 
 .formAndTitle h1 span {
     color: rgb(215, 19, 107);
+}
+
+.datePickerForm {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+textarea::placeholder {
+    color: dodgerblue !important;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
 }

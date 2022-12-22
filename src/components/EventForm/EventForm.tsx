@@ -6,12 +6,18 @@ import { useNavigate, useParams } from "react-router-dom";
 import EditProfileTextInput from "../../common/form/EditProfileTextInput/EditProfileTextInput";
 import { useEffect, useState } from "react";
 import { EventFormValues } from "../../models/event";
-import { CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import * as Yup from "yup";
 import './style.css';
 import EventFormSelectInput from "../../common/form/EventFormSelectInput/EventFormSelectInput";
 import { categoryOptions } from "../../common/options/categoryOptions";
+import EventFormTextInput from "../../common/form/EventFormTextInput/EventFormTextInput";
+import Calendar from "../Calendar/Calendar";
+import Grid2 from "@mui/material/Unstable_Grid2";
+import { anonimityOptions } from "../../common/options/anonimityOptions";
+import FormDatePicker from "../../common/form/FormDatePicker/FormDatePicker";
+import EventFormTextarea from "../../common/form/EventFormTextarea/EventFormTextarea";
 
 function EventForm() {
     const { eventStore } = useStore();
@@ -58,31 +64,48 @@ function EventForm() {
                 enableReinitialize
                 validationSchema={validationSchema}
                 initialValues={event}
-                onSubmit={values =>  handleFormSubmit(values)}>
+                onSubmit={values =>  handleFormSubmit(values)}
+                // onSubmit={values => console.log(values)}
+            >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                    <Form onSubmit={handleSubmit} className='createEvent' autoComplete='off'>
-                        <TextField id="standard-basic" label="Title of the event" variant="standard" sx={{ fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }} />
+                    <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'>
+                        <Box display="flex" flexDirection="column" width={"300px"}>
 
-                        <TextField id="standard-basic" label="Standard" variant="standard"  sx={{ fontFamily: "'Montserrat', sans-serif", fontStyle: "italic", marginTop: '20px' }} />
+                            <EventFormTextInput placeholder="Title of your event" name="title" label="Title" />
 
-                        <EventFormSelectInput placeholder="category" name="category" options={categoryOptions} />
+                            <EventFormSelectInput placeholder="category" name="category" options={categoryOptions} label="Choose a category for your event" />
 
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Describe your event..."
-                            multiline
-                            rows={4}
-                            sx={{ 
-                                borderRadius: "1px",
-                                backgroundColor: "white"
-                            }}
-                        />
+                            <EventFormTextInput placeholder="Country" name="country" label="Country" />
 
-                        <button type='submit' className="formPostBtn">
-                            {isSubmitting ? (
-                                <CircularProgress color="secondary"/>
-                            ) : "POST"}
-                        </button>
+                            <EventFormTextInput placeholder="City" name="city" label="City" />
+
+                            <EventFormTextInput placeholder="Venue" name="venue" label="Venue" />
+
+                            <EventFormSelectInput placeholder="Anonimity" name="anonimity" options={anonimityOptions} label="Choose anonimity of your event"/>
+
+                            <EventFormTextarea placeholder="Describe your event..." name="description" rows={4} />
+
+                            <button type='submit' className="formPostBtn" disabled={isSubmitting || !isValid || !dirty}>
+                                POST
+                            </button>
+                        </Box>
+
+                        <div className="datePickerForm">
+                            <FormDatePicker name="date"/>
+                            <Typography sx={{
+                                padding: "5px 70px",
+                                backgroundColor: "rgb(191, 215, 237)",
+                                marginTop: "20px",
+                                borderRadius: "10px",
+                                fontFamily: "Montserrat, sans-serif",
+                                fontStyle: "italic",
+                                color: "darkblue",
+                                fontWeight: "400",
+                                boxShadow: "0px 1px 5px 0px rgba(0,0,0,0.75)",
+                            }}>
+                                Pick a date for your event
+                            </Typography>
+                        </div>
                     </Form>
                 )}
             </Formik>
