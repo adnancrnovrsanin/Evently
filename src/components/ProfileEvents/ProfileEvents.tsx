@@ -13,6 +13,7 @@ import { Button, Card, CardActions, CardContent, CardMedia, CircularProgress } f
 import eventPic from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
 import dayjs from 'dayjs';
 import InitialLoader from '../InitialLoader/InitialLoader';
+import { useNavigate } from 'react-router-dom';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -65,6 +66,7 @@ export default function ProfileEvents({ profile }: Props) {
         loadingEvents,
         userEvents
     } = profileStore;
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadUserEvents(profile!.username);
@@ -77,7 +79,7 @@ export default function ProfileEvents({ profile }: Props) {
 
   return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 250 }}
+      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', minHeight: 300 }}
     >
       <Tabs
         orientation="vertical"
@@ -99,37 +101,43 @@ export default function ProfileEvents({ profile }: Props) {
         })}
       </Tabs>
 
-        <Grid2 container spacing={2} sx={{
+        <Grid2 container spacing={3} sx={{
             paddingInline: "1rem",
-            maxHeight: "100%",
             overflowY: "auto",
-            width: "100%",      
+            width: "100%",    
+            height: "100%"  
         }}>
-            {userEvents ? (
-                userEvents.map((event: UserEvent) => {
-                    return (
-                        <Grid2 xs={9} sm={4.5} md={3} key={event.id}>
-                            <Card sx={{ maxWidth: "100%", height: "100%" }}>
-                                <CardMedia
-                                    sx={{ height: 140 }}
-                                    image={eventPic}
-                                    title="event"
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        {event.title}
-                                    </Typography>
-    
-                                    <Typography sx={{
-                                        color: "grey"
-                                    }}>
-                                        {dayjs(event.date).format('MMMM D, YYYY')}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid2>
-                    )
-                })
+            {!loadingEvents ? (
+                userEvents.length > 0 ? (
+                  userEvents.map((event: UserEvent) => {
+                      return (
+                          <Grid2 xs={12} sm={6} md={4} lg={3} xl={2} key={event.id}>
+                              <Card sx={{ maxWidth: "100%", height: "100%", cursor: "pointer" }} onClick={() => navigate(`/events/${event.id}`)}>
+                                  <CardMedia
+                                      sx={{ height: 140 }}
+                                      image={eventPic}
+                                      title="event"
+                                  />
+                                  <CardContent>
+                                      <Typography gutterBottom variant="h5" component="div">
+                                          {event.title}
+                                      </Typography>
+      
+                                      <Typography sx={{
+                                          color: "grey"
+                                      }}>
+                                          {dayjs(event.date).format('MMMM D, YYYY')}
+                                      </Typography>
+                                  </CardContent>
+                              </Card>
+                          </Grid2>
+                      )
+                  })
+                ) : (
+                    <Typography variant="body1" sx={{ m: 'auto' }}>
+                      No events here.
+                    </Typography>
+                )
             ) : (
                 <CircularProgress color='secondary' sx={{
                     margin: "auto",

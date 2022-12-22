@@ -65,7 +65,6 @@ function EventForm() {
                 validationSchema={validationSchema}
                 initialValues={event}
                 onSubmit={values =>  handleFormSubmit(values)}
-                // onSubmit={values => console.log(values)}
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'>
@@ -101,7 +100,6 @@ function EventForm() {
                                 fontStyle: "italic",
                                 color: "darkblue",
                                 fontWeight: "400",
-                                // boxShadow: "0px 1px 5px 0px rgba(0,0,0,0.75)",
                             }}>
                                 Pick a date for your event
                             </Typography>

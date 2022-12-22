@@ -9,6 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import LoginDialog from './components/LoginDialog/LoginDialog';
 import RegisterDialog from './components/RegisterDialog/RegisterDialog';
 import InitialLoader from './components/InitialLoader/InitialLoader';
+import Footer from './components/Footer/Footer';
 
 function App() {
   const { commonStore, userStore, loginDialogStore, registerDialogStore } = useStore();
@@ -28,8 +29,8 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer position='bottom-right' hideProgressBar theme='colored'/>
       <Navbar />
+      <ToastContainer position='bottom-right' hideProgressBar theme='colored'/>
       {loginDialogStore.loginDialog.open && <LoginDialog />}
       {registerDialogStore.registerDialog.open && <RegisterDialog />}
       {location.pathname === '/' ? <HomePage /> : <Outlet />}

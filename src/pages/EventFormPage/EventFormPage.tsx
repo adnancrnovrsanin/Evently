@@ -4,7 +4,6 @@ import './style.css';
 import EventForm from "../../components/EventForm/EventForm";
 
 export default function EventFormPage() {
-    
     return (
         <div className="createEventContainer">
             <EventForm />

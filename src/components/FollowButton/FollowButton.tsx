@@ -20,18 +20,18 @@ function FollowButton({ profile }: Props) {
     }
     
     return (
-        <Paper elevation={profile?.following ? 0 : 3} sx={{ borderRadius: "10px" }}>
+        <Paper elevation={profile?.following ? 0 : 3} sx={{ borderRadius: "10px", marginTop: '20px' }}>
             <button style={{
-                backgroundColor: 'white',
-                color: 'black',
-                border: profile?.following ? '1.5px solid #ff0000' : '1.5px solid #00ff00',
-                padding: '7px 20px',
-                borderRadius: '10px',
-                cursor: 'pointer',
-                outline: 'none',
-                fontSize: '1rem',
-                transition: 'all 0.3s ease-in-out',
-                width: '100%',
+                    backgroundColor: 'white',
+                    color: 'black',
+                    border: profile?.following ? '1.5px solid #ff0000' : '1.5px solid #00ff00',
+                    padding: '7px 20px',
+                    borderRadius: '10px',
+                    cursor: 'pointer',
+                    outline: 'none',
+                    fontSize: '1rem',
+                    transition: 'all 0.3s ease-in-out',
+                    width: '100%'
                 }}
                 onClick={(e) => handleFollow(e, profile?.username!)}
             >
