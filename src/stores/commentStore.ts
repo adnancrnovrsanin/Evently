@@ -28,11 +28,11 @@ export default class CommentStore {
                     comments.forEach(comment => {
                         comment.createdAt = new Date(comment.createdAt);
                     });
-                    this.comments = comments;
+                    this.comments = comments.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
                 });
             });
 
-            this.hubConnection.on('RecieveComment', comment => {
+            this.hubConnection.on('ReceiveComment', comment => {
                 runInAction(() => {
                     comment.createdAt = new Date(comment.createdAt);
                     this.comments.unshift(comment);

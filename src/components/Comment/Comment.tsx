@@ -1,4 +1,4 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Avatar, Divider, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { observer } from "mobx-react-lite";
 import { IEvent } from "../../models/event";
@@ -7,6 +7,9 @@ import { ChatComment } from "../../models/comment";
 import React from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+
+dayjs.extend(localizedFormat);
 
 interface Props {
     comment: ChatComment;
@@ -15,6 +18,7 @@ interface Props {
 function Comment({ comment }: Props) {
     return (
         <Grid2 lg={12} display="flex" flexDirection="column">
+            <Divider />
             <Grid2 lg={12} display="flex" alignItems="center">
                 <Avatar variant="square" alt="Profile photo" src={comment.image} {...stringAvatar(comment.displayName!)} sx={{
                     bgcolor: stringToColor(comment.username!),
@@ -43,7 +47,7 @@ function Comment({ comment }: Props) {
                         marginLeft: "50px",
                     }}
                 >
-                    {comment.createdAt && dayjs(comment.createdAt).format('h:mm A')}
+                    {comment.createdAt && dayjs(comment.createdAt).format('MMMM D, YYYY h:mm A')}
                 </Typography>
             </Grid2>
 
@@ -51,14 +55,18 @@ function Comment({ comment }: Props) {
                 <Typography
                     sx={{
                         fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: "800",
+                        fontWeight: "500",
                         color: "black",
                         fontSize: "1.2rem",
+                        marginLeft: "40px",
+                        whiteSpace: "pre-wrap",
                     }}
                 >
                     {comment.body}
                 </Typography>
             </Grid2>
+
+            
         </Grid2>
     );
 }

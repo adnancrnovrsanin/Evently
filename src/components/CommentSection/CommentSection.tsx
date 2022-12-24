@@ -62,23 +62,6 @@ function CommentSection({ eventId }: Props) {
                     borderTop: "none",
                 }}
             >
-                {commentStore.comments.length > 0 ? (
-                    commentStore.comments.map(comment => (
-                        <Comment key={comment.id} comment={comment} />
-                    ))
-                ) : (
-                    <Typography
-                        sx={{
-                            fontFamily: 'Montserrat, sans-serif',
-                            color: 'darkblue',
-                            fontWeight: "bold",
-                            margin: "50px",
-                            textAlign: "center",
-                        }}
-                    >
-                        No comments yet
-                    </Typography>
-                )}
                 <Formik
                     onSubmit={(values, { resetForm }) => commentStore.addComment(values).then(() => resetForm())}
                     initialValues={{ body: '' }}
@@ -128,6 +111,23 @@ function CommentSection({ eventId }: Props) {
                         </Form>
                     )}
                 </Formik>
+                {commentStore.comments.length > 0 ? (
+                    commentStore.comments.map(comment => (
+                        <Comment key={comment.id} comment={comment} />
+                    ))
+                ) : (
+                    <Typography
+                        sx={{
+                            fontFamily: 'Montserrat, sans-serif',
+                            color: 'darkblue',
+                            fontWeight: "bold",
+                            margin: "50px",
+                            textAlign: "center",
+                        }}
+                    >
+                        No comments yet
+                    </Typography>
+                )}
             </Grid2>
         </Grid2>
     );
