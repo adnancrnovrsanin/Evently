@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Button, CircularProgress, List, Paper, Typography } from "@mui/material";
+import { Avatar, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Paper, Typography } from "@mui/material";
 import eventImage from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
 import { colorFromAnonimity, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
@@ -16,10 +16,11 @@ import * as Yup from "yup";
 import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import { Textarea } from "@mui/joy";
 import CommentSection from "../../components/CommentSection/CommentSection";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function EventPage() {
     const { id } = useParams();
-    const { eventStore, commentStore } = useStore();
+    const { eventStore, userStore } = useStore();
     const { 
         selectedEvent, 
         loadEvent, 
@@ -119,6 +120,81 @@ function EventPage() {
                                 fontWeight: "bold",
                             }}>{" " + selectedEvent.anonimity}</span> 
                         </Typography>
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <Typography
+                            sx={{
+                                fontFamily: "Playfair Display, serif",
+                                textDecoration: "underline",
+                                fontSize: "1.5rem",
+                            }}
+                        >
+                            <span style={{ fontWeight: "bold", fontSize: "2rem" }}>{selectedEvent.attendees.length}</span> {selectedEvent.attendees.length === 1 ? "person" : "people"} comming
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <List>
+                            {selectedEvent.attendees.map(attendee => (
+                                <ListItem key={attendee.username}>
+                                    <ListItemAvatar>
+                                        <Avatar variant="square" alt="Profile photo" src={attendee.image} {...stringAvatar(attendee.displayName!)} sx={{
+                                            bgcolor: stringToColor(attendee.username!),
+                                            width: "56px",
+                                            height: '56px',
+                                        }} />
+                                    </ListItemAvatar>
+                                    <ListItemText
+                                        primary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{
+                                                        fontFamily: 'Montserrat, sans-serif',
+                                                        fontWeight: "800",
+                                                        fontSize: "1.125rem",
+                                                        marginLeft: "10px",
+                                                        textDecoration: "none",
+                                                        color: "black",
+                                                    }}
+                                                    component={Link}
+                                                    to={`/profile/${attendee.username}`}
+                                                >
+                                                    {attendee.displayName}
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                        secondary={
+                                            <React.Fragment>
+                                                <Typography
+                                                    sx={{
+                                                        fontFamily: 'Montserrat, sans-serif',
+                                                        marginLeft: "10px",
+                                                        textDecoration: "none",
+                                                        color: "gray",
+                                                        fontWeight: "500",
+                                                    }}
+                                                    component={Link}
+                                                    to={`/profile/${attendee.username}`}
+                                                >
+                                                    {attendee.username}
+                                                </Typography>
+                                            </React.Fragment>
+                                        }
+                                    />
+                                    {selectedEvent.isHost && (attendee.username !== userStore.user?.username) && (
+                                        <ListItemSecondaryAction>
+                                            <IconButton edge="end" aria-label="delete"
+                                                // onClick={() => updateAttendeance(selectedEvent, attendee)}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </ListItemSecondaryAction>
+                                    )}
+                                </ListItem>
+                            ))}
+                            
+                        </List>
                     </Grid2>
                 </Grid2>
 
@@ -249,7 +325,7 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <CommentSection eventId={selectedEvent.id}/>
+                    <CommentSection eventId={selectedEvent.id} isJoined={selectedEvent.attendees.some(a => a.username === userStore.user?.username)} />
                 </Grid2>
             </Grid2>
         </div>

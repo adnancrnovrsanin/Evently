@@ -201,6 +201,21 @@ export default class EventStore {
         }
     }
 
+    // expelAttendee = async (username: string) => {
+    //     this.loading = true;
+    //     try {
+    //         await agent.Events.expel(this.selectedEvent!.id, username);
+    //         runInAction(() => {
+    //             this.selectedEvent!.attendees = this.selectedEvent!.attendees?.filter(a => a.username !== username);
+    //             this.eventRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //     } finally {
+    //         runInAction(() => this.loading = false);
+    //     }
+    // }
+
     cancelEventToggle = async () => {
         this.loading = true;
         try {
