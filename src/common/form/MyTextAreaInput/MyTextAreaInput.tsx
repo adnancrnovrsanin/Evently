@@ -6,6 +6,7 @@ interface Props {
     name: string;
     rows: number;
     label?: string;
+    sx?: any;
 }
 
 export default function MyTextAreaInput(props: Props) {
@@ -26,7 +27,8 @@ export default function MyTextAreaInput(props: Props) {
                 fontFamily: "Montserrat, sans-serif",
                 fontWeight: 500,
                 marginTop: "20px",
-                borderRadius: "0px"
+                borderRadius: "0px",
+                ...props.sx
             }}
             error={meta.touched && !!meta.error}
         />

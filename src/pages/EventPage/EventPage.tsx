@@ -1,22 +1,42 @@
 import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import { useEffect } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Typography } from "@mui/material";
+import { Avatar, Button, CircularProgress, List, Paper, Typography } from "@mui/material";
 import eventImage from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
 import { colorFromAnonimity, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
+import { LoadingButton } from "@mui/lab";
+import Comment from "../../components/Comment/Comment";
+import { ChatComment } from "../../models/comment";
+import { Field, FieldProps, Form, Formik } from "formik";
+import * as Yup from "yup";
+import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
+import { Textarea } from "@mui/joy";
+import CommentSection from "../../components/CommentSection/CommentSection";
 
 function EventPage() {
     const { id } = useParams();
-    const { eventStore } = useStore();
-    const { selectedEvent, loadEvent, loadingInitial, clearSelectedEvent } = eventStore;
+    const { eventStore, commentStore } = useStore();
+    const { 
+        selectedEvent, 
+        loadEvent, 
+        loadingInitial, 
+        clearSelectedEvent,
+        loading,
+        cancelEventToggle,
+        updateAttendeance,
+    } = eventStore;
 
     useEffect(() => {
-        if (id) loadEvent(id);
-        return () => clearSelectedEvent();
+        if (id) {
+            loadEvent(id);
+        }
+        return () => {
+            clearSelectedEvent();
+        }
     }, [id, loadEvent, clearSelectedEvent]);
 
     if (loadingInitial || !selectedEvent) return <InitialLoader adding="event"/>;
@@ -52,7 +72,7 @@ function EventPage() {
                     </Typography>
                 </Grid2>
 
-                <Grid2 lg={4}>
+                <Grid2 lg={3}>
                     <Grid2 lg={12} display='flex' alignItems="center">
                         <Avatar variant="square" alt="Profile photo" src={selectedEvent.host?.image} {...stringAvatar(selectedEvent.host?.displayName!)} sx={{
                             bgcolor: stringToColor(selectedEvent.host?.username!),
@@ -65,8 +85,11 @@ function EventPage() {
                                 fontWeight: "800",
                                 color: "dodgerblue",
                                 fontSize: "1.5rem",
-                                marginLeft: "10px"
+                                marginLeft: "10px",
+                                textDecoration: "none",
                             }}
+                            component={Link}
+                            to={`/profile/${selectedEvent.host?.username}`}
                         >
                             {selectedEvent.host?.displayName}
                         </Typography>
@@ -97,6 +120,136 @@ function EventPage() {
                             }}>{" " + selectedEvent.anonimity}</span> 
                         </Typography>
                     </Grid2>
+                </Grid2>
+
+                <Grid2 lg={9}>
+                    <Grid2 lg={12} container
+                        sx={{
+                            display: 'flex',
+                            justifyContent: selectedEvent.isHost ? 'space-between' : 'flex-end',
+                        }}
+                    >
+                        {
+                            selectedEvent.isHost ? (
+                                <>
+                                    <LoadingButton
+                                        component={Link}
+                                        to={`/events/manage/${selectedEvent.id}`}
+                                        loading={loading}
+                                        variant="contained"
+                                        sx={{
+                                            fontFamily: 'Montserrat, sans-serif',
+                                            color: "white",
+                                            backgroundColor: "purple",
+                                            fontStyle: "italic",
+                                            padding: "5px 50px",
+                                            fontSize: "1.125rem",
+                                            '&:hover': {
+                                                backgroundColor: "rgb(81, 0, 81)"
+                                            }
+                                        }}
+                                    >
+                                        Manage Event
+                                    </LoadingButton>
+
+                                    <LoadingButton
+                                        loading={loading}
+                                        onClick={cancelEventToggle}
+                                        variant="contained"
+                                        sx={{
+                                            fontFamily: 'Montserrat, sans-serif',
+                                            color: "white",
+                                            backgroundColor: selectedEvent.isCancelled ? "green" : "red",
+                                            fontStyle: "italic",
+                                            padding: "5px 50px",
+                                            fontSize: "1.125rem",
+                                            '&:hover': {
+                                                backgroundColor: selectedEvent.isCancelled ? "darkgreen" : "darkred"
+                                            }
+                                        }}
+                                    >
+                                        {selectedEvent.isCancelled ? 'Re-activate event' : 'Cancel event'}
+                                    </LoadingButton>
+                                </>
+                            ) : selectedEvent.isGoing ? (
+                                <LoadingButton
+                                    loading={loading}
+                                    onClick={updateAttendeance}
+                                    variant="contained"
+                                    sx={{
+                                        fontFamily: 'Montserrat, sans-serif',
+                                        color: "white",
+                                        backgroundColor: "red",
+                                        fontStyle: "italic",
+                                        padding: "5px 50px",
+                                        fontSize: "1.125rem",
+                                        '&:hover': {
+                                            backgroundColor: "darkred"
+                                        },
+                                        float: "right"
+                                    }}
+                                >
+                                    Cancel attendance
+                                </LoadingButton>
+                            ) : (
+                                <LoadingButton
+                                    loading={loading}
+                                    disabled={selectedEvent.isCancelled}
+                                    variant="contained"
+                                    sx={{
+                                        fontFamily: 'Montserrat, sans-serif',
+                                        color: "white",
+                                        backgroundColor: "green",
+                                        fontStyle: "italic",
+                                        padding: "5px 50px",
+                                        fontSize: "1.125rem",
+                                        '&:hover': {
+                                            backgroundColor: "darkgreen"
+                                        },
+                                        float: "right"
+                                    }}
+
+                                    onClick={updateAttendeance}
+                                >
+                                    Join Event
+                                </LoadingButton>
+                            )
+                        }
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                color: 'darkblue',
+                                fontWeight: "bold",
+                                textAlign: "center",
+                                marginTop: "50px",
+                            }}
+                        >
+                            Description
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <Typography
+                            variant="body1"
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                bgcolor: "rgb(222, 239, 255)",
+                                padding: "20px",
+                                borderRadius: "10px",
+                                border: "1px solid purple",
+                            }}
+                            component={Paper}
+                            elevation={3}
+                        >
+                            {selectedEvent.description}
+                        </Typography>
+                    </Grid2>
+
+                    <CommentSection eventId={selectedEvent.id}/>
                 </Grid2>
             </Grid2>
         </div>

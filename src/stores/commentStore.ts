@@ -14,7 +14,7 @@ export default class CommentStore {
     createHubConnection = (eventId: string) => {
         if (store.eventStore.selectedEvent) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('https://localhost/chat' + '?eventId=' + eventId, {
+                .withUrl('http://localhost:5000/chat' + '?eventId=' + eventId, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()

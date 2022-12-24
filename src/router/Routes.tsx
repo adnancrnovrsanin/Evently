@@ -14,6 +14,7 @@ export const routes: RouteObject[] = [
             {element: <RequireAuth />, children: [
                 {path: '/profile/:username', element: <ProfilePage />},
                 {path: '/events/create', element: <EventFormPage />},
+                {path: '/events/manage/:id', element: <EventFormPage />},
             ]},
             {path: '/events/:id', element: <EventPage />},
             {path: 'not-found', element: <NotFound />},
