@@ -26,9 +26,9 @@ export function stringAvatar(name: string) {
   };
 }
 
-export function truncate(str: string | undefined) {
+export function truncate(str: string | undefined, limit: number) {
   if (str) {
-      return str.length > 40 ? str.substring(0, 37) + '...' : str;
+      return str.length > 40 ? str.substring(0, limit) + '...' : str;
   }
 }
 
@@ -48,5 +48,22 @@ export function colorFromAnonimity(string: string) {
       return 'black';
     case 'ON INVITE':
       return 'darkblue';
+  }
+}
+
+export function getCategoryImage(category: string) {
+  switch (category) {
+    case 'travel':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908851/Evently/travel_pldilw.jpg';
+    case 'culture':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908851/Evently/culture_geenyn.jpg';
+    case 'film':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908850/Evently/film_std7x5.jpg';
+    case 'music':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908850/Evently/music_wlsrrv.jpg';
+    case 'food':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908850/Evently/food_xurzv0.jpg';
+    case 'drinks':
+      return 'https://res.cloudinary.com/dnhcwikgq/image/upload/v1671908850/Evently/drinks_yadb2e.jpg';
   }
 }

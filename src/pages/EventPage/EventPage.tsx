@@ -6,8 +6,7 @@ import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
 import { Avatar, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Paper, Typography } from "@mui/material";
-import eventImage from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
-import { colorFromAnonimity, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
+import { colorFromAnonimity, getCategoryImage, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
 import Comment from "../../components/Comment/Comment";
 import { ChatComment } from "../../models/comment";
@@ -51,7 +50,7 @@ function EventPage() {
                         alignItems: 'center',
                         height: '350px',
                         boxShadow: "0 0 10px 10px rgb(240, 240, 240) inset",
-                        backgroundImage: `url(${eventImage})`,
+                        backgroundImage: `url(${getCategoryImage(selectedEvent.category!)})`,
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat"

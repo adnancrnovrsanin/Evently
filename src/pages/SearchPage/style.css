@@ -1,0 +1,28 @@
+.searchPageContainer {
+    width: 75%;
+    align-self: center;
+}
+
+#searchBox {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 35px;
+    padding: 3px 20px;
+    font-size: 1.2rem;
+    outline: none;
+    margin-bottom: 20px;
+    transition: 0.2s border ease-in-out;
+    font-weight: 500;
+}
+
+#searchBox::placeholder {
+    font-family: "Montserrat", sans-serif;
+    font-style: italic;
+    font-weight: 300;
+}
+
+#searchBox:focus {
+    border: 2px solid purple;
+}

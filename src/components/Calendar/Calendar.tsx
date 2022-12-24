@@ -1,24 +1,36 @@
 import { TextField } from "@mui/material";
 import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDatePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import './style.css';
-
-const probaDate = dayjs('2022-11-10');
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../stores/store";
+import { IEvent } from "../../models/event";
 
 const renderWeekPickerDay = (
-  date: Date,
-  selectedDates: Array<Date | null>,
-  pickersDayProps: PickersDayProps<Date>
+  date: Dayjs,
+  selectedDates: Array<Dayjs | null>,
+  pickersDayProps: PickersDayProps<Dayjs>,
+  usersEvents: Array<IEvent>
 ) => {
-  const compareF = () => {
-    let dateToCompare = dayjs(date);
+  const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
+    let dateToCompare = dayjs(eventDate);
+    return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
+  };
 
-    return dateToCompare.diff(probaDate, "day") === 0 && dateToCompare.diff(probaDate, "month") === 0 && dateToCompare.diff(probaDate, "year") === 0
-  }; 
+  const checkEventDay = () => {
+    let result = false;
+    for (const event of usersEvents) {
+      if (compareDay(date, event.date!)) {
+        result = true;
+        break;
+      }
+    }
+    return result;
+  }
 
   return (
     <PickersDay
@@ -28,8 +40,8 @@ const renderWeekPickerDay = (
           backgroundColor: "purple"
         },
         fontSize: "13px",
-        borderRadius: () => (compareF())? "0" : "100%",
-        borderBottom: () => (compareF())? "3px solid purple": "none"
+        borderRadius: () => (checkEventDay())? "0" : "100%",
+        borderBottom: () => (checkEventDay())? "3px solid purple": "none"
       }}
     />
   );
@@ -53,8 +65,12 @@ const ArrowRight = () => {
   );
 };
 
-export default function Calendar() {
-    const [value, setValue] = useState<Dayjs | null>(dayjs());
+function Calendar() {
+    const { eventStore: { loadEventsUserIsGoing, usersEvents, predicate, setPredicate }, userStore: { user } } = useStore();
+    
+    useEffect(() => {
+        if (user) loadEventsUserIsGoing();
+    }, [loadEventsUserIsGoing, user]);
 
     return (
         <div className="calendarWrapper">
@@ -64,16 +80,16 @@ export default function Calendar() {
                         LeftArrowIcon: ArrowLeft,
                         RightArrowIcon: ArrowRight
                     }}
-                    renderDay={renderWeekPickerDay}
+                    renderDay={(date, selectedDates, pickersDayProps) => renderWeekPickerDay(date, selectedDates, pickersDayProps, usersEvents)}
                     displayStaticWrapperAs="desktop"
                     openTo="day"
-                    value={value}
-                    onChange={(newValue) => {
-                        setValue(dayjs(newValue));
-                    }}
+                    value={predicate.get("startDate")}
+                    onChange={(newValue) => setPredicate("startDate", newValue.toDate())}
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
       </div>
     );
 }
+
+export default observer(Calendar);

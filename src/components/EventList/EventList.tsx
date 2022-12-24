@@ -5,13 +5,11 @@ import EventCard from "../EventCard/EventCard";
 import EventHorizontal from "../EventHorizontal/EventHorizontal";
 
 function EventList() {
-    const { eventStore } = useStore();
-
-    const { eventsByDate } = eventStore;
+    const { eventStore: { eventsByDate } } = useStore();
 
     return (
         <>
-            {eventsByDate.map((event: IEvent) => (
+            {eventsByDate && eventsByDate.map((event: IEvent) => (
                 <EventHorizontal key={event.id} event={event}/>
             ))}
         </>

@@ -5,6 +5,7 @@ import NotFound from "../pages/NotFound/NotFound";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import EventFormPage from "../pages/EventFormPage/EventFormPage";
 import EventPage from "../pages/EventPage/EventPage";
+import SearchPage from "../pages/SearchPage/SearchPage";
 
 export const routes: RouteObject[] = [
     {
@@ -16,6 +17,7 @@ export const routes: RouteObject[] = [
                 {path: '/events/create', element: <EventFormPage />},
                 {path: '/events/manage/:id', element: <EventFormPage />},
             ]},
+            {path: '/events', element: <SearchPage />},
             {path: '/events/:id', element: <EventPage />},
             {path: 'not-found', element: <NotFound />},
             // {path: 'server-error', element: <ServerError />},

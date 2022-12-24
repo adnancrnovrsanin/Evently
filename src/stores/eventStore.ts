@@ -14,6 +14,7 @@ export default class EventStore {
     pagination: Pagination | null = null;
     predicate = new Map().set('all', true);
     pagingParams = new PagingParams();
+    usersEvents: IEvent[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -35,7 +36,7 @@ export default class EventStore {
     setPredicate = (predicate: string, value: string | Date) => {
         const resetPredicate = () => {
             this.predicate.forEach((value, key) => {
-                if (key !== 'startDate') this.predicate.delete(key);
+                if (key !== 'startDate' || key !== 'searchQuery') this.predicate.delete(key);
             })
         }
 
@@ -52,13 +53,28 @@ export default class EventStore {
                 resetPredicate();
                 this.predicate.set('isHost', true);
                 break;
+            case 'searchQuery':
+                this.predicate.delete('searchQuery');
+                this.predicate.set('searchQuery', value);
+                break;
             case 'startDate':
                 this.predicate.delete('startDate');
                 this.predicate.set('startDate', value);
                 break;
+            
         }
     }
 
+    get eventsByDate() {
+        return Array.from(this.eventRegistry.values())
+            .sort((a, b) => a.date!.getTime() - b.date!.getTime());
+    }
+
+    get usersEventsByDate() {
+        return this.usersEvents.sort((a, b) => a.date!.getTime() - b.date!.getTime());
+    }
+
+    
     get axiosParams() {
         const params = new URLSearchParams();
         params.append('pageNumber', this.pagingParams.pageNumber.toString());
@@ -71,6 +87,21 @@ export default class EventStore {
             }
         })
         return params;
+    }
+    
+    loadEventsUserIsGoing = async () => {
+        const params = new URLSearchParams();
+        params.append('pageNumber', '1');
+        params.append('pageSize', '365');
+        params.append('isgoing', 'true');
+        try {
+            const result = await agent.Events.list(params);
+            result.data.forEach(e => {
+                this.usersEvents.push(e);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     loadEvents = async () => {

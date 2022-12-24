@@ -58,7 +58,7 @@ interface Props {
     name: string;
 }
 
-export default function Calendar(props: Props) {
+export default function FormDatePicker(props: Props) {
     const [meta, field, helpers] = useField(props.name);
 
     return (
