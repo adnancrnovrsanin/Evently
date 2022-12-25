@@ -46,6 +46,10 @@
     font-size: 12px;
 }
 
+.eventProfileSection:hover {
+    cursor: pointer;
+}
+
 .eventTimePosted p {
     color: grey;
     font-style: italic;

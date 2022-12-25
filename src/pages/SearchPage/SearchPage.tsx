@@ -7,15 +7,23 @@ import InfiniteScroll from "react-infinite-scroller";
 import EventList from "../../components/EventList/EventList";
 import { PagingParams } from "../../models/pagination";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { IconButton, TextField, Typography } from "@mui/material";
+import { Button, IconButton, Menu, MenuItem, TextField, Typography } from "@mui/material";
 import './style.css';
 import Calendar from "../../components/Calendar/Calendar";
 import SortIcon from '@mui/icons-material/Sort';
 
 function SearchPage() {
     const { eventStore } = useStore();
-    const { loadEvents, setPagingParams, pagination, setPredicate, predicate, eventsByDate } = eventStore;
+    const { loadEvents, setPagingParams, pagination, setPredicate, predicate, eventsByDate, resetPredicate } = eventStore;
     const [loadingNext, setLoadingNext] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     function handleGetNext() {
         setLoadingNext(true);
@@ -25,6 +33,8 @@ function SearchPage() {
 
     useEffect(() => {
         loadEvents();
+
+        return () => resetPredicate();
     }, [loadEvents]);
 
     return (
@@ -40,9 +50,9 @@ function SearchPage() {
                         <Formik
                             onSubmit={(values, { resetForm }) => {
                                 setPredicate('searchQuery', values.searchQuery);
-                                resetForm();
+                                // resetForm();
                             }}
-                            initialValues={{ searchQuery: '' }}
+                            initialValues={{ searchQuery: predicate.get('searchQuery') }}
                         >
                             {({ isSubmitting }) => (
                                 <Form style={{ width: "92.5%" }}>
@@ -70,20 +80,53 @@ function SearchPage() {
                             <SortIcon />
                         </IconButton>
 
-                        <Typography
+                        <Button
+                            id="demo-positioned-button"
+                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClick}
                             sx={{
-                                padding: "20px",
+                                color: "black",
+                                marginTop: "10px",
+                                marginLeft: "10px",
                                 fontSize: "14px",
                                 fontWeight: "800",
-                                color: "#000000",
-                                '&:hover': {
-                                    cursor: "pointer",
-                                    color: "gray",
-                                }
+                                fontFamily: "Montserrat, sans-serif",
+
                             }}
                         >
                             {"FILTER >"}
-                        </Typography>
+                        </Button>
+
+                        <Menu
+                            id="demo-positioned-menu"
+                            aria-labelledby="demo-positioned-button"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                            }}
+                        >
+                            <MenuItem onClick={() => {
+                                setPredicate('all', 'true');
+                                handleClose();
+                            }}>All events</MenuItem>
+                            <MenuItem onClick={() => {
+                                setPredicate('isHost', 'true');
+                                handleClose();
+                            }}>I'm hosting</MenuItem>
+                            <MenuItem onClick={() => {
+                                setPredicate('isGoing', 'true');
+                                handleClose();
+                            }}>I'm going</MenuItem>
+                        </Menu>
                     </Grid2>
                 </Grid2>
 

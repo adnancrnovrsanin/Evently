@@ -104,6 +104,9 @@ function Navbar() {
 
                         <MenuItem
                             sx={{ fontSize: "20px" }}
+                            onClick={() => {
+                                navigate('/settings');
+                            }}
                         >
                             <ListItemIcon>
                                 <Settings fontSize="inherit" />

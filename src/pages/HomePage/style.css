@@ -36,7 +36,7 @@
     font-weight: 600;
 }
 
-.homeHeroSection > input {
+.homeHeroSectionSearchBox {
     width: 35%;
     margin-left: 12rem;
     background: rgba(161, 161, 161, 0.511);
@@ -48,14 +48,14 @@
     font-size: 20px;
 }
 
-.homeHeroSection > input::placeholder {
+.homeHeroSectionSearchBox::placeholder {
     font-style: italic;
     font-size: 20px;
     color: white;
     text-align: right;
 }
 
-.homeHeroSection > input:focus {
+.homeHeroSectionSearchBox:focus {
     outline: none;
 }
 

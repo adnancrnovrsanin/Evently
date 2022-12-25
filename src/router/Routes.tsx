@@ -6,6 +6,7 @@ import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import EventFormPage from "../pages/EventFormPage/EventFormPage";
 import EventPage from "../pages/EventPage/EventPage";
 import SearchPage from "../pages/SearchPage/SearchPage";
+import SettingsPage from "../pages/SettingsPage/SettingsPage";
 
 export const routes: RouteObject[] = [
     {
@@ -19,6 +20,7 @@ export const routes: RouteObject[] = [
             ]},
             {path: '/events', element: <SearchPage />},
             {path: '/events/:id', element: <EventPage />},
+            {path: '/settings', element: <SettingsPage />},
             {path: 'not-found', element: <NotFound />},
             // {path: 'server-error', element: <ServerError />},
             {path: '*', element: <Navigate replace to='/not-found' />},

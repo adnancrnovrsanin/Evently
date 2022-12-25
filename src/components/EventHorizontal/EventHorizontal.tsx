@@ -34,7 +34,9 @@ function EventHorizontal ({ event }: Props) {
 
             <div className="eventContent">
                 <div className="firstRow">
-                    <div className="eventProfileSection">
+                    <div className="eventProfileSection"
+                        onClick={() => navigate(`/profile/${event.host?.username}`)}
+                    >
                         <Avatar variant="square" alt="Profile photo" src={event.host?.image} {...stringAvatar(event.host?.displayName!)} sx={{
                             bgcolor: stringToColor(event.host?.username!),
                             width: '30px',

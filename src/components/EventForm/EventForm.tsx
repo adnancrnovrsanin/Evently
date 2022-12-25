@@ -18,9 +18,10 @@ import Grid2 from "@mui/material/Unstable_Grid2";
 import { anonimityOptions } from "../../common/options/anonimityOptions";
 import FormDatePicker from "../../common/form/FormDatePicker/FormDatePicker";
 import EventFormTextarea from "../../common/form/EventFormTextarea/EventFormTextarea";
+import { Profile } from "../../models/profile";
 
 function EventForm() {
-    const { eventStore } = useStore();
+    const { eventStore, userStore: { user } } = useStore();
     const { createEvent, updateEvent, loadingInitial, loadEvent } = eventStore;
     const { id } = useParams();
     const navigate = useNavigate();

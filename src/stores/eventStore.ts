@@ -33,24 +33,26 @@ export default class EventStore {
         this.pagingParams = pagingParams;
     }
 
+    resetPredicate = () => {
+        this.predicate.forEach((value, key) => {
+            if (key !== 'startDate' && key !== 'searchQuery') this.predicate.delete(key);
+        })
+    }
+
     setPredicate = (predicate: string, value: string | Date) => {
-        const resetPredicate = () => {
-            this.predicate.forEach((value, key) => {
-                if (key !== 'startDate' || key !== 'searchQuery') this.predicate.delete(key);
-            })
-        }
+        
 
         switch (predicate) {
             case 'all':
-                resetPredicate();
+                this.resetPredicate();
                 this.predicate.set('all', true);
                 break;
             case 'isGoing':
-                resetPredicate();
+                this.resetPredicate();
                 this.predicate.set('isGoing', true);
                 break;
             case 'isHost':
-                resetPredicate();
+                this.resetPredicate();
                 this.predicate.set('isHost', true);
                 break;
             case 'searchQuery':
@@ -171,6 +173,9 @@ export default class EventStore {
             const newEvent = new IEvent(event);
             newEvent.hostUsername = user?.username;
             newEvent.host = profile;
+            newEvent.isHost = true;
+            newEvent.isGoing = true;
+            newEvent.attendees.push(profile);
             this.setEvent(newEvent);
             runInAction(() => {
                 this.selectedEvent = newEvent;

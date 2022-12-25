@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import React, { useEffect } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
@@ -19,6 +19,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function EventPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const { eventStore, userStore } = useStore();
     const { 
         selectedEvent, 

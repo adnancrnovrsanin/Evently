@@ -4,13 +4,39 @@ import explainedProcess1 from '../../assets/explainedProcess1.png';
 import explainedProcess2 from '../../assets/explainedProcess2.png';
 import explainedProcess3 from '../../assets/explainedProcess3.png';
 import explainedProcess4 from '../../assets/explainedProcess4.png';
+import { Field, FieldProps, Form, Formik } from 'formik';
+import { useStore } from '../../stores/store';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
+    const { eventStore: { setPredicate, predicate } } = useStore();
+    const navigate = useNavigate();
     return(
         <div className="homepageContainer">
             <div className="homeHeroSection">
                 <h1>Find upcoming <span>EVENTS</span></h1>
-                <input type="text" placeholder="Search..."/>
+                <Formik
+                    onSubmit={(values, { resetForm }) => {
+                        setPredicate('searchQuery', values.searchQuery);
+                        // resetForm();
+                        navigate('/events');
+                    }}
+                    initialValues={{ searchQuery: predicate.get('searchQuery') }}
+                >
+                    {({ isSubmitting }) => (
+                        <Form style={{ width: "92.5%" }}>
+                            <Field name="searchQuery">
+                                {(props: FieldProps) => (
+                                    <input
+                                        {...props.field}
+                                        placeholder="Search..."
+                                        className='homeHeroSectionSearchBox'
+                                    />
+                                )}
+                            </Field>
+                        </Form>
+                    )}
+                </Formik>
             </div>
 
             <div className="intro">

@@ -100,7 +100,8 @@ const Profiles = {
     listFollowings: (username: string, predicate: string) => requests
         .get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
     listEvents: (username: string, predicate: string) =>
-        requests.get<UserEvent[]>(`/profiles/${username}/events?predicate=${predicate}`)
+        requests.get<UserEvent[]>(`/profiles/${username}/events?predicate=${predicate}`),
+    deleteProfile: () => requests.del(`/profiles`),
 }
 
 const agent = {
