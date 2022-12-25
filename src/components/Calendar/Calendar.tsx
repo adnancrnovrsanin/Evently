@@ -10,42 +10,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { IEvent } from "../../models/event";
 
-const renderWeekPickerDay = (
-  date: Dayjs,
-  selectedDates: Array<Dayjs | null>,
-  pickersDayProps: PickersDayProps<Dayjs>,
-  usersEvents: Array<IEvent>
-) => {
-  const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
-    let dateToCompare = dayjs(eventDate);
-    return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
-  };
 
-  const checkEventDay = () => {
-    let result = false;
-    for (const event of usersEvents) {
-      if (compareDay(date, event.date!)) {
-        result = true;
-        break;
-      }
-    }
-    return result;
-  }
-
-  return (
-    <PickersDay
-      {...pickersDayProps}
-      sx={{
-        [`&&.${pickersDayClasses.selected}`]: {
-          backgroundColor: "purple"
-        },
-        fontSize: "13px",
-        borderRadius: () => (checkEventDay())? "0" : "100%",
-        borderBottom: () => (checkEventDay())? "3px solid purple": "none"
-      }}
-    />
-  );
-};
 
 const ArrowLeft = () => {
   return (
@@ -67,6 +32,42 @@ const ArrowRight = () => {
 
 function Calendar() {
     const { eventStore: { loadEventsUserIsGoing, usersEvents, predicate, setPredicate }, userStore: { user } } = useStore();
+
+    const renderWeekPickerDay = (
+      date: Dayjs,
+      selectedDates: Array<Dayjs | null>,
+      pickersDayProps: PickersDayProps<Dayjs>
+    ) => {
+      const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
+        let dateToCompare = dayjs(eventDate);
+        return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
+      };
+    
+      const checkEventDay = () => {
+        let result = false;
+        for (const event of usersEvents) {
+          if (compareDay(date, event.date!)) {
+            result = true;
+            break;
+          }
+        }
+        return result;
+      }
+    
+      return (
+        <PickersDay
+          {...pickersDayProps}
+          sx={{
+            [`&&.${pickersDayClasses.selected}`]: {
+              backgroundColor: "purple"
+            },
+            fontSize: "13px",
+            borderRadius: () => (checkEventDay())? "0" : "100%",
+            borderBottom: () => (checkEventDay())? "3px solid purple": "none"
+          }}
+        />
+      );
+    };
     
     useEffect(() => {
         if (user) loadEventsUserIsGoing();
@@ -80,7 +81,7 @@ function Calendar() {
                         LeftArrowIcon: ArrowLeft,
                         RightArrowIcon: ArrowRight
                     }}
-                    renderDay={(date, selectedDates, pickersDayProps) => renderWeekPickerDay(date, selectedDates, pickersDayProps, usersEvents)}
+                    renderDay={(date, selectedDates, pickersDayProps) => renderWeekPickerDay(date, selectedDates, pickersDayProps)}
                     displayStaticWrapperAs="desktop"
                     openTo="day"
                     value={predicate.get("startDate")}

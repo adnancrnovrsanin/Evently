@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import EventList from "../../components/EventList/EventList";
 import { PagingParams } from "../../models/pagination";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, Typography } from "@mui/material";
 import './style.css';
 import Calendar from "../../components/Calendar/Calendar";
 import SortIcon from '@mui/icons-material/Sort';
@@ -35,31 +35,59 @@ function SearchPage() {
             }}
         >
             <Grid2 lg={9} container>
-                <Grid2 sm={0} lg={10}>
-                    <Formik
-                        onSubmit={(values, { resetForm }) => {
-                            setPredicate('searchQuery', values.searchQuery);
-                            resetForm();
-                        }}
-                        initialValues={{ searchQuery: '' }}
-                    >
-                        {({ isSubmitting }) => (
-                            <Form style={{ width: "100%" }}>
-                                <Field name="searchQuery">
-                                    {(props: FieldProps) => (
-                                        <input
-                                            {...props.field}
-                                            placeholder="Search for events by name, category, location, host..."
-                                            id="searchBox"
-                                        />
-                                    )}
-                                </Field>
-                            </Form>
-                        )}
-                    </Formik>
+                <Grid2 lg={12} display="flex" container>
+                    <Grid2 lg={9}>
+                        <Formik
+                            onSubmit={(values, { resetForm }) => {
+                                setPredicate('searchQuery', values.searchQuery);
+                                resetForm();
+                            }}
+                            initialValues={{ searchQuery: '' }}
+                        >
+                            {({ isSubmitting }) => (
+                                <Form style={{ width: "92.5%" }}>
+                                    <Field name="searchQuery">
+                                        {(props: FieldProps) => (
+                                            <input
+                                                {...props.field}
+                                                placeholder="Search for events by name, category, location, host..."
+                                                id="searchBox"
+                                            />
+                                        )}
+                                    </Field>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Grid2>
+                    
+                    <Grid2 lg={3} display="flex" alignItems="flex-start" justifyContent="flex-start">
+                        <IconButton
+                            sx={{
+                                color: "black",
+                                marginTop: "10px"
+                            }}
+                        >
+                            <SortIcon />
+                        </IconButton>
+
+                        <Typography
+                            sx={{
+                                padding: "20px",
+                                fontSize: "14px",
+                                fontWeight: "800",
+                                color: "#000000",
+                                '&:hover': {
+                                    cursor: "pointer",
+                                    color: "gray",
+                                }
+                            }}
+                        >
+                            {"FILTER >"}
+                        </Typography>
+                    </Grid2>
                 </Grid2>
 
-                <Grid2 lg={12} container>
+                <Grid2 lg={9} container>
                     {eventStore.loadingInitial && !loadingNext ? (
                         <Grid2 lg={12}>
                             <EventPlaceholder />
@@ -85,21 +113,12 @@ function SearchPage() {
                         )
                     )}
                 </Grid2>
-            </Grid2>
 
-            <Grid2 lg={3} container>
-                <Grid2 lg={12}>
-                    <IconButton>
-                        <SortIcon sx={{
-                            width: "1.5em",
-                            height: "1.5em",
-                            color: "black", 
-                            float: "left",
-                        }}/>
-                    </IconButton>
-                </Grid2>
-                <Grid2 lg={12}>
-                    <Calendar />
+                <Grid2 lg={3} display="flex" flexDirection="column" container>
+                    <Grid2 lg={12} height="150px"></Grid2>
+                    <Grid2 lg={12} marginLeft="60px">
+                        <Calendar />
+                    </Grid2>
                 </Grid2>
             </Grid2>
         </Grid2>

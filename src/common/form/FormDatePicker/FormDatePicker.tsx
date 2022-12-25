@@ -7,34 +7,8 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import './style.css';
 import { useField } from "formik";
-
-const probaDate = dayjs('2022-11-10');
-
-const renderWeekPickerDay = (
-  date: Date,
-  selectedDates: Array<Date | null>,
-  pickersDayProps: PickersDayProps<Date>
-) => {
-  const compareF = () => {
-    let dateToCompare = dayjs(date);
-
-    return dateToCompare.diff(probaDate, "day") === 0 && dateToCompare.diff(probaDate, "month") === 0 && dateToCompare.diff(probaDate, "year") === 0
-  }; 
-
-  return (
-    <PickersDay
-      {...pickersDayProps}
-      sx={{
-        [`&&.${pickersDayClasses.selected}`]: {
-          backgroundColor: "purple"
-        },
-        fontSize: "13px",
-        borderRadius: () => (compareF())? "0" : "100%",
-        borderBottom: () => (compareF())? "3px solid purple": "none"
-      }}
-    />
-  );
-};
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../../stores/store";
 
 const ArrowLeft = () => {
   return (
@@ -58,8 +32,45 @@ interface Props {
     name: string;
 }
 
-export default function FormDatePicker(props: Props) {
+function FormDatePicker(props: Props) {
     const [meta, field, helpers] = useField(props.name);
+    const { eventStore: { usersEvents }} = useStore();
+
+    const renderWeekPickerDay = (
+      date: Dayjs,
+      selectedDates: Array<Dayjs | null>,
+      pickersDayProps: PickersDayProps<Dayjs>
+    ) => {
+      const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
+        let dateToCompare = dayjs(eventDate);
+        return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
+      };
+    
+      const checkEventDay = () => {
+        let result = false;
+        for (const event of usersEvents) {
+          if (compareDay(date, event.date!)) {
+            result = true;
+            break;
+          }
+        }
+        return result;
+      }
+    
+      return (
+        <PickersDay
+          {...pickersDayProps}
+          sx={{
+            [`&&.${pickersDayClasses.selected}`]: {
+              backgroundColor: "purple"
+            },
+            fontSize: "13px",
+            borderRadius: () => (checkEventDay())? "0" : "100%",
+            borderBottom: () => (checkEventDay())? "3px solid purple": "none"
+          }}
+        />
+      );
+    };
 
     return (
         <div className="calendarWrapper">
@@ -82,3 +93,5 @@ export default function FormDatePicker(props: Props) {
       </div>
     );
 }
+
+export default observer(FormDatePicker);
