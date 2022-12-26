@@ -130,7 +130,7 @@ function Navbar() {
                 </div>
             ) : (
                 <div className="userAuthButtons">
-                    <Typography component={Link} to={'/search'} sx={{ 
+                    <Typography component={Link} to={'/events'} sx={{ 
                         fontSize: "15px", fontWeight: 600,
                         textDecoration: "none", color: "black", marginRight: "20px"
                     }}>SEARCH</Typography>

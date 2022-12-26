@@ -10,6 +10,7 @@ import LoginDialog from './components/LoginDialog/LoginDialog';
 import RegisterDialog from './components/RegisterDialog/RegisterDialog';
 import InitialLoader from './components/InitialLoader/InitialLoader';
 import Footer from './components/Footer/Footer';
+import UserHomePage from './pages/UserHomePage/UserHomePage';
 
 function App() {
   const { commonStore, userStore, loginDialogStore, registerDialogStore } = useStore();
@@ -33,7 +34,15 @@ function App() {
       <ToastContainer position='bottom-right' hideProgressBar theme='colored'/>
       {loginDialogStore.loginDialog.open && <LoginDialog />}
       {registerDialogStore.registerDialog.open && <RegisterDialog />}
-      {location.pathname === '/' ? <HomePage /> : <Outlet />}
+      {location.pathname === '/' ? (
+        userStore.user ? (
+          <UserHomePage />
+        ) : (
+          <HomePage />
+        )
+      ) : (
+        <Outlet />
+      )}
     </div>
   )
 }

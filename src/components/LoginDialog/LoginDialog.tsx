@@ -15,7 +15,7 @@ function LoginDialog() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                backgroundColor: "lightyellow",
+                backgroundColor: "whitesmoke",
                 border: "3px solid purple",
              }}>
                 <Formik

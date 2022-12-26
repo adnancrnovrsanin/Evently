@@ -15,7 +15,7 @@ function RegisterDialog() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                backgroundColor: "lightyellow",
+                backgroundColor: "whitesmoke",
 
             }}>
                 <Formik

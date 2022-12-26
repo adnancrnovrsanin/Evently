@@ -39,6 +39,12 @@ export default class EventStore {
         })
     }
 
+    resetSortPredicate = () => {
+        this.predicate.forEach((value, key) => {
+            if (key === 'dateAscending' || key === 'dateDescending') this.predicate.delete(key);
+        })
+    }
+
     setPredicate = (predicate: string, value: string | Date) => {
         
 
@@ -55,6 +61,14 @@ export default class EventStore {
                 this.resetPredicate();
                 this.predicate.set('isHost', true);
                 break;
+            case 'dateAscending':
+                this.resetSortPredicate();
+                this.predicate.set('dateAscending', true);
+                break;
+            case 'dateDescending':
+                this.resetSortPredicate();
+                this.predicate.set('dateDescending', true);
+                break;
             case 'searchQuery':
                 this.predicate.delete('searchQuery');
                 this.predicate.set('searchQuery', value);
@@ -69,7 +83,13 @@ export default class EventStore {
 
     get eventsByDate() {
         return Array.from(this.eventRegistry.values())
-            .sort((a, b) => a.date!.getTime() - b.date!.getTime());
+            .sort((a, b) => {
+                if (this.predicate.get('dateAscending')) {
+                    return a.date!.getTime() - b.date!.getTime();
+                } else {
+                    return b.date!.getTime() - a.date!.getTime();
+                }
+            });
     }
 
     get usersEventsByDate() {
@@ -92,7 +112,9 @@ export default class EventStore {
     }
     
     loadEventsUserIsGoing = async () => {
+        this.loading = true;
         const params = new URLSearchParams();
+        const user = store.userStore.user;
         params.append('pageNumber', '1');
         params.append('pageSize', '365');
         params.append('isgoing', 'true');
@@ -100,9 +122,21 @@ export default class EventStore {
             const result = await agent.Events.list(params);
             result.data.forEach(e => {
                 this.usersEvents.push(e);
+                if (user) {
+                    e.isGoing = e.attendees?.some(a => a.username === user.username);
+                    e.isHost = e.hostUsername === user.username;
+                    e.host = e.attendees?.find(a => a.username === e.hostUsername);
+                }
+                e.date = new Date(e.date!);
             });
+            runInAction(() => {
+                this.loading = false;
+            })
         } catch (error) {
             console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
         }
     }
 

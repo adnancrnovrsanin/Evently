@@ -25,6 +25,15 @@ function SearchPage() {
         setAnchorEl(null);
     };
 
+    const [anchorEl2, setAnchorEl2] = useState<null | HTMLElement>(null);
+    const open2 = Boolean(anchorEl2);
+    const handleClick2 = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl2(event.currentTarget);
+    };
+    const handleClose2 = () => {
+        setAnchorEl2(null);
+    };
+
     function handleGetNext() {
         setLoadingNext(true);
         setPagingParams(new PagingParams(pagination!.currentPage + 1));
@@ -72,6 +81,11 @@ function SearchPage() {
                     
                     <Grid2 lg={3} display="flex" alignItems="flex-start" justifyContent="flex-start">
                         <IconButton
+                            id="basic-button"
+                            aria-controls={open2 ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open2 ? 'true' : undefined}
+                            onClick={handleClick2}
                             sx={{
                                 color: "black",
                                 marginTop: "10px"
@@ -80,9 +94,34 @@ function SearchPage() {
                             <SortIcon />
                         </IconButton>
 
+                        <Menu
+                            id="basic-menu"
+                            aria-labelledby="basic-button"
+                            anchorEl={anchorEl2}
+                            open={open2}
+                            onClose={handleClose2}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                        >
+                            <MenuItem onClick={() => {
+                                setPredicate('dateAscending', 'true');
+                                handleClose2();
+                            }}>{"Closer events (by Date)"}</MenuItem>
+                            <MenuItem onClick={() => {
+                                setPredicate('dateDescending', 'true');
+                                handleClose2();
+                            }}>{"Farther events (by Date)"}</MenuItem>
+                        </Menu>
+
                         <Button
-                            id="demo-positioned-button"
-                            aria-controls={open ? 'demo-positioned-menu' : undefined}
+                            id="basic-button"
+                            aria-controls={open ? 'basi-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
@@ -100,8 +139,8 @@ function SearchPage() {
                         </Button>
 
                         <Menu
-                            id="demo-positioned-menu"
-                            aria-labelledby="demo-positioned-button"
+                            id="basic-menu"
+                            aria-labelledby="basic-button"
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}

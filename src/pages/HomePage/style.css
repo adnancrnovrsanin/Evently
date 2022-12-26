@@ -46,7 +46,28 @@
     margin-top: 200px;
     color: white;
     font-size: 20px;
+    box-shadow:  5px 5px 10px #cccccc,
+                -5px -5px 10px #ffffff;
 }
+
+/* The fast way */
+.homeHeroSectionSearchBox {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+/* Pre-render the bigger shadow, but hide it */
+.homeHeroSectionSearchBox::after {
+    box-shadow: 0 5px 15px white;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Transition to showing the bigger shadow on hover */
+.homeHeroSectionSearchBox:hover::after {
+    opacity: 1;
+}
+
+
 
 .homeHeroSectionSearchBox::placeholder {
     font-style: italic;
