@@ -3,6 +3,7 @@ import { User, UserFormValues } from "../models/user";
 import agent from "../api/agent";
 import { store } from "./store";
 import { router } from "../router/Routes";
+import { useNavigate } from "react-router-dom";
 
 export default class UserStore {
     user: User | null = null;
@@ -19,8 +20,12 @@ export default class UserStore {
         try {
             const user = await agent.Account.login(creds);
             store.commonStore.setToken(user.token);
-            runInAction(() => this.user = user);
-            store.modalStore.closeModal();
+            runInAction(() => {
+                this.user = user;
+                store.loginDialogStore.closeLoginDialog();
+                this.getUser();
+                if (this.user) store.profileStore.loadProfile(this.user.username);
+            });
         } catch (error) {
             throw error;
         }
@@ -28,10 +33,9 @@ export default class UserStore {
 
     register = async (creds: UserFormValues) => {
         try {
-            const user = await agent.Account.register(creds);
-            store.commonStore.setToken(user.token);
-            runInAction(() => this.user = user);
-            store.modalStore.closeModal();
+            await agent.Account.register(creds);
+            store.registerDialogStore.closeRegisterDialog();
+            router.navigate(`/account/registerSuccess?email=${creds.email}`);
         } catch (error) {
             throw error;
         }
@@ -39,6 +43,8 @@ export default class UserStore {
 
     logout = () => {
         store.commonStore.setToken(null);
+        store.eventStore.eventRegistry.clear();
+        store.eventStore.usersEvents = [];
         this.user = null;
         router.navigate('/');
     }

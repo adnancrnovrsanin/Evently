@@ -6,19 +6,20 @@ import EventHorizontal from "../../components/EventHorizontal/EventHorizontal";
 
 function UserHomePage() {
     const { 
-        eventStore: { loadEventsUserIsGoing, loading, usersEvents },
+        userDashboardStore: { loadEvents, loading, eventsByDate, resetPredicate, setPredicate},
         userStore: { user }
     } = useStore();
 
     useEffect(() => {
-        if (user) loadEventsUserIsGoing();
-    }, [user, loadEventsUserIsGoing]);
+        if (user) loadEvents();
+        return () => resetPredicate();
+    }, [setPredicate, loadEvents, user]);
 
-    if (loading || !user) return <InitialLoader adding="dashboard"/>;
+    if (loading) return <InitialLoader adding="dashboard"/>;
 
     return (
         <div>
-            {usersEvents.map(event => (
+            {eventsByDate.map(event => (
                 <EventHorizontal key={event.id} event={event}/>
             ))}
         </div>

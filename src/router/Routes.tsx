@@ -7,6 +7,7 @@ import EventFormPage from "../pages/EventFormPage/EventFormPage";
 import EventPage from "../pages/EventPage/EventPage";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
+import RegisterSuccess from "../pages/RegisterSuccess/RegisterSuccess";
 
 export const routes: RouteObject[] = [
     {
@@ -14,16 +15,17 @@ export const routes: RouteObject[] = [
         element: <App />,
         children: [
             {element: <RequireAuth />, children: [
-                {path: '/profile/:username', element: <ProfilePage />},
                 {path: '/events/create', element: <EventFormPage />},
                 {path: '/events/manage/:id', element: <EventFormPage />},
             ]},
+            {path: '/profile/:username', element: <ProfilePage />},
             {path: '/events', element: <SearchPage />},
             {path: '/events/:id', element: <EventPage />},
+            {path: '/account/registerSuccess', element: <RegisterSuccess />},
             {path: '/settings', element: <SettingsPage />},
             {path: 'not-found', element: <NotFound />},
             // {path: 'server-error', element: <ServerError />},
-            {path: '*', element: <Navigate replace to='/not-found' />},
+            // {path: '*', element: <Navigate replace to='/not-found' />},
         ]
     }
 ]

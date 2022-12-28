@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
 import './App.css';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useStore } from './stores/store';
 import { useEffect } from 'react';
 import HomePage from './pages/HomePage/HomePage';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import LoginDialog from './components/LoginDialog/LoginDialog';
 import RegisterDialog from './components/RegisterDialog/RegisterDialog';
@@ -30,8 +31,9 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar />
+      <ScrollRestoration />
       <ToastContainer position='bottom-right' hideProgressBar theme='colored'/>
+      <Navbar />
       {loginDialogStore.loginDialog.open && <LoginDialog />}
       {registerDialogStore.registerDialog.open && <RegisterDialog />}
       {location.pathname === '/' ? (

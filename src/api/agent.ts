@@ -45,7 +45,19 @@ axios.interceptors.response.use(async response => {
             }
             break;
         case 401:
-            toast.error('unauthorised')
+            if (data.split("|")[0].trim() === "Email not verified") {
+                toast.error("Email not verified");
+                const email = data.split("|")[1];
+                requests.get<void>(`/account/resendEmailConfirmationLink?email=${email}`);
+                router.navigate(`/account/registerSuccess?email=${email}`);
+                store.loginDialogStore.closeLoginDialog();
+            } else {
+                if (!data || data === "") {
+                    toast.error("Unauthorized");
+                } else {
+                    toast.error(data);
+                }
+            }
             break;
         case 403:
             toast.error('forbidden')
@@ -81,7 +93,9 @@ const Events = {
 const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
-    register: (user: UserFormValues) => requests.post<User>('/account/register', user)
+    register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+    verifyEmail: (token: string, email: string) => requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
+    resendEmailConfirmationLink: (email: string) => requests.get(`/account/resendEmailConfirmationLink?email=${email}`),
 }
 
 const Profiles = {

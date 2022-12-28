@@ -21,11 +21,6 @@ function LoginDialog() {
                 <Formik
                     initialValues={{ email: '', password: '', error: null }}
                     onSubmit={(values, { setErrors }) => userStore.login(values)
-                        .then(() => {
-                            loginDialogStore.closeLoginDialog();
-                            userStore.getUser();
-                            if (userStore.user) profileStore.loadProfile(userStore.user.username);
-                        })
                         .catch(error => setErrors({ error: 'Invalid email or password' }))}
                 >
                     {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (

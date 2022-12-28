@@ -7,6 +7,7 @@ import ProfileStore from "./profileStore";
 import CommentStore from "./commentStore";
 import LoginDialogStore from "./loginDialogStore";
 import RegisterDialogStore from "./registerDialogStore";
+import UserDashboardStore from "./userDashboardStore";
 
 interface Store {
     eventStore: EventStore;
@@ -17,6 +18,7 @@ interface Store {
     commentStore: CommentStore;
     loginDialogStore: LoginDialogStore;
     registerDialogStore: RegisterDialogStore;
+    userDashboardStore: UserDashboardStore;
 }
 
 export const store: Store = {
@@ -27,7 +29,8 @@ export const store: Store = {
     profileStore: new ProfileStore(),
     commentStore: new CommentStore(),
     loginDialogStore: new LoginDialogStore(),
-    registerDialogStore: new RegisterDialogStore()
+    registerDialogStore: new RegisterDialogStore(),
+    userDashboardStore: new UserDashboardStore(),
 }
 
 export const StoreContext = createContext(store);

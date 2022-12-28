@@ -33,6 +33,10 @@ export default class EventStore {
         this.pagingParams = pagingParams;
     }
 
+    resetAllPredicate = () => {
+        this.predicate.clear();
+    }
+
     resetPredicate = () => {
         this.predicate.forEach((value, key) => {
             if (key !== 'startDate' && key !== 'searchQuery') this.predicate.delete(key);
@@ -84,10 +88,10 @@ export default class EventStore {
     get eventsByDate() {
         return Array.from(this.eventRegistry.values())
             .sort((a, b) => {
-                if (this.predicate.get('dateAscending')) {
-                    return a.date!.getTime() - b.date!.getTime();
-                } else {
+                if (this.predicate.get('dateDescending')) {
                     return b.date!.getTime() - a.date!.getTime();
+                } else {
+                    return a.date!.getTime() - b.date!.getTime();
                 }
             });
     }
@@ -180,7 +184,7 @@ export default class EventStore {
     }
 
     private setEvent = (event: IEvent) => {
-        const user = store.userStore.user;
+        const user = store.userStore.user || { username: '', displayName: '', image: null };
         if (user) {
             event.isGoing = event.attendees?.some(a => a.username === user.username);
             event.isHost = event.hostUsername === user.username;

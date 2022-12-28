@@ -21,11 +21,6 @@ function RegisterDialog() {
                 <Formik
                     initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
                     onSubmit={(values, { setErrors }) => userStore.register(values)
-                        .then(() => {
-                            registerDialogStore.closeRegisterDialog();
-                            userStore.getUser();
-                            if (userStore.user) profileStore.loadProfile(userStore.user.username);
-                        })
                         .catch(error => setErrors({ error: error }))}
                 >
                     {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (

@@ -33,7 +33,9 @@ function Navbar() {
 
             {userStore.isLoggedIn ? (
                 <div className="navLinks">
-                    <Typography component={Link} to={'/events'} sx={{ 
+                    <Typography 
+                        component={Link} to={'/events'}
+                    sx={{ 
                         fontSize: "15px", fontWeight: 600,
                         textDecoration: "none", color: "black",
                     }}>SEARCH</Typography>
@@ -130,10 +132,13 @@ function Navbar() {
                 </div>
             ) : (
                 <div className="userAuthButtons">
-                    <Typography component={Link} to={'/events'} sx={{ 
-                        fontSize: "15px", fontWeight: 600,
-                        textDecoration: "none", color: "black", marginRight: "20px"
-                    }}>SEARCH</Typography>
+                    <Typography  
+                        component={Link} to={'/events'}
+                        sx={{ 
+                            fontSize: "15px", fontWeight: 600,
+                            textDecoration: "none", color: "black", marginRight: "20px"
+                        }}
+                    >SEARCH</Typography>
                     <button onClick={loginDialogStore.openLoginDialog} className="authButton purple">LOG IN</button>
                     <button onClick={registerDialogStore.openRegisterDialog} className="authButton teal">SIGN UP</button>
                 </div>

@@ -42,7 +42,6 @@ function SearchPage() {
 
     useEffect(() => {
         loadEvents();
-
         return () => resetPredicate();
     }, [loadEvents]);
 
@@ -58,7 +57,7 @@ function SearchPage() {
                     <Grid2 lg={9}>
                         <Formik
                             onSubmit={(values, { resetForm }) => {
-                                setPredicate('searchQuery', values.searchQuery);
+                                setPredicate('searchQuery', values.searchQuery.trim());
                                 // resetForm();
                             }}
                             initialValues={{ searchQuery: predicate.get('searchQuery') }}
@@ -100,14 +99,6 @@ function SearchPage() {
                             anchorEl={anchorEl2}
                             open={open2}
                             onClose={handleClose2}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'left',
-                            }}
                         >
                             <MenuItem onClick={() => {
                                 setPredicate('dateAscending', 'true');
@@ -121,7 +112,7 @@ function SearchPage() {
 
                         <Button
                             id="basic-button"
-                            aria-controls={open ? 'basi-menu' : undefined}
+                            aria-controls={open ? 'basic-menu' : undefined}
                             aria-haspopup="true"
                             aria-expanded={open ? 'true' : undefined}
                             onClick={handleClick}
@@ -140,17 +131,11 @@ function SearchPage() {
 
                         <Menu
                             id="basic-menu"
-                            aria-labelledby="basic-button"
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                            }}
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
+                            MenuListProps={{
+                              'aria-labelledby': 'basic-button',
                             }}
                         >
                             <MenuItem onClick={() => {
