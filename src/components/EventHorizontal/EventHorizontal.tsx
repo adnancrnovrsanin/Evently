@@ -23,7 +23,7 @@ function EventHorizontal ({ event }: Props) {
     return (
         <div className="eventHorizontal"
             style={{
-                backgroundColor: event.attendees?.some(a => a.username === userStore.user?.username) ? 'rgba(0, 255, 0, 0.1)' : 'white',
+                backgroundColor: event.attendees?.some(a => a.username === userStore.user?.username) ? 'rgb(191, 215, 237)' : 'white',
             }}
         >
             <div className="eventImage"

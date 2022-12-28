@@ -27,7 +27,7 @@ export default function ConfirmEmail() {
     }
 
     useEffect(() => {
-        agent.Account.verifyEmail(email, token).then(() => {
+        agent.Account.verifyEmail(token, email).then(() => {
             setStatus(Status.Success);
         }).catch(() => {
             setStatus(Status.Failed);

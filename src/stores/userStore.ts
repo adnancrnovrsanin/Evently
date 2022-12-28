@@ -46,6 +46,7 @@ export default class UserStore {
         store.commonStore.setToken(null);
         store.eventStore.eventRegistry.clear();
         store.eventStore.usersEvents = [];
+        store.userDashboardStore.eventRegistry.clear();
         this.user = null;
         router.navigate('/');
     }

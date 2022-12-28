@@ -9,6 +9,7 @@ import { useStore } from "../../stores/store";
 import { useState } from "react";
 import { Logout, Settings } from "@mui/icons-material";
 import { router } from "../../router/Routes";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function Navbar() {
     const { userStore } = useStore();
@@ -26,7 +27,13 @@ function Navbar() {
     };
 
     return (
-        <nav>
+        <Grid2 xl={9} container sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "5px 0",
+            alignSelf: "center",
+        }}>
             <Link to={'/'}>
                 <img src={navLogo} alt="Evently" className='logoNav' />
             </Link>
@@ -143,7 +150,7 @@ function Navbar() {
                     <button onClick={registerDialogStore.openRegisterDialog} className="authButton teal">SIGN UP</button>
                 </div>
             )}
-        </nav>
+        </Grid2>
     );
 }
 

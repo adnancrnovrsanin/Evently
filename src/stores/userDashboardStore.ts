@@ -32,6 +32,12 @@ export default class UserDashboardStore {
             });
     }
 
+    resetAllPredicates = () => {
+        this.predicate.forEach((value, key) => {
+            this.predicate.delete(key);
+        })
+    }
+
     resetPredicate = () => {
         this.predicate.forEach((value, key) => {
             if (key !== 'startDate' && key !== 'searchQuery') this.predicate.delete(key);
@@ -98,11 +104,11 @@ export default class UserDashboardStore {
         }
     }
 
-    private getEvent = (id: string) => {
+    getEvent = (id: string) => {
         return this.eventRegistry.get(id);
     }
 
-    private setEvent = (event: IEvent) => {
+    setEvent = (event: IEvent) => {
         const user = store.userStore.user;
         if (user) {
             event.isGoing = event.attendees!.some(a => a.username === user.username);
@@ -111,5 +117,27 @@ export default class UserDashboardStore {
         }
         event.date = new Date(event.date!);
         this.eventRegistry.set(event.id, event);
+    }
+
+    handleChange = (event: IEvent) => {
+        this.eventRegistry.set(event.id, event);
+        this.loadEvents();
+    }
+    
+    initialLoad = async (username: string) => {
+        this.loading = true;
+        try {
+            await store.profileStore.loadProfile(username);
+            await this.loadEvents();
+            await store.profileStore.loadFollowings("following");
+            runInAction(() => {
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
     }
 }

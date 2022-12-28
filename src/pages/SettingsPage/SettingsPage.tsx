@@ -8,6 +8,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import { TransitionProps } from '@mui/material/transitions';
 import { useStore } from '../../stores/store';
 import { useNavigate } from 'react-router-dom';
+import Grid2 from '@mui/material/Unstable_Grid2';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -72,51 +73,53 @@ function SettingsPage() {
 
 
   return (
-    <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224, marginTop: "150px" }}
-    >
-      <Tabs
-        textColor='secondary'
-        indicatorColor='secondary'
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider' }}
+    <Grid2 xl={9} container alignSelf="center">
+      <Box
+        sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224, marginTop: "150px" }}
       >
-        <Tab label="Account" {...a11yProps(0)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <Button
-            variant='contained'
-            color='error'
-            sx={{ width: '100%' }}
-            onClick={handleClickOpen}
+        <Tabs
+          textColor='secondary'
+          indicatorColor='secondary'
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          sx={{ borderRight: 1, borderColor: 'divider' }}
         >
-            Delete account
-        </Button>
-        <Dialog
-            open={open}
-            TransitionComponent={Transition}
-            keepMounted
-            onClose={handleClose}
-            aria-describedby="alert-dialog-slide-description"
-        >
-            <DialogTitle>{"Are you sure you want to delete your account?"}</DialogTitle>
-            <DialogActions sx={{ display: "flex", justifyContent: "space-between"}}>
-                <Button onClick={handleClose} variant="contained" color='primary'>Cancel</Button>
-                <Button variant="outlined" color="error"
-                    onClick={() => {
-                        deleteProfile();
-                        handleClose();
-                        navigate('/');
-                    }}
-                >DELETE</Button>
-            </DialogActions>
-        </Dialog>
-      </TabPanel>
-    </Box>
+          <Tab label="Account" {...a11yProps(0)} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <Button
+              variant='contained'
+              color='error'
+              sx={{ width: '100%' }}
+              onClick={handleClickOpen}
+          >
+              Delete account
+          </Button>
+          <Dialog
+              open={open}
+              TransitionComponent={Transition}
+              keepMounted
+              onClose={handleClose}
+              aria-describedby="alert-dialog-slide-description"
+          >
+              <DialogTitle>{"Are you sure you want to delete your account?"}</DialogTitle>
+              <DialogActions sx={{ display: "flex", justifyContent: "space-between"}}>
+                  <Button onClick={handleClose} variant="contained" color='primary'>Cancel</Button>
+                  <Button variant="outlined" color="error"
+                      onClick={() => {
+                          deleteProfile();
+                          handleClose();
+                          navigate('/');
+                      }}
+                  >DELETE</Button>
+              </DialogActions>
+          </Dialog>
+        </TabPanel>
+      </Box>
+    </Grid2>
   );
 }
 

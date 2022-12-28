@@ -21,7 +21,7 @@ function LoginDialog() {
                 <Formik
                     initialValues={{ email: '', password: '', error: null }}
                     onSubmit={(values, { setErrors }) => userStore.login(values)
-                        .catch(error => setErrors({ error: 'Invalid email or password' }))}
+                        .catch(error => setErrors({ error: 'Invalid input' }))}
                 >
                     {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                         <Form onSubmit={handleSubmit} autoComplete='off'

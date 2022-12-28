@@ -33,8 +33,10 @@ export default class EventStore {
         this.pagingParams = pagingParams;
     }
 
-    resetAllPredicate = () => {
-        this.predicate.clear();
+    resetAllPredicates = () => {
+        this.predicate.forEach((value, key) => {
+            if (key !== 'startDate') this.predicate.delete(key);
+        })
     }
 
     resetPredicate = () => {
@@ -54,7 +56,7 @@ export default class EventStore {
 
         switch (predicate) {
             case 'all':
-                this.resetPredicate();
+                this.resetAllPredicates();
                 this.predicate.set('all', true);
                 break;
             case 'isGoing':
@@ -215,6 +217,7 @@ export default class EventStore {
             newEvent.isGoing = true;
             newEvent.attendees.push(profile);
             this.setEvent(newEvent);
+            store.userDashboardStore.setEvent(newEvent);
             runInAction(() => {
                 this.selectedEvent = newEvent;
             });
@@ -230,6 +233,7 @@ export default class EventStore {
                 if (event.id) {
                     let updatedEvent = { ...this.getEvent(event.id), ...event };
                     this.eventRegistry.set(event.id, updatedEvent as IEvent);
+                    store.userDashboardStore.handleChange(updatedEvent as IEvent)
                     this.selectedEvent = updatedEvent as IEvent;
                 }
             });
@@ -244,6 +248,7 @@ export default class EventStore {
             await agent.Events.delete(id);
             runInAction(() => {
                 this.eventRegistry.delete(id);
+                store.userDashboardStore.eventRegistry.delete(id);
                 this.loading = false;
             })
         } catch (error) {
@@ -267,6 +272,7 @@ export default class EventStore {
                     this.selectedEvent!.isGoing = true;
                 }
                 this.eventRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+                store.userDashboardStore.handleChange(this.selectedEvent!);
             });
         } catch (error) {
             console.log(error);
@@ -297,6 +303,7 @@ export default class EventStore {
             runInAction(() => {
                 this.selectedEvent!.isCancelled = !this.selectedEvent!.isCancelled;
                 this.eventRegistry.set(this.selectedEvent!.id, this.selectedEvent!);
+                store.userDashboardStore.handleChange(this.selectedEvent!);
             });
         } catch (error) {
             console.log(error);

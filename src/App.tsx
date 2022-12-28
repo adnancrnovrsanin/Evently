@@ -14,12 +14,15 @@ import Footer from './components/Footer/Footer';
 import UserHomePage from './pages/UserHomePage/UserHomePage';
 
 function App() {
-  const { commonStore, userStore, loginDialogStore, registerDialogStore } = useStore();
+  const { commonStore, userStore, loginDialogStore, registerDialogStore, profileStore } = useStore();
   const location = useLocation();
 
   useEffect(() => {
     if (commonStore.token) {
-      userStore.getUser().finally(() => commonStore.setAppLoaded());
+      userStore.getUser().finally(() => {
+        commonStore.setAppLoaded();
+        if (userStore.user) profileStore.loadProfile(userStore.user.username);
+      });
     } else {
       commonStore.setAppLoaded();
     }
@@ -38,7 +41,7 @@ function App() {
       {registerDialogStore.registerDialog.open && <RegisterDialog />}
       {location.pathname === '/' ? (
         userStore.user ? (
-          <UserHomePage />
+          <UserHomePage username={userStore.user.username} />
         ) : (
           <HomePage />
         )

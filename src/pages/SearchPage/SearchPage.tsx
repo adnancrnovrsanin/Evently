@@ -14,7 +14,7 @@ import SortIcon from '@mui/icons-material/Sort';
 
 function SearchPage() {
     const { eventStore } = useStore();
-    const { loadEvents, setPagingParams, pagination, setPredicate, predicate, eventsByDate, resetPredicate } = eventStore;
+    const { loadEvents, setPagingParams, pagination, setPredicate, predicate, eventsByDate, resetAllPredicates } = eventStore;
     const [loadingNext, setLoadingNext] = useState(false);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -42,7 +42,7 @@ function SearchPage() {
 
     useEffect(() => {
         loadEvents();
-        return () => resetPredicate();
+        return () => resetAllPredicates();
     }, [loadEvents]);
 
     return (
@@ -52,13 +52,12 @@ function SearchPage() {
                 marginTop: "50px",
             }}
         >
-            <Grid2 lg={9} container>
+            <Grid2 lg={8} container>
                 <Grid2 lg={12} display="flex" container>
-                    <Grid2 lg={9}>
+                    <Grid2 lg={10}>
                         <Formik
                             onSubmit={(values, { resetForm }) => {
                                 setPredicate('searchQuery', values.searchQuery.trim());
-                                // resetForm();
                             }}
                             initialValues={{ searchQuery: predicate.get('searchQuery') }}
                         >
@@ -78,7 +77,7 @@ function SearchPage() {
                         </Formik>
                     </Grid2>
                     
-                    <Grid2 lg={3} display="flex" alignItems="flex-start" justifyContent="flex-start">
+                    <Grid2 lg={2} display="flex" alignItems="flex-start" justifyContent="flex-start">
                         <IconButton
                             id="basic-button"
                             aria-controls={open2 ? 'basic-menu' : undefined}
@@ -154,7 +153,7 @@ function SearchPage() {
                     </Grid2>
                 </Grid2>
 
-                <Grid2 lg={9} container>
+                <Grid2 lg={8} container>
                     {eventStore.loadingInitial && !loadingNext ? (
                         <Grid2 lg={12}>
                             <EventPlaceholder />
@@ -180,12 +179,12 @@ function SearchPage() {
                         )
                     )}
                 </Grid2>
+            </Grid2>
 
-                <Grid2 lg={3} display="flex" flexDirection="column" container>
-                    <Grid2 lg={12} height="150px"></Grid2>
-                    <Grid2 lg={12} marginLeft="60px">
-                        <Calendar />
-                    </Grid2>
+            <Grid2 lg={4} container maxHeight="500px">
+                <Grid2 lg={12} height="150px"></Grid2>
+                <Grid2 lg={12} marginLeft="60px" display="flex" justifyContent="flex-end">
+                    <Calendar />
                 </Grid2>
             </Grid2>
         </Grid2>

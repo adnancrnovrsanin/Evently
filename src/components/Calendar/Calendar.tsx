@@ -31,7 +31,7 @@ const ArrowRight = () => {
 };
 
 function Calendar() {
-    const { eventStore: { loadEventsUserIsGoing, usersEvents, predicate, setPredicate }, userStore: { user } } = useStore();
+    const { eventStore: { loadEventsUserIsGoing, usersEvents, predicate, setPredicate }, userStore: { user }, userDashboardStore } = useStore();
 
     const renderWeekPickerDay = (
       date: Dayjs,
@@ -85,7 +85,10 @@ function Calendar() {
                     displayStaticWrapperAs="desktop"
                     openTo="day"
                     value={predicate.get("startDate")}
-                    onChange={(newValue) => setPredicate("startDate", newValue.toDate())}
+                    onChange={(newValue) => {
+                      setPredicate("startDate", newValue.toDate());
+                      userDashboardStore.setPredicate("startDate", newValue.toDate());
+                    }}
                     renderInput={(params) => <TextField {...params} />}
                 />
             </LocalizationProvider>
