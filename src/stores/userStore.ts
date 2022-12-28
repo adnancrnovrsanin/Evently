@@ -25,6 +25,7 @@ export default class UserStore {
                 store.loginDialogStore.closeLoginDialog();
                 this.getUser();
                 if (this.user) store.profileStore.loadProfile(this.user.username);
+                router.navigate('/');
             });
         } catch (error) {
             throw error;

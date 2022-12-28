@@ -8,6 +8,7 @@ import EventPage from "../pages/EventPage/EventPage";
 import SearchPage from "../pages/SearchPage/SearchPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import RegisterSuccess from "../pages/RegisterSuccess/RegisterSuccess";
+import ConfirmEmail from "../pages/ConfirmEmail.tsx/ConfirmEmail";
 
 export const routes: RouteObject[] = [
     {
@@ -22,6 +23,7 @@ export const routes: RouteObject[] = [
             {path: '/events', element: <SearchPage />},
             {path: '/events/:id', element: <EventPage />},
             {path: '/account/registerSuccess', element: <RegisterSuccess />},
+            {path: '/account/verifyEmail', element: <ConfirmEmail />},
             {path: '/settings', element: <SettingsPage />},
             {path: 'not-found', element: <NotFound />},
             // {path: 'server-error', element: <ServerError />},
