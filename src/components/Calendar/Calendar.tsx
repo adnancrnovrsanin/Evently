@@ -62,8 +62,8 @@ function Calendar() {
               backgroundColor: "purple"
             },
             fontSize: "13px",
-            borderRadius: () => (checkEventDay())? "0" : "100%",
-            borderBottom: () => (checkEventDay())? "3px solid purple": "none"
+            borderRadius: () => (!checkEventDay())? "100%" : "0",
+            borderBottom: () => (!checkEventDay())? "none" : "3px solid purple"
           }}
         />
       );
@@ -81,13 +81,13 @@ function Calendar() {
                         LeftArrowIcon: ArrowLeft,
                         RightArrowIcon: ArrowRight
                     }}
-                    renderDay={(date, selectedDates, pickersDayProps) => renderWeekPickerDay(date, selectedDates, pickersDayProps)}
+                    renderDay={renderWeekPickerDay}
                     displayStaticWrapperAs="desktop"
                     openTo="day"
                     value={predicate.get("startDate")}
                     onChange={(newValue) => {
-                      setPredicate("startDate", newValue.toDate());
-                      userDashboardStore.setPredicate("startDate", newValue.toDate());
+                      setPredicate("startDate", newValue!.toDate());
+                      userDashboardStore.setPredicate("startDate", newValue!.toDate());
                     }}
                     renderInput={(params) => <TextField {...params} />}
                 />

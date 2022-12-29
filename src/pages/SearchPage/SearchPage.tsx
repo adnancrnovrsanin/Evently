@@ -56,8 +56,10 @@ function SearchPage() {
                 <Grid2 lg={12} display="flex" container>
                     <Grid2 lg={10}>
                         <Formik
+                            enableReinitialize={true}
                             onSubmit={(values, { resetForm }) => {
                                 setPredicate('searchQuery', values.searchQuery.trim());
+                                resetForm();
                             }}
                             initialValues={{ searchQuery: predicate.get('searchQuery') }}
                         >
@@ -69,6 +71,7 @@ function SearchPage() {
                                                 {...props.field}
                                                 placeholder="Search for events by name, category, location, host..."
                                                 id="searchBox"
+                                                disabled={isSubmitting}
                                             />
                                         )}
                                     </Field>

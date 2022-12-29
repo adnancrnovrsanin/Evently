@@ -68,7 +68,13 @@ function EventForm() {
                 onSubmit={values =>  handleFormSubmit(values)}
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                    <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'>
+                    <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'
+                        style={{
+                            width: "80%",
+                            display: "flex",
+                            justifyContent: "space-between",
+                        }}
+                    >
                         <Box display="flex" flexDirection="column" width={"300px"}>
 
                             <EventFormTextInput placeholder="Title of your event" name="title" label="Title" />

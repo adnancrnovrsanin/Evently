@@ -16,6 +16,7 @@ import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import { Textarea } from "@mui/joy";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import DeleteIcon from '@mui/icons-material/Delete';
+import dayjs from "dayjs";
 
 function EventPage() {
     const { id } = useParams();
@@ -93,6 +94,28 @@ function EventPage() {
                             to={`/profile/${selectedEvent.host?.username}`}
                         >
                             {selectedEvent.host?.displayName}
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                color: 'dodgerblue',
+                            }}
+                        >
+                            Date: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('MMMM D, YYYY')}</span>
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 lg={12}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                color: 'dodgerblue',
+                            }}
+                        >
+                            Time: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('h:mm A')}</span>
                         </Typography>
                     </Grid2>
 
