@@ -186,7 +186,7 @@ function SearchPage() {
 
             <Grid2 lg={4} container maxHeight="500px">
                 <Grid2 lg={12} height="150px"></Grid2>
-                <Grid2 lg={12} marginLeft="60px" display="flex" justifyContent="flex-end">
+                <Grid2 lg={12} marginLeft="60px" display="flex" justifyContent="center">
                     <Calendar />
                 </Grid2>
             </Grid2>
