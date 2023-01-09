@@ -9,6 +9,7 @@ import SearchPage from "../pages/SearchPage/SearchPage";
 import SettingsPage from "../pages/SettingsPage/SettingsPage";
 import RegisterSuccess from "../pages/RegisterSuccess/RegisterSuccess";
 import ConfirmEmail from "../pages/ConfirmEmail.tsx/ConfirmEmail";
+import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 
 export const routes: RouteObject[] = [
     {
@@ -29,7 +30,8 @@ export const routes: RouteObject[] = [
             // {path: 'server-error', element: <ServerError />},
             // {path: '*', element: <Navigate replace to='/not-found' />},
         ]
-    }
+    },
+    { path: '/admin', element: <AdminDashboard />}
 ]
 
 export const router = createBrowserRouter(routes);

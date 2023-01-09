@@ -8,14 +8,11 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import './style.css';
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
-import { IEvent } from "../../models/event";
-
-
 
 const ArrowLeft = () => {
   return (
     <ArrowCircleLeftIcon sx={{
-      color: "purple",
+      color: "#7C05F2",
       fontSize: "25px"
     }} />
   );
@@ -24,7 +21,7 @@ const ArrowLeft = () => {
 const ArrowRight = () => {
   return (
     <ArrowCircleRightIcon sx={{
-      color: "purple",
+      color: "#7C05F2",
       fontSize: "25px"
     }} />
   );
@@ -59,11 +56,11 @@ function Calendar() {
           {...pickersDayProps}
           sx={{
             [`&&.${pickersDayClasses.selected}`]: {
-              backgroundColor: "purple"
+              backgroundColor: "#7C05F2"
             },
             fontSize: "13px",
             borderRadius: () => (!checkEventDay())? "100%" : "0",
-            borderBottom: () => (!checkEventDay())? "none" : "3px solid purple"
+            borderBottom: () => (!checkEventDay())? "none" : "3px solid #7C05F2"
           }}
         />
       );

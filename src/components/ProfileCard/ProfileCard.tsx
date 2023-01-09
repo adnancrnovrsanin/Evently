@@ -41,7 +41,7 @@ function ProfileCard({ profile }: Props) {
                         {profile.displayName}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        {truncate(profile.bio)}
+                        {truncate(profile.bio, 100)}
                     </Typography>
                 </CardContent>
             </Card>

@@ -7,18 +7,18 @@
 }
 
 .css-3eghsz-PrivatePickersYear-button.Mui-selected {
-    background-color: purple !important;
+    background-color: #7C05F2 !important;
 }
 
 .css-dplwbx-MuiPickersCalendarHeader-label {
-    color: purple;
+    color: #7C05F2;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 700;
     font-size: 15px;
 }
 
 .css-12mkn7b-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
-    color: purple !important;
+    color: #7C05F2 !important;
 }
 
 .css-xelq0e-MuiPickerStaticWrapper-content {
@@ -30,7 +30,7 @@
 }
 
 .MuiPickersDay-today {
-    border: 2px solid purple !important;
+    border: 2px solid #7C05F2 !important;
 }
 
 .css-xb7uwb-MuiPickersArrowSwitcher-spacer {
@@ -38,7 +38,7 @@
 }
 
 .css-nk89i7-MuiPickersCalendarHeader-root {
-    border-bottom: 2px solid purple;
+    border-bottom: 2px solid #7B80CD;
     margin-bottom: 0 !important;
     padding: 0 !important;
     width: 85%;
@@ -54,7 +54,7 @@
 .css-h2z9v1-MuiButtonBase-root-MuiIconButton-root-MuiClock-amButton,
 .css-rjqbug-MuiButtonBase-root-MuiIconButton-root-MuiClock-pmButton {
     color: white !important;
-    background-color: purple !important;
+    background-color: #7C05F2 !important;
 }
 
 .css-h2z9v1-MuiButtonBase-root-MuiIconButton-root-MuiClock-amButton,
@@ -79,16 +79,16 @@
 
 .css-umzx0k-MuiClock-pin,
 .css-d0vs79-MuiClockPointer-root {
-    background-color: purple !important;
+    background-color: #7C05F2 !important;
 }
 
 .css-12t0dn4-MuiClockPointer-thumb {
-    border: 16px solid purple !important;
+    border: 16px solid #7C05F2 !important;
 }
 
 .css-eg3pzz-MuiClockPointer-thumb {
-    border: 16px solid purple !important;
-    background-color: purple !important;
+    border: 16px solid #7C05F2 !important;
+    background-color: #7C05F2 !important;
 }
 
 .css-1jm66jt-MuiClockPicker-root,

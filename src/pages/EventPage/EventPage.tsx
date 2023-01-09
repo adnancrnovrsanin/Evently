@@ -46,6 +46,27 @@ function EventPage() {
     return (
         <div className="eventPageContainer">
             <Grid2 container spacing={3} width="100%">
+                {selectedEvent.isCancelled && 
+                    <Grid2 lg={12}
+                        sx={{
+                            backgroundColor: "red",
+                            textAlign: "center",
+                            borderRadius: "10px 10px 0 0",
+                        }}
+                    >
+                        <Typography
+                            sx={{
+                                fontFamily: 'Playfair Display, serif',
+                                fontStyle: "italic",
+                                color: "white",
+                                fontSize: "1.5rem",
+                            }}
+                        >
+                            Canceled
+                        </Typography>
+                    </Grid2>
+                }
+
                 <Grid2 xl={12} sx={{
                         display: 'flex',
                         justifyContent: 'center',
@@ -348,7 +369,7 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <CommentSection eventId={selectedEvent.id} isJoined={selectedEvent.attendees.some(a => a.username === userStore.user?.username)} />
+                    <CommentSection eventId={selectedEvent.id} isJoined={selectedEvent.attendees.some(a => a.username === userStore.user?.username)} isCancelled={selectedEvent.isCancelled} />
                 </Grid2>
             </Grid2>
         </div>

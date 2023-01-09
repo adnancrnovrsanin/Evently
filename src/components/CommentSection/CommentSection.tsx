@@ -13,9 +13,10 @@ import Comment from "../Comment/Comment";
 interface Props {
     eventId: string;
     isJoined: boolean;
+    isCancelled?: boolean;
 }
 
-function CommentSection({ eventId, isJoined }: Props) {
+function CommentSection({ eventId, isJoined, isCancelled }: Props) {
     const { commentStore } = useStore();
 
     useEffect(() => {
@@ -52,7 +53,7 @@ function CommentSection({ eventId, isJoined }: Props) {
                 </Typography>
             </Grid2>
 
-            {isJoined ? (
+            {(isJoined && !isCancelled) ? (
                 <Grid2 lg={12} 
                     sx={{
                         bgcolor: "background.paper",
@@ -147,7 +148,7 @@ function CommentSection({ eventId, isJoined }: Props) {
                         }}
                     >
                         Comment section is not available <br />
-                        You have to <span style={{ color: "green" }} >join this event!</span>
+                        {isCancelled ? "This event has been cancelled" : "You need to join this event to comment"}
                     </Typography>
                 </Grid2>
             )}
