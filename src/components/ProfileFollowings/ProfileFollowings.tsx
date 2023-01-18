@@ -16,7 +16,19 @@ function ProfileFollowings({ profile }: Props) {
     return (
         <Grid2 container spacing={3} width="100%" maxHeight={"100%"}>
             <Grid2 xl={12} md={12} xs={12} sm={12} sx={{ lineHeight: '40px' }}>
-                <h1>{profile.displayName}'s {activeTab === '3' ? 'Followers' : 'Followings'}</h1>
+                <Typography
+                    component={'h2'}
+                    sx={{
+                        fontSize: '1.5rem',
+                        fontWeight: 'bold',
+                        color: 'secondary.main',
+                        textAlign: 'center',
+                        margin: '1rem 0',
+                        fontFamily: "Montserrat, sans-serif",
+                    }}
+                >
+                    {profile.displayName}'s {activeTab === '3' ? 'Followers' : 'Followings'}
+                </Typography>
             </Grid2>
             {loadingFollowings ? (
                 <CircularProgress sx={{ 

@@ -15,6 +15,7 @@ import { Button } from "@mui/material";
 import { UserEvent } from "../../models/profile";
 import ProfileEvents from "../../components/ProfileEvents/ProfileEvents";
 import ProfileFollowings from "../../components/ProfileFollowings/ProfileFollowings";
+import ProfilePhotos from "../../components/ProfilePhotos";
 
 interface StyledTabsProps {
     children?: React.ReactNode;
@@ -110,7 +111,7 @@ function ProfilePage() {
                         </TabPanel>
 
                         <TabPanel value="2">
-                            Photos
+                            <ProfilePhotos profile={profile} />
                         </TabPanel>
 
                         <TabPanel value="3">

@@ -9,6 +9,7 @@ import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import profilePic from '../../assets/profilna.jpg';
 import { LoadingButton } from "@mui/lab";
 import { Profile } from "../../models/profile";
+import { styleHelper } from "../../helpers/usefulFunctions";
 
 interface Props {
     setEditMode: (editMode: boolean) => void;
@@ -43,7 +44,20 @@ function EditProfileForm({ setEditMode, profile }: Props) {
             {({ isSubmitting, isValid, dirty, errors }) => (
                 <Form className="profileInfoContainer">
                     <div className="topPartProfile">
-                        <div className="profilna" style={{ backgroundImage: `url(${ profile.image ? profile.image : profilePic })`}}></div>
+                        <div className="profilna" style={{ 
+                            ...styleHelper(profile),
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }}>
+                            {!profile.image && <Typography sx={{
+                                fontSize: "100px",
+                                fontFamily: "Montserrat, sans-serif",
+                                color: "white"
+                            }}>
+                                {profile.displayName.split(" ")[0][0]}
+                            </Typography>}
+                        </div>
                         <div className="profileInfo">
                             <div className="displayNameContainer">
                                 <EditProfileTextInput
