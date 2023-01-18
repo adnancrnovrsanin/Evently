@@ -13,7 +13,7 @@ import { useStore } from "../../../stores/store";
 const ArrowLeft = () => {
   return (
     <ArrowCircleLeftIcon sx={{
-      color: "purple",
+      color: "#7C05F2",
       fontSize: "25px"
     }} />
   );
@@ -22,7 +22,7 @@ const ArrowLeft = () => {
 const ArrowRight = () => {
   return (
     <ArrowCircleRightIcon sx={{
-      color: "purple",
+      color: "#7C05F2",
       fontSize: "25px"
     }} />
   );

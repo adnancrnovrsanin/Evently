@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Paper, Typography } from "@mui/material";
+import { Avatar, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Typography } from "@mui/material";
 import { colorFromAnonimity, getCategoryImage, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
 import Comment from "../../components/Comment/Comment";
@@ -16,7 +16,10 @@ import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import { Textarea } from "@mui/joy";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import DeleteIcon from '@mui/icons-material/Delete';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import FlagIcon from '@mui/icons-material/Flag';
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 function EventPage() {
     const { id } = useParams();
@@ -30,6 +33,7 @@ function EventPage() {
         loading,
         cancelEventToggle,
         updateAttendeance,
+        reportHost,
     } = eventStore;
 
     useEffect(() => {
@@ -40,6 +44,17 @@ function EventPage() {
             clearSelectedEvent();
         }
     }, [id, loadEvent, clearSelectedEvent]);
+
+    // logika menija
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     if (loadingInitial || !selectedEvent) return <InitialLoader adding="event"/>;
 
@@ -93,6 +108,44 @@ function EventPage() {
                     >
                         {selectedEvent.title}
                     </Typography>
+
+                    <IconButton
+                        aria-label="more"
+                        id="long-button"
+                        aria-controls={open ? 'long-menu' : undefined}
+                        aria-expanded={open ? 'true' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleClick}
+                        sx={{
+                            position: "absolute",
+                            top: "140px",
+                            right: "280px",
+                            border: "2px solid white",
+                        }}
+                    >
+                        <MoreVertIcon 
+                            sx={{
+                                color: "white",
+                                fontSize: "2.5rem",
+                            }}
+                        />
+                    </IconButton>
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={() => {
+                            handleClose();
+                            reportHost(selectedEvent.id);
+                        }}>
+                            <FlagIcon sx={{ marginRight: "10px" }} /> Report the host
+                        </MenuItem>
+                    </Menu>
                 </Grid2>
 
                 <Grid2 lg={3}>
@@ -319,10 +372,10 @@ function EventPage() {
                                     sx={{
                                         fontFamily: 'Montserrat, sans-serif',
                                         color: "white",
-                                        backgroundColor: "green",
+                                        backgroundColor: "#189C5A",
                                         fontStyle: "italic",
                                         padding: "5px 50px",
-                                        fontSize: "1.125rem",
+                                        fontSize: "1.5rem",
                                         '&:hover': {
                                             backgroundColor: "darkgreen"
                                         },

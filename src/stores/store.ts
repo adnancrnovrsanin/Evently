@@ -8,6 +8,7 @@ import CommentStore from "./commentStore";
 import LoginDialogStore from "./loginDialogStore";
 import RegisterDialogStore from "./registerDialogStore";
 import UserDashboardStore from "./userDashboardStore";
+import AdminStore from "./adminStore";
 
 interface Store {
     eventStore: EventStore;
@@ -19,6 +20,7 @@ interface Store {
     loginDialogStore: LoginDialogStore;
     registerDialogStore: RegisterDialogStore;
     userDashboardStore: UserDashboardStore;
+    adminStore: AdminStore;
 }
 
 export const store: Store = {
@@ -31,6 +33,7 @@ export const store: Store = {
     loginDialogStore: new LoginDialogStore(),
     registerDialogStore: new RegisterDialogStore(),
     userDashboardStore: new UserDashboardStore(),
+    adminStore: new AdminStore(),
 }
 
 export const StoreContext = createContext(store);

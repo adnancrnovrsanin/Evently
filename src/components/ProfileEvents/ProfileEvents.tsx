@@ -69,7 +69,7 @@ export default function ProfileEvents({ profile }: Props) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        loadUserEvents(profile!.username);
+        if (profile) loadUserEvents(profile.username);
     }, [loadUserEvents, profile]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {

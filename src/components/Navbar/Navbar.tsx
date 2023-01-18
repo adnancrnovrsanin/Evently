@@ -3,7 +3,7 @@ import navLogo from '../../assets/LogoBlack.png';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PersonIcon from '@mui/icons-material/Person';
 import './style.css';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { useState } from "react";
@@ -62,8 +62,10 @@ function Navbar() {
     const navigate = useNavigate();
     const [anchorElCategories, setAnchorElCategories] = useState<null | HTMLElement>(null);
     const openCategories = Boolean(anchorElCategories);
+    const location = useLocation();
 
     const handleClickCategories = (event: React.MouseEvent<HTMLElement>) => {
+        console.log(location);
         setAnchorElCategories(event.currentTarget);
     }
 
@@ -92,7 +94,9 @@ function Navbar() {
             padding: "5px 0",
             alignSelf: "center",
         }}>
-            <Link to={'/'}>
+            <Link 
+                to={'/'}
+            >
                 <img src={navLogo} alt="Evently" className='logoNav' />
             </Link>
 
@@ -136,9 +140,15 @@ function Navbar() {
                     sx={{ 
                         fontSize: "15px", fontWeight: 600,
                         textDecoration: "none", color: "black",
+                        borderBottom: (location.pathname === '/events') ? "2px solid #7C05F2" : "none",
                     }}>SEARCH</Typography>
-                    <IconButton component={Link} to={'/events/create'}>
-                        <AddCircleIcon sx={{ fontSize: "32px", color: "purple" }}/>
+                    <IconButton component={Link} to={'/events/create'}
+                        sx={{
+                            borderRadius: "0",
+                            borderBottom: (location.pathname === '/events/create') ? "3px solid #7C05F2" : "none",
+                        }}
+                    >
+                        <AddCircleIcon sx={{ fontSize: "32px", color: "#7C05F2" }}/>
                     </IconButton>
                     <IconButton
                         onClick={handleMenuClick}
@@ -146,14 +156,14 @@ function Navbar() {
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                         sx={{
-                            border: "1.5px solid purple",
+                            border: "1.5px solid #7C05F2",
                             borderRadius: "3px",
                             padding: "1px 8px",
-                            backgroundColor: (open ? "purple" : "transparent"),
+                            backgroundColor: (open ? "#7C05F2" : "transparent"),
                             color: (open ? "white" : "black"),
-
+                            borderBottom: (location.pathname.startsWith("/profile")) ? "5px solid #7C05F2" : "1.5px solid #7C05F2",
                             '&:hover': {
-                                backgroundColor: "purple",
+                                backgroundColor: "#7C05F2",
                                 color: "white",
                             },
                         }}

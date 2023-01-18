@@ -66,7 +66,13 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                     }}
                 >
                     <Formik
-                        onSubmit={(values, { resetForm }) => commentStore.addComment(values).then(() => resetForm())}
+                        onSubmit={(values, { resetForm }) => {
+                            if (values.body.trim() !== "") {
+                                commentStore.addComment(values).then(() => resetForm())
+                            } else {
+                                resetForm();
+                            }
+                        }}
                         initialValues={{ body: '' }}
                         validationSchema={Yup.object({
                             body: Yup.string().required()

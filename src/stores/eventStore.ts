@@ -4,6 +4,7 @@ import agent from "../api/agent";
 import { EventFormValues, IEvent } from "../models/event";
 import { Profile } from "../models/profile";
 import { store } from "./store";
+import { toast } from "react-toastify";
 
 export default class EventStore {
     eventRegistry = new Map<string, IEvent>();
@@ -325,5 +326,18 @@ export default class EventStore {
                 }
             })
         })
+    }
+
+    reportHost = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.Events.reportHost(id);
+            runInAction(() => toast.success('Host reported. Thank you for your feedback!'));
+        } catch (error) {
+            console.log(error);
+            toast.error('Problem reporting host');
+        } finally {
+            runInAction(() => this.loading = false);
+        }
     }
 }
