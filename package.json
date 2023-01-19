@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --port 3000",
     "build": "tsc && vite build",
-    "postbuild": "mv dist ../Evently_API/API/wwwroot",
+    "postbuild": "mv dist/* ../Evently_API/API/wwwroot",
     "preview": "vite preview --port 3000"
   },
   "dependencies": {
