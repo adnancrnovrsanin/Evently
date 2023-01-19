@@ -119,10 +119,16 @@ const Profiles = {
     deleteProfile: () => requests.del(`/profiles`),
 }
 
+const Admin = {
+    getReportedUsers: () => axios.get<Array<Profile>>('/admin/reportedUsers'),
+    deleteReportedUser: (username: string) => axios.delete(`/admin/deleteUser/${username}`),
+}
+
 const agent = {
     Events,
     Account,
-    Profiles
+    Profiles,
+    Admin
 }
 
 export default agent;

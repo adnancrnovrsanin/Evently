@@ -3,6 +3,7 @@ import { store } from "./store";
 import axios from "axios";
 import { Profile } from "../models/profile";
 import { toast } from "react-toastify";
+import agent from "../api/agent";
 
 export default class AdminStore {
     users: Array<Profile> = [];
@@ -17,7 +18,7 @@ export default class AdminStore {
 
     getReportedUsers = async () => {
         try {
-            const response = await axios.get<Array<Profile>>('http://localhost:5000/api/admin/reportedUsers');
+            const response = await agent.Admin.getReportedUsers();
             runInAction(() => {
                 this.users = response.data;
             })
@@ -28,7 +29,7 @@ export default class AdminStore {
 
     deleteReportedUser = async (username: string) => {
         try {
-            await axios.delete(`http://localhost:5000/api/admin/deleteUser/${username}`);
+            await agent.Admin.deleteReportedUser(username);
             runInAction(() => {
                 this.users = this.users.filter(user => user.username !== username);
                 toast.success('User deleted successfully');
