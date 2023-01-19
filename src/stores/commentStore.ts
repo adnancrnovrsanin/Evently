@@ -14,7 +14,7 @@ export default class CommentStore {
     createHubConnection = (eventId: string) => {
         if (store.eventStore.selectedEvent) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl('http://localhost:5000/chat' + '?eventId=' + eventId, {
+                .withUrl(import.meta.env.VITE_APP_CHAT_URL + '?eventId=' + eventId, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()
