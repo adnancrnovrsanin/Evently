@@ -566,6 +566,49 @@ function Navbar() {
                     </>
                 ) : (
                     <>
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                            sx={{
+                                padding: "15px 0",
+                                borderBottom: "1px solid #e0e0e0",
+                                textDecoration: "none",
+                                backgroundColor: "#7C05F2",
+                                textAlign: "center",
+                                '&:hover': {
+                                    cursor: "pointer",
+                                }
+                            }}
+                            onClick={loginDialogStore.openLoginDialog}
+                        >
+                            <Typography 
+                                sx={{ 
+                                    fontSize: "12px", fontWeight: 600,
+                                    textDecoration: "none", color: "white",
+                                    marginLeft: "7px",
+                                }}
+                            >Log In</Typography>
+                        </Grid2>
+
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                            sx={{
+                                padding: "15px 0",
+                                borderBottom: "1px solid #e0e0e0",
+                                textDecoration: "none",
+                                backgroundColor: "#BCE0FD",
+                                textAlign: "center",
+                                '&:hover': {
+                                    cursor: "pointer",
+                                }
+                            }}
+                            onClick={registerDialogStore.openRegisterDialog}
+                        >
+                            <Typography 
+                                sx={{ 
+                                    fontSize: "12px", fontWeight: 600,
+                                    textDecoration: "none", color: "white",
+                                    marginLeft: "7px",
+                                }}
+                            >Sign Up</Typography>
+                        </Grid2>
                     </>
                 )}
             </Grid2>
