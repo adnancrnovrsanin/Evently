@@ -1,4 +1,4 @@
-import { Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuProps, Typography, alpha, styled } from "@mui/material";
+import { Avatar, Button, Divider, IconButton, ListItemIcon, Menu, MenuItem, MenuProps, Paper, Typography, alpha, styled } from "@mui/material";
 import navLogo from '../../assets/LogoBlack.png';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PersonIcon from '@mui/icons-material/Person';
@@ -6,13 +6,15 @@ import './style.css';
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Logout, Settings } from "@mui/icons-material";
 import { router } from "../../router/Routes";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { categoryOptions } from "../../common/options/categoryOptions";
 import MenuIcon from '@mui/icons-material/Menu';
+import { stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -65,6 +67,14 @@ function Navbar() {
     const openCategories = Boolean(anchorElCategories);
     const location = useLocation();
     const [openedNav, setOpenedNav] = useState(false);
+    const [mobileCategoriesOpen, setMobileCategoriesOpen] = useState(false);
+    const [mobileProfileOpen, setMobileProfileOpen] = useState(false);
+    let mobileProfileRef = useRef(null);
+    mobileProfileRef = useClickOutside(mobileProfileRef, () => setMobileProfileOpen(false));
+    let mobileCategoriesRef = useRef(null);
+    mobileCategoriesRef = useClickOutside(mobileCategoriesRef, () => setMobileCategoriesOpen(false));
+    let mobileMenuRef = useRef(null);
+    mobileMenuRef = useClickOutside(mobileMenuRef, () => setOpenedNav(false));
 
     const handleClickCategories = (event: React.MouseEvent<HTMLElement>) => {
         console.log(location);
@@ -98,7 +108,10 @@ function Navbar() {
             flexDirection: "column",
             padding: "5px 0",
             alignSelf: "center",
-        }}>
+        }}
+            component="div"
+            ref={mobileMenuRef}
+        >
             <Grid2 xs={11} sm={11} md={11} lg={12} container sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -206,7 +219,7 @@ function Navbar() {
                                         transform: 'translateY(-50%) rotate(45deg)',
                                         zIndex: 0,
                                     },
-                                    width: "170px",
+                                    width: { xs: "140px", sm: "140px", md: "155px", lg: "170px", xl: "170px" },
                                     height: "170px",
                                 },
                             }}
@@ -216,7 +229,7 @@ function Navbar() {
                             <MenuItem
                                 component={Link}
                                 to={`/profile/${userStore.user?.username}`}
-                                sx={{ fontSize: "20px" }}
+                                sx={{ fontSize: { xs: "15px", sm: "15px", md: "17px", lg: "20px", xl: "20px" } }}
                             >
                                 <PersonIcon sx={{ marginRight: '10px' }} fontSize='inherit'/> My Profile
                             </MenuItem>
@@ -224,7 +237,7 @@ function Navbar() {
                             <Divider />
 
                             <MenuItem
-                                sx={{ fontSize: "20px" }}
+                                sx={{ fontSize: { xs: "15px", sm: "15px", md: "17px", lg: "20px", xl: "20px" } }}
                                 onClick={() => {
                                     navigate('/settings');
                                 }}
@@ -240,7 +253,7 @@ function Navbar() {
                                     userStore.logout();
                                     navigate('/');
                                 }}
-                                sx={{ fontSize: "20px" }}
+                                sx={{ fontSize: { xs: "15px", sm: "15px", md: "17px", lg: "20px", xl: "20px" } }}
                             >
                                 <ListItemIcon>
                                     <Logout fontSize="inherit" />
@@ -319,30 +332,242 @@ function Navbar() {
                     display: openedNav ? "flex" : "none" ,
                     paddingLeft: "20px",
                 }}
+                component="div"
+                ref={mobileMenuRef}
             >
                 <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
                     sx={{
-                        margin: "20px 0",
+                        borderBottom: "1px solid #e0e0e0",
+                        padding: "15px 0",
                     }}
+                    container
+                    component="div"
+                    ref={mobileCategoriesRef}
                 >
                     <Button
                         id="demo-customized-button"
-                        aria-controls={openCategories ? 'demo-customized-menu' : undefined}
+                        aria-controls={mobileCategoriesOpen ? 'demo-customized-menu' : undefined}
                         aria-haspopup="true"
-                        aria-expanded={openCategories ? 'true' : undefined}
+                        aria-expanded={mobileCategoriesOpen ? 'true' : undefined}
                         variant="text"
                         disableElevation
-                        onClick={handleClickCategories}
+                        onClick={() => setMobileCategoriesOpen(!mobileCategoriesOpen)}
                         endIcon={<KeyboardArrowDownIcon />}
                         color="secondary"
                         sx={{
-                            fontSize: "15px", fontWeight: 600,
-                            textDecoration: "none", color: "black", marginRight: "20px",
+                            fontSize: "12px", fontWeight: 600,
+                            textDecoration: "none", color: "black",
                         }}
                     >
                         Categories
                     </Button>
+
+                    {mobileCategoriesOpen && categoryOptions.map(option => (
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                            sx={{
+                                backgroundColor: "background.paper",
+                                padding: "10px 30px",
+                                borderBottom: "1px solid #e0e0e0",
+                                '&:hover': {
+                                    backgroundColor: "#e0e0e0",
+                                    cursor: "pointer",
+                                }
+                            }}
+                            onClick={handleCloseCategories} key={option.value}
+                        >
+                            <Typography
+                                sx={{
+                                    fontSize: "12px", fontWeight: 500,
+                                    textDecoration: "none", color: "black",
+                                }}
+                            >
+                                {option.text}
+                            </Typography>
+                        </Grid2>
+                    ))}
                 </Grid2>
+
+                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                    sx={{
+                        padding: "15px 0",
+                        borderBottom: "1px solid #e0e0e0",
+                        textDecoration: "none",
+                    }}
+                    component={Link} to={'/events'}
+                >
+                    <Typography 
+                        sx={{ 
+                            fontSize: "12px", fontWeight: 600,
+                            textDecoration: "none", color: "black",
+                            marginLeft: "7px",
+                        }}
+                    >SEARCH</Typography>
+                </Grid2>
+
+                {userStore.user ? (
+                    <>
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                            sx={{
+                                padding: "15px 0",
+                                display: "flex",
+                                alignItems: "center",
+                                borderBottom: "1px solid #e0e0e0",
+                                paddingLeft: "7px",
+                                textDecoration: "none",
+                            }}
+                            component={Link} to={'/events/create'}
+                        >
+                            <AddCircleIcon sx={{ fontSize: "25px", color: "#7C05F2" }}/>
+
+                            <Typography
+                                sx={{
+                                    fontSize: "12px", fontWeight: 600,
+                                    textDecoration: "none", color: "black",
+                                    marginLeft: "20px",
+                                }}
+                            >
+                                Create a new event
+                            </Typography>
+                        </Grid2>
+
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                            sx={{
+                                padding: "15px 0",
+                                display: "flex",
+                                alignItems: "center",
+                                borderBottom: "1px solid #e0e0e0",
+                                paddingLeft: "7px",
+                            }}
+                            container
+                        >
+                            <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component="div" ref={mobileProfileRef}>
+                                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                                    sx={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <Avatar variant="square" alt="Profile photo" src={userStore.user.image} {...stringAvatar(userStore.user.displayName!)} sx={{
+                                        bgcolor: stringToColor(userStore.user.username!),
+                                        width: "25px",
+                                        height: '25px',
+                                    }} />
+
+                                    <Typography
+                                        sx={{
+                                            fontSize: "12px", fontWeight: 600,
+                                            textDecoration: "none", color: "black",
+                                            marginLeft: "20px",
+                                            '&:hover': {
+                                                cursor: "pointer",
+                                            }
+                                        }}
+                                        onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
+                                        aria-controls={mobileProfileOpen ? 'account-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={mobileProfileOpen ? 'true' : undefined}
+                                    >
+                                        {userStore.user.displayName}
+                                    </Typography>
+                                </Grid2>
+
+                                {mobileProfileOpen && (
+                                    <>
+                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                backgroundColor: "background.paper",
+                                                padding: "10px 30px",
+                                                borderBottom: "1px solid #e0e0e0",
+                                                marginTop: "15px",
+                                                marginLeft: "10px",
+                                                '&:hover': {
+                                                    backgroundColor: "#e0e0e0",
+                                                    cursor: "pointer",
+                                                }
+                                            }}
+                                            onClick={() => navigate(`/profile/${userStore.user?.username}`)}
+                                        >
+                                            <PersonIcon fontSize="inherit" sx={{ marginRight: "10px" }}/>
+
+                                            <Typography
+                                                sx={{
+                                                    fontSize: "12px", fontWeight: 500,
+                                                    textDecoration: "none", color: "black",
+                                                }}
+                                            >
+                                                My Profile
+                                            </Typography>
+                                        </Grid2>
+
+                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                backgroundColor: "background.paper",
+                                                padding: "10px 30px",
+                                                borderBottom: "1px solid #e0e0e0",
+                                                marginLeft: "10px",
+                                                '&:hover': {
+                                                    backgroundColor: "#e0e0e0",
+                                                    cursor: "pointer",
+                                                }
+                                            }}
+                                            onClick={() => navigate('/settings')}
+                                        >
+                                            <Settings fontSize="inherit" sx={{ marginRight: "10px" }}/>
+
+                                            <Typography
+                                                sx={{
+                                                    fontSize: "12px", fontWeight: 500,
+                                                    textDecoration: "none", color: "black",
+                                                }}
+                                            >
+                                                Settings
+                                            </Typography>
+                                        </Grid2>
+
+                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                            sx={{
+                                                display: "flex",
+                                                alignItems: "center",
+                                                backgroundColor: "background.paper",
+                                                padding: "10px 30px",
+                                                borderBottom: "1px solid #e0e0e0",
+                                                marginLeft: "10px",
+                                                '&:hover': {
+                                                    backgroundColor: "#e0e0e0",
+                                                    cursor: "pointer",
+                                                }
+                                            }}
+                                            onClick={() => {
+                                                userStore.logout();
+                                                navigate(`/`)
+                                            }}
+                                        >
+                                            <Logout fontSize="inherit" sx={{ marginRight: "10px" }}/>
+
+                                            <Typography
+                                                sx={{
+                                                    fontSize: "12px", fontWeight: 500,
+                                                    textDecoration: "none", color: "black",
+                                                }}
+                                            >
+                                                Logout
+                                            </Typography>
+                                        </Grid2>
+                                    </>
+                                )}
+                            </Grid2>
+
+                            
+                        </Grid2>
+                    </>
+                ) : (
+                    <>
+                    </>
+                )}
             </Grid2>
         </Grid2>
     );
