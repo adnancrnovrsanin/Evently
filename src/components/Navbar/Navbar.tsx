@@ -12,6 +12,7 @@ import { router } from "../../router/Routes";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { categoryOptions } from "../../common/options/categoryOptions";
+import MenuIcon from '@mui/icons-material/Menu';
 
 const StyledMenu = styled((props: MenuProps) => (
     <Menu
@@ -63,6 +64,7 @@ function Navbar() {
     const [anchorElCategories, setAnchorElCategories] = useState<null | HTMLElement>(null);
     const openCategories = Boolean(anchorElCategories);
     const location = useLocation();
+    const [openedNav, setOpenedNav] = useState(false);
 
     const handleClickCategories = (event: React.MouseEvent<HTMLElement>) => {
         console.log(location);
@@ -86,204 +88,262 @@ function Navbar() {
         setAnchorEl(null);
     };
 
+    const handleMobileMenuClick = (event: React.MouseEvent<HTMLElement>) => {
+        setOpenedNav(!openedNav);
+    }
+
     return (
-        <Grid2 xl={9} container sx={{
+        <Grid2 xs={12} sm={12} md={12} lg={9} container sx={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            flexDirection: "column",
             padding: "5px 0",
             alignSelf: "center",
         }}>
-            <Link 
-                to={'/'}
-            >
-                <img src={navLogo} alt="Evently" className='logoNav' />
-            </Link>
+            <Grid2 xs={11} sm={11} md={11} lg={12} container sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                alignSelf: "center",
+            }}>
+                <Link 
+                    to={'/'}
+                >
+                    <img src={navLogo} alt="Evently" className='logoNav' />
+                </Link>
 
-            {userStore.isLoggedIn ? (
-                <div className="navLinks">
-                    <Button
-                        id="demo-customized-button"
-                        aria-controls={openCategories ? 'demo-customized-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openCategories ? 'true' : undefined}
-                        variant="text"
-                        disableElevation
-                        onClick={handleClickCategories}
-                        endIcon={<KeyboardArrowDownIcon />}
-                        color="secondary"
-                        sx={{
-                            fontSize: "15px", fontWeight: 600,
-                            textDecoration: "none", color: "black", marginRight: "20px"
-                        }}
-                    >
-                        Categories
-                    </Button>
-                    <StyledMenu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                            'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={anchorElCategories}
-                        open={openCategories}
-                        onClose={handleCloseCategories}
-                    >
-                        {categoryOptions.map(option => (
-                            <MenuItem onClick={handleCloseCategories} disableRipple key={option.value} value={option.value}>
-                                {option.text}
-                            </MenuItem>
-                        ))}
-                    </StyledMenu>
-
-                    <Typography 
-                        component={Link} to={'/events'}
-                    sx={{ 
-                        fontSize: "15px", fontWeight: 600,
-                        textDecoration: "none", color: "black",
-                        borderBottom: (location.pathname === '/events') ? "2px solid #7C05F2" : "none",
-                    }}>SEARCH</Typography>
-                    <IconButton component={Link} to={'/events/create'}
-                        sx={{
-                            borderRadius: "0",
-                            borderBottom: (location.pathname === '/events/create') ? "3px solid #7C05F2" : "none",
-                        }}
-                    >
-                        <AddCircleIcon sx={{ fontSize: "32px", color: "#7C05F2" }}/>
-                    </IconButton>
-                    <IconButton
-                        onClick={handleMenuClick}
-                        aria-controls={open ? 'account-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={open ? 'true' : undefined}
-                        sx={{
-                            border: "1.5px solid #7C05F2",
-                            borderRadius: "3px",
-                            padding: "1px 8px",
-                            backgroundColor: (open ? "#7C05F2" : "transparent"),
-                            color: (open ? "white" : "black"),
-                            borderBottom: (location.pathname.startsWith("/profile")) ? "5px solid #7C05F2" : "1.5px solid #7C05F2",
-                            '&:hover': {
-                                backgroundColor: "#7C05F2",
-                                color: "white",
-                            },
-                        }}
-                    >
-                        <PersonIcon sx={{ width: "1.5em", height: "1.5em" }}/>
-                    </IconButton>
-
-                    <Menu
-                        anchorEl={anchorEl}
-                        id="account-menu"
-                        open={open}
-                        onClose={handleMenuClose}
-                        onClick={handleMenuClose}
-                        PaperProps={{
-                            elevation: 0,
-                            sx: {
-                                overflow: 'visible',
-                                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                                mt: 1.5,
-                                '&:before': {
-                                    content: '""',
-                                    display: 'block',
-                                    position: 'absolute',
-                                    top: 0,
-                                    right: 14,
-                                    width: 10,
-                                    height: 10,
-                                    bgcolor: 'background.paper',
-                                    transform: 'translateY(-50%) rotate(45deg)',
-                                    zIndex: 0,
-                                },
-                                width: "170px",
-                                height: "170px",
-                            },
-                        }}
-                        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                    >
-                        <MenuItem
-                            component={Link}
-                            to={`/profile/${userStore.user?.username}`}
-                            sx={{ fontSize: "20px" }}
-                        >
-                            <PersonIcon sx={{ marginRight: '10px' }} fontSize='inherit'/> My Profile
-                        </MenuItem>
-
-                        <Divider />
-
-                        <MenuItem
-                            sx={{ fontSize: "20px" }}
-                            onClick={() => {
-                                navigate('/settings');
+                {userStore.isLoggedIn ? (
+                    <div className="navLinks">
+                        <Button
+                            id="demo-customized-button"
+                            aria-controls={openCategories ? 'demo-customized-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openCategories ? 'true' : undefined}
+                            variant="text"
+                            disableElevation
+                            onClick={handleClickCategories}
+                            endIcon={<KeyboardArrowDownIcon />}
+                            color="secondary"
+                            sx={{
+                                fontSize: "15px", fontWeight: 600,
+                                textDecoration: "none", color: "black", marginRight: "20px"
                             }}
                         >
-                            <ListItemIcon>
-                                <Settings fontSize="inherit" />
-                            </ListItemIcon>
-                            Settings
-                        </MenuItem>
-
-                        <MenuItem
-                            onClick={() => {
-                                userStore.logout();
-                                navigate('/');
+                            Categories
+                        </Button>
+                        <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                                'aria-labelledby': 'demo-customized-button',
                             }}
-                            sx={{ fontSize: "20px" }}
+                            anchorEl={anchorElCategories}
+                            open={openCategories}
+                            onClose={handleCloseCategories}
                         >
-                            <ListItemIcon>
-                                <Logout fontSize="inherit" />
-                            </ListItemIcon>
-                                Logout
-                        </MenuItem>
-                    </Menu>
-                </div>
-            ) : (
-                <div className="userAuthButtons">
-                    <Button
-                        id="demo-customized-button"
-                        aria-controls={openCategories ? 'demo-customized-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openCategories ? 'true' : undefined}
-                        variant="text"
-                        disableElevation
-                        onClick={handleClickCategories}
-                        endIcon={<KeyboardArrowDownIcon />}
-                        color="secondary"
-                        sx={{
-                            fontSize: "15px", fontWeight: 600,
-                            textDecoration: "none", color: "black", marginRight: "20px"
-                        }}
-                    >
-                        Categories
-                    </Button>
-                    <StyledMenu
-                        id="demo-customized-menu"
-                        MenuListProps={{
-                        'aria-labelledby': 'demo-customized-button',
-                        }}
-                        anchorEl={anchorElCategories}
-                        open={openCategories}
-                        onClose={handleCloseCategories}
-                    >
-                        {categoryOptions.map(option => (
-                            <MenuItem onClick={handleCloseCategories} disableRipple key={option.value} value={option.value}>
-                                {option.text}
-                            </MenuItem>
-                        ))}
-                    </StyledMenu>
+                            {categoryOptions.map(option => (
+                                <MenuItem onClick={handleCloseCategories} disableRipple key={option.value} value={option.value}>
+                                    {option.text}
+                                </MenuItem>
+                            ))}
+                        </StyledMenu>
 
-                    <Typography  
-                        component={Link} to={'/events'}
+                        <Typography 
+                            component={Link} to={'/events'}
                         sx={{ 
                             fontSize: "15px", fontWeight: 600,
-                            textDecoration: "none", color: "black", marginRight: "20px"
+                            textDecoration: "none", color: "black",
+                            borderBottom: (location.pathname === '/events') ? "2px solid #7C05F2" : "none",
+                        }}>SEARCH</Typography>
+                        <IconButton component={Link} to={'/events/create'}
+                            sx={{
+                                borderRadius: "0",
+                                borderBottom: (location.pathname === '/events/create') ? "3px solid #7C05F2" : "none",
+                            }}
+                        >
+                            <AddCircleIcon sx={{ fontSize: "32px", color: "#7C05F2" }}/>
+                        </IconButton>
+                        <IconButton
+                            onClick={handleMenuClick}
+                            aria-controls={open ? 'account-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            sx={{
+                                border: "1.5px solid #7C05F2",
+                                borderRadius: "3px",
+                                padding: "1px 8px",
+                                backgroundColor: (open ? "#7C05F2" : "transparent"),
+                                color: (open ? "white" : "black"),
+                                borderBottom: (location.pathname.startsWith("/profile")) ? "5px solid #7C05F2" : "1.5px solid #7C05F2",
+                                '&:hover': {
+                                    backgroundColor: "#7C05F2",
+                                    color: "white",
+                                },
+                            }}
+                        >
+                            <PersonIcon sx={{ width: "1.5em", height: "1.5em" }}/>
+                        </IconButton>
+
+                        <Menu
+                            anchorEl={anchorEl}
+                            id="account-menu"
+                            open={open}
+                            onClose={handleMenuClose}
+                            onClick={handleMenuClose}
+                            PaperProps={{
+                                elevation: 0,
+                                sx: {
+                                    overflow: 'visible',
+                                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                    mt: 1.5,
+                                    '&:before': {
+                                        content: '""',
+                                        display: 'block',
+                                        position: 'absolute',
+                                        top: 0,
+                                        right: 14,
+                                        width: 10,
+                                        height: 10,
+                                        bgcolor: 'background.paper',
+                                        transform: 'translateY(-50%) rotate(45deg)',
+                                        zIndex: 0,
+                                    },
+                                    width: "170px",
+                                    height: "170px",
+                                },
+                            }}
+                            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                            <MenuItem
+                                component={Link}
+                                to={`/profile/${userStore.user?.username}`}
+                                sx={{ fontSize: "20px" }}
+                            >
+                                <PersonIcon sx={{ marginRight: '10px' }} fontSize='inherit'/> My Profile
+                            </MenuItem>
+
+                            <Divider />
+
+                            <MenuItem
+                                sx={{ fontSize: "20px" }}
+                                onClick={() => {
+                                    navigate('/settings');
+                                }}
+                            >
+                                <ListItemIcon>
+                                    <Settings fontSize="inherit" />
+                                </ListItemIcon>
+                                Settings
+                            </MenuItem>
+
+                            <MenuItem
+                                onClick={() => {
+                                    userStore.logout();
+                                    navigate('/');
+                                }}
+                                sx={{ fontSize: "20px" }}
+                            >
+                                <ListItemIcon>
+                                    <Logout fontSize="inherit" />
+                                </ListItemIcon>
+                                    Logout
+                            </MenuItem>
+                        </Menu>
+                    </div>
+                ) : (
+                    <div className="userAuthButtons">
+                        <Button
+                            id="demo-customized-button"
+                            aria-controls={openCategories ? 'demo-customized-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={openCategories ? 'true' : undefined}
+                            variant="text"
+                            disableElevation
+                            onClick={handleClickCategories}
+                            endIcon={<KeyboardArrowDownIcon />}
+                            color="secondary"
+                            sx={{
+                                fontSize: "15px", fontWeight: 600,
+                                textDecoration: "none", color: "black", marginRight: "20px"
+                            }}
+                        >
+                            Categories
+                        </Button>
+                        <StyledMenu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                            'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorElCategories}
+                            open={openCategories}
+                            onClose={handleCloseCategories}
+                        >
+                            {categoryOptions.map(option => (
+                                <MenuItem onClick={handleCloseCategories} disableRipple key={option.value} value={option.value}>
+                                    {option.text}
+                                </MenuItem>
+                            ))}
+                        </StyledMenu>
+
+                        <Typography  
+                            component={Link} to={'/events'}
+                            sx={{ 
+                                fontSize: "15px", fontWeight: 600,
+                                textDecoration: "none", color: "black", marginRight: "20px"
+                            }}
+                        >SEARCH</Typography>
+                        <button onClick={loginDialogStore.openLoginDialog} className="authButton purple">LOG IN</button>
+                        <button onClick={registerDialogStore.openRegisterDialog} className="authButton teal">SIGN UP</button>
+                    </div>
+                )}
+
+                <IconButton
+                    className="mobileMenuButton"
+                    sx={{
+                        color: "black",
+                        height: "fit-content",
+                    }}
+                    onClick={handleMobileMenuClick}
+                >
+                    <MenuIcon 
+                        sx={{
+                            color: "black",
+                            width: "30px",
+                            height: "30px",
                         }}
-                    >SEARCH</Typography>
-                    <button onClick={loginDialogStore.openLoginDialog} className="authButton purple">LOG IN</button>
-                    <button onClick={registerDialogStore.openRegisterDialog} className="authButton teal">SIGN UP</button>
-                </div>
-            )}
+                    />
+                </IconButton>
+            </Grid2>
+
+            <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} container
+                sx={{
+                    display: openedNav ? "flex" : "none" ,
+                    paddingLeft: "20px",
+                }}
+            >
+                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                    sx={{
+                        margin: "20px 0",
+                    }}
+                >
+                    <Button
+                        id="demo-customized-button"
+                        aria-controls={openCategories ? 'demo-customized-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openCategories ? 'true' : undefined}
+                        variant="text"
+                        disableElevation
+                        onClick={handleClickCategories}
+                        endIcon={<KeyboardArrowDownIcon />}
+                        color="secondary"
+                        sx={{
+                            fontSize: "15px", fontWeight: 600,
+                            textDecoration: "none", color: "black", marginRight: "20px",
+                        }}
+                    >
+                        Categories
+                    </Button>
+                </Grid2>
+            </Grid2>
         </Grid2>
     );
 }
