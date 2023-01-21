@@ -8,7 +8,7 @@
 }
 
 .homeHeroSection {
-    width: calc(100vw - 1.1rem);
+    width: calc(100vw - 1rem);
     /* height: 768px; */
     height: calc(100vh - 2rem);
     background-image: url(../../assets/heroPicture.jpg);
@@ -26,7 +26,8 @@
 }
 
 .homeHeroSection > h1 {
-    align-self: center;
+    line-height: 50px;
+    text-align: center;
 }
 
 .homeHeroSection > h1 > span {
@@ -112,13 +113,15 @@
 }
 
 .lila {
-    color: rgb(140, 0, 255);
+    color: #7C05F2;
 }
 
 .explainedProcessContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
     margin-top: 100px;
 }
 
@@ -127,7 +130,7 @@
 }
 
 .explainedProcessItem {
-    width: 300px;
+    width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -169,4 +172,80 @@
     align-self: flex-end;
     position: relative;
     left: 50px;
+}
+
+h2 {
+    line-height: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+    .homepageContainer {
+        width: 85%;
+    }
+
+    .quote {
+        font-size: 25px;
+        line-height: 40px;
+    }
+
+    #writer {
+        left: 20px;
+    }
+
+    .explainedProcess > h2 {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .intro > h2 {
+        text-align: center;
+        font-size: 30px;
+        margin: 0;
+        margin-bottom: 20px;
+    }
+
+    .explainedProcess {
+        margin-top: 50px;
+    }
+
+    .explainedProcessContainer {
+        margin-top: 20px;
+    }
+
+    .homeHeroSection > h1 {
+        line-height: 20px;
+        font-size: 35px;
+        text-align: center;
+    }
+
+    .homeHeroSection > h1 > span {
+        top: 70px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .homepageContainer {
+        width: 100%;
+    }
+
+    .homeHeroSection {
+        width: 100%;
+    }
+
+    .quote {
+        font-size: 15px;
+        line-height: 30px;
+    }
+
+    #writer {
+        left: 10px;
+    }
+
+    .homeHeroSection > h1 {
+        font-size: 25px;
+    }
+
+    .homeHeroSection > h1 > span {
+        top: 40px;
+    }
 }

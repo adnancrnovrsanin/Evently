@@ -11,12 +11,12 @@ function LoginDialog() {
     return (
         <Dialog open={loginDialogStore.loginDialog.open} onClose={() => loginDialogStore.closeLoginDialog()}>
             <DialogContent sx={{ 
-                width: "350px",
+                width: { xs: "250px", sm: "250px", md: "300px", lg: "350px", xl: "350px" },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 backgroundColor: "whitesmoke",
-                border: "3px solid purple",
+                border: "1px solid #7C05F2",
              }}>
                 <Formik
                     initialValues={{ email: '', password: '', error: null }}
@@ -30,7 +30,7 @@ function LoginDialog() {
                                 flexDirection: "column",
                                 alignItems: "center",
                                 fontFamily: "Montserrat, serif"
-                             }}
+                            }}
                         >
                             <div className="loginHeader">
                                 <h1>LOGIN</h1>
@@ -41,16 +41,16 @@ function LoginDialog() {
                             <ErrorMessage name="error" render={() => <label style={{ marginBottom: 10 }} color="red">{errors.error}</label>}/>
                             <LoadingButton disabled={!isValid || !dirty || isSubmitting} loading={isSubmitting} sx={{
                                 fontFamily: "Playfair Display, serif",
-                                backgroundColor: "purple",
+                                backgroundColor: "#7C05F2",
                                 color: "white",
                                 padding: "5px 20px",
-                                border: "2px solid rgb(203, 58, 255)",
+                                border: "2px solid #7C05F2",
                                 fontStyle: "italic",
-                                fontSize: "15px",
+                                fontSize: { xs: "12px", sm: "12px", md: "14px", lg: "16px", xl: "16px" },
                                 marginTop: "20px",
                                 borderRadius: "10px",
                                 '&:hover': {
-                                    backgroundColor: "purple",
+                                    backgroundColor: "#410a78",
                                 },
                             }} type="submit" variant="contained">SUBMIT</LoadingButton>
                         </Form>

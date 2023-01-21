@@ -8,37 +8,61 @@ import { Field, FieldProps, Form, Formik } from 'formik';
 import { useStore } from '../../stores/store';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Button, useMediaQuery } from '@mui/material';
 
 function HomePage() {
     const { eventStore: { setPredicate, predicate, resetAllPredicates } } = useStore();
     const navigate = useNavigate();
+    const match = useMediaQuery('(min-width: 600px)');
 
     return(
         <div className="homepageContainer">
             <div className="homeHeroSection">
                 <h1>Find upcoming <span>EVENTS</span></h1>
-                <Formik
-                    onSubmit={(values, { resetForm }) => {
-                        setPredicate('searchQuery', values.searchQuery);
-                        // resetForm();
-                        navigate('/events');
-                    }}
-                    initialValues={{ searchQuery: predicate.get('searchQuery') }}
-                >
-                    {({ isSubmitting }) => (
-                        <Form style={{ width: "92.5%" }}>
-                            <Field name="searchQuery">
-                                {(props: FieldProps) => (
-                                    <input
-                                        {...props.field}
-                                        placeholder="Search..."
-                                        className='homeHeroSectionSearchBox'
-                                    />
-                                )}
-                            </Field>
-                        </Form>
-                    )}
-                </Formik>
+                {match ? (
+                    <Formik
+                        onSubmit={(values, { resetForm }) => {
+                            setPredicate('searchQuery', values.searchQuery);
+                            // resetForm();
+                            navigate('/events');
+                        }}
+                        initialValues={{ searchQuery: predicate.get('searchQuery') }}
+                    >
+                        {({ isSubmitting }) => (
+                            <Form style={{ width: "92.5%" }}>
+                                <Field name="searchQuery">
+                                    {(props: FieldProps) => (
+                                        <input
+                                            {...props.field}
+                                            placeholder="Search..."
+                                            className='homeHeroSectionSearchBox'
+                                        />
+                                    )}
+                                </Field>
+                            </Form>
+                        )}
+                    </Formik>
+                ) : (
+                    <Button
+                        variant="contained"
+                        sx={{
+                            fontFamily: "Montserrat, sans-serif",
+                            marginTop: { xs: '140px', sm: "170px", md: "200px", lg: "200px" },
+                            width: 'fit-content',
+                            marginInline: 'auto',
+                            padding: '10px 30px',
+                            backgroundColor: '#7C05F2',
+                            fontWeight: 'bold',
+                            fontSize: '0.8rem',
+                            '&:hover': {
+                                backgroundColor: "#410a78",
+                            },
+                        }}
+                        onClick={() => navigate('/events')}
+                    >
+                        Search for events
+                    </Button>
+                )}
             </div>
 
             <div className="intro">
@@ -86,7 +110,7 @@ function HomePage() {
             </div>
 
             <div className="quote lila">
-                <p>Life is a collage of event, really.</p>
+                <p>Life is a collage of events, really.</p>
                 <p id='writer' className="roze"> -Mohanlal</p>
             </div>
         </div>

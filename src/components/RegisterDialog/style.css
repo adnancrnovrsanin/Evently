@@ -1,7 +1,7 @@
 .registerHeader {
     height: 40px;
     width: 250px;
-    background-color: rgb(190, 242, 255);
+    background-color: #BCE0FD;
     border: 2px solid dodgerblue;
     display: flex;
     justify-content: center;
@@ -11,4 +11,19 @@
     font-weight: bold;
     border-radius: 10px;
     margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 900px) {
+    .registerHeader {
+        font-size: 8px;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .registerHeader {
+        width: 220px;
+        height: 35px;
+        margin-bottom: 30px;
+        font-size: 8px;
+    }
 }

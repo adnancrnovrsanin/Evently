@@ -327,10 +327,11 @@ function Navbar() {
                 </IconButton>
             </Grid2>
 
-            <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} container
+            <Grid2 xs={11} sm={11} md={11} lg={11} xl={11} container
                 sx={{
                     display: openedNav ? "flex" : "none" ,
-                    paddingLeft: "20px",
+                    flexDirection: "column",
+                    marginInline: "auto",
                 }}
                 component="div"
                 ref={mobileMenuRef}

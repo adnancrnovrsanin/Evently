@@ -11,12 +11,12 @@ function RegisterDialog() {
     return (
         <Dialog open={registerDialogStore.registerDialog.open} onClose={() => registerDialogStore.closeRegisterDialog()}>
             <DialogContent sx={{
-                width: "350px",
+                width: { xs: "250px", sm: "250px", md: "300px", lg: "350px", xl: "350px" },
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 backgroundColor: "whitesmoke",
-
+                border: "2px solid #BCE0FD",
             }}>
                 <Formik
                     initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
@@ -29,7 +29,7 @@ function RegisterDialog() {
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
-                                fontFamily: "Montserrat, serif"
+                                fontFamily: "Montserrat, serif",
                             }}
                         >
                             <div className="registerHeader">
@@ -45,7 +45,7 @@ function RegisterDialog() {
 
                             <LoadingButton loading={isSubmitting} sx={{
                                 fontFamily: "Playfair Display, serif",
-                                backgroundColor: "rgb(190, 242, 255)",
+                                backgroundColor: "#BCE0FD",
                                 padding: "5px 20px",
                                 border: "2px solid dodgerblue",
                                 fontStyle: "italic",
@@ -54,7 +54,7 @@ function RegisterDialog() {
                                 borderRadius: "10px",
                                 color: "black",
                                 '&:hover': {
-                                    backgroundColor: "rgb(190, 242, 255)",   
+                                    backgroundColor: "#BCE0FD",   
                                     color: "black",
                                 }
                             }} type="submit" variant="contained"

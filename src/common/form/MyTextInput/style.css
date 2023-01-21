@@ -27,11 +27,17 @@
 }
 
 .loginTextField {
-    border: 2px solid purple;
+    border: 2px solid #7C05F2;
     margin-bottom: 20px;
 }
 
 .registerTextField {
     border: 2px solid dodgerblue;
     margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 900px) {
+    .myTextField {
+        width: 200px;
+    }
 }
