@@ -72,7 +72,7 @@ function ProfileInfo({ profile }: Props) {
             </div>
             
             <Typography sx={{ 
-                width: "500px",
+                width: { xs: "300px", sm: "350px", md: "450px", lg: "500px" },
                 height: "150px",
                 border: "1px solid purple",
                 padding: "3px",

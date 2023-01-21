@@ -33,7 +33,9 @@ export default function PhotoUploadWidgetDropzone({setFiles}: Props) {
     return (
         <div {...getRootProps()} className="flexColumnCenter" style={isDragActive ? {...dzStyles, ...dzActive} : dzStyles}>
             <input {...getInputProps()} />
-            <FileUploadIcon />
+            <FileUploadIcon sx={{
+                fontSize: '3rem',
+            }}/>
             <Typography
                 sx={{
                     fontFamily: 'Montserrat, sans-serif',
@@ -42,7 +44,7 @@ export default function PhotoUploadWidgetDropzone({setFiles}: Props) {
                     color: '#aaa'
                 }}
             >
-                Drop the files here...
+                Click here to add files or drop them here
             </Typography>
         </div>
     )

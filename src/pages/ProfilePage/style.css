@@ -2,6 +2,8 @@
     width: 75%;
     align-self: center;
     padding: 30px 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .profileInfoContainer {
@@ -52,6 +54,8 @@
 }
 
 .editProfileButton {
+    width: 300px;
+    align-self: center;
     background-color: white;
     border: 1px solid darkblue;
     padding: 3px 10px;
@@ -66,4 +70,32 @@
 .editProfileButton:hover {
     background-color: darkblue;
     color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .profilePageContainer {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .profilePageContainer {
+        width: 95%;
+    }
+
+    .profileInfoContainer {
+        flex-direction: column;
+        align-self: center;
+    }
+
+    .topPartProfile {
+        flex-direction: column;
+    }
+
+    .profileInfo {
+        align-self: center;
+        width: 100%;
+        margin-left: 0;
+        padding-left: 0;
+    }
 }

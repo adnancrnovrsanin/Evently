@@ -30,15 +30,14 @@ function PhotoUploadWidget({ loading, uploadPhoto }: Props) {
     }, [files]);
 
     return (
-        <Grid2 lg={12} spacing={3} container>
-            <Grid2 lg={4}>
+        <Grid2 xs={12} sm={12} md={12} lg={12} spacing={3} container>
+            <Grid2 xs={12} sm={12} md={12} lg={4}>
                 <Typography
                     sx={{
                         fontSize: '1.25rem',
                         fontWeight: 'bold',
                         color: 'secondary.main',
                         textAlign: 'center',
-                        margin: '1rem 0',
                     }}
                 >
                     Step 1 - Add Photo
@@ -47,7 +46,7 @@ function PhotoUploadWidget({ loading, uploadPhoto }: Props) {
                 <PhotoUploadWidgetDropzone setFiles={setFiles}/>
             </Grid2>
 
-            <Grid2 lg={4}>
+            <Grid2 xs={12} sm={12} md={12} lg={4}>
                 <Typography
                     sx={{
                         fontSize: '1.25rem',
@@ -65,8 +64,8 @@ function PhotoUploadWidget({ loading, uploadPhoto }: Props) {
                 }
             </Grid2>
 
-            <Grid2 lg={4} container>
-                <Grid2 lg={12}>
+            <Grid2 xs={12} sm={12} md={12} lg={4} container>
+                <Grid2 xs={12} sm={12} md={12} lg={12}>
                     <Typography
                         sx={{
                             fontSize: '1.25rem',
@@ -80,18 +79,24 @@ function PhotoUploadWidget({ loading, uploadPhoto }: Props) {
                     </Typography>
                 </Grid2>
 
-                <Grid2 lg={12}>
+                <Grid2 xs={12} sm={12} md={12} lg={12}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
                     <div className="img-preview"
                         style={{
                             minHeight: 200,
+                            minWidth: 200,
                             overflow: 'hidden',
-                            marginInline: 'auto',
                         }}
                     />
                 </Grid2>
 
                 {files && files.length > 0 && 
-                    <Grid2 lg={12} spacing={3} 
+                    <Grid2 xs={12} sm={12} md={12} lg={12} spacing={3} 
                         sx={{
                             display: 'flex',
                             justifyContent: 'space-around',

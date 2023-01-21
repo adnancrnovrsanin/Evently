@@ -41,8 +41,12 @@ function ProfilePhotos({ profile }: Props) {
     }
 
     return (
-        <Grid2 lg={12} container>
-            <Grid2 lg={12}>
+        <Grid2 xs={12} sm={12} md={12} lg={12} container
+            sx={{
+                marginInline: "auto",
+            }}
+        >
+            <Grid2 xs={12} sm={12} md={12} lg={12}>
                 <Typography
                     component={'h2'}
                     sx={{
@@ -59,7 +63,11 @@ function ProfilePhotos({ profile }: Props) {
             </Grid2>
 
             {isCurrentUser && (
-                <Grid2 lg={12}>
+                <Grid2 xs={12} sm={12} md={12} lg={12}
+                    sx={{
+                        textAlign: 'center',
+                    }}
+                >
                     <Button
                         variant="contained"
                         color="secondary"
@@ -73,12 +81,12 @@ function ProfilePhotos({ profile }: Props) {
                 </Grid2>
             )}
 
-            <Grid2 lg={12} container>
+            <Grid2 xs={12} sm={12} md={12} lg={12} container spacing={3}>
                 {addPhotoMode ? (
                     <PhotoUploadWidget uploadPhoto={handlePhotoUpload} loading={uploadingPhoto} />
                 ) : (
                     profile.photos?.map((photo: Photo) => (
-                        <Grid2 key={photo.id} lg={2}>
+                        <Grid2 key={photo.id} xs={12} sm={6} md={3} lg={2}>
                             <Card sx={{ width: "100%" }}>
                                 <CardMedia 
                                     sx={{ 
