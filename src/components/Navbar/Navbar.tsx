@@ -362,8 +362,8 @@ function Navbar() {
                         Categories
                     </Button>
 
-                    {mobileCategoriesOpen && categoryOptions.map(option => (
-                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                    {mobileCategoriesOpen && categoryOptions.map((option, i) => (
+                        <Grid2 xs={9} sm={9} md={9} lg={9} xl={9} component={Paper}
                             sx={{
                                 backgroundColor: "background.paper",
                                 padding: "10px 30px",
@@ -371,9 +371,14 @@ function Navbar() {
                                 '&:hover': {
                                     backgroundColor: "#e0e0e0",
                                     cursor: "pointer",
-                                }
+                                },
+                                marginLeft: "20px",
+                                marginTop: i === 0 ? "10px" : "0px",
                             }}
-                            onClick={handleCloseCategories} key={option.value}
+                            onClick={(event) => {
+                                handleCloseCategories(event);
+                                setOpenedNav(false);
+                            }} key={option.value}
                         >
                             <Typography
                                 sx={{
@@ -392,8 +397,12 @@ function Navbar() {
                         padding: "15px 0",
                         borderBottom: "1px solid #e0e0e0",
                         textDecoration: "none",
+                        '&:hover': {
+                            backgroundColor: "#e0e0e0",
+                        }
                     }}
                     component={Link} to={'/events'}
+                    onClick={() => setOpenedNav(false)}
                 >
                     <Typography 
                         sx={{ 
@@ -414,8 +423,12 @@ function Navbar() {
                                 borderBottom: "1px solid #e0e0e0",
                                 paddingLeft: "7px",
                                 textDecoration: "none",
+                                '&:hover': {
+                                    backgroundColor: "#e0e0e0",
+                                },
                             }}
                             component={Link} to={'/events/create'}
+                            onClick={() => setOpenedNav(false)}
                         >
                             <AddCircleIcon sx={{ fontSize: "25px", color: "#7C05F2" }}/>
 
@@ -445,7 +458,14 @@ function Navbar() {
                                     sx={{
                                         display: "flex",
                                         alignItems: "center",
+                                        '&:hover': {
+                                            cursor: "pointer",
+                                        }
                                     }}
+                                    onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
+                                    aria-controls={mobileProfileOpen ? 'account-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={mobileProfileOpen ? 'true' : undefined}
                                 >
                                     <Avatar variant="square" alt="Profile photo" src={userStore.user.image} {...stringAvatar(userStore.user.displayName!)} sx={{
                                         bgcolor: stringToColor(userStore.user.username!),
@@ -458,14 +478,7 @@ function Navbar() {
                                             fontSize: "12px", fontWeight: 600,
                                             textDecoration: "none", color: "black",
                                             marginLeft: "20px",
-                                            '&:hover': {
-                                                cursor: "pointer",
-                                            }
                                         }}
-                                        onClick={() => setMobileProfileOpen(!mobileProfileOpen)}
-                                        aria-controls={mobileProfileOpen ? 'account-menu' : undefined}
-                                        aria-haspopup="true"
-                                        aria-expanded={mobileProfileOpen ? 'true' : undefined}
                                     >
                                         {userStore.user.displayName}
                                     </Typography>
@@ -473,7 +486,7 @@ function Navbar() {
 
                                 {mobileProfileOpen && (
                                     <>
-                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                        <Grid2 xs={9} sm={9} md={9} lg={9} xl={9} component={Paper}
                                             sx={{
                                                 display: "flex",
                                                 alignItems: "center",
@@ -487,7 +500,10 @@ function Navbar() {
                                                     cursor: "pointer",
                                                 }
                                             }}
-                                            onClick={() => navigate(`/profile/${userStore.user?.username}`)}
+                                            onClick={() => {
+                                                navigate(`/profile/${userStore.user?.username}`);
+                                                setOpenedNav(false);
+                                            }}
                                         >
                                             <PersonIcon fontSize="inherit" sx={{ marginRight: "10px" }}/>
 
@@ -501,7 +517,7 @@ function Navbar() {
                                             </Typography>
                                         </Grid2>
 
-                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                        <Grid2 xs={9} sm={9} md={9} lg={9} xl={9} component={Paper}
                                             sx={{
                                                 display: "flex",
                                                 alignItems: "center",
@@ -514,7 +530,10 @@ function Navbar() {
                                                     cursor: "pointer",
                                                 }
                                             }}
-                                            onClick={() => navigate('/settings')}
+                                            onClick={() => {
+                                                navigate('/settings');
+                                                setOpenedNav(false);
+                                            }}
                                         >
                                             <Settings fontSize="inherit" sx={{ marginRight: "10px" }}/>
 
@@ -528,7 +547,7 @@ function Navbar() {
                                             </Typography>
                                         </Grid2>
 
-                                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} component={Paper}
+                                        <Grid2 xs={9} sm={9} md={9} lg={9} xl={9} component={Paper}
                                             sx={{
                                                 display: "flex",
                                                 alignItems: "center",
@@ -543,7 +562,8 @@ function Navbar() {
                                             }}
                                             onClick={() => {
                                                 userStore.logout();
-                                                navigate(`/`)
+                                                navigate(`/`);
+                                                setOpenedNav(false);
                                             }}
                                         >
                                             <Logout fontSize="inherit" sx={{ marginRight: "10px" }}/>
@@ -577,7 +597,10 @@ function Navbar() {
                                     cursor: "pointer",
                                 }
                             }}
-                            onClick={loginDialogStore.openLoginDialog}
+                            onClick={() => {
+                                loginDialogStore.openLoginDialog();
+                                setOpenedNav(false);
+                            }}
                         >
                             <Typography 
                                 sx={{ 
@@ -599,7 +622,10 @@ function Navbar() {
                                     cursor: "pointer",
                                 }
                             }}
-                            onClick={registerDialogStore.openRegisterDialog}
+                            onClick={() => {
+                                registerDialogStore.openRegisterDialog();
+                                setOpenedNav(false);
+                            }}
                         >
                             <Typography 
                                 sx={{ 
