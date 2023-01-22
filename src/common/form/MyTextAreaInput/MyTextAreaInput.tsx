@@ -20,7 +20,7 @@ export default function MyTextAreaInput(props: Props) {
             {...field}
             {...props}
             sx={{
-                width: "508px",
+                width: { xs: "100%", sm: "350px", md: "400px", lg: "508px", xl: "508px" },
                 height: "158px",
                 border: "1px solid purple",
                 padding: "3px",

@@ -1,14 +1,15 @@
 .eventCard {
-    background: whitesmoke;
     box-shadow:  3px 3px 7px #494949,
                 -3px -3px 5px #ffffff;
     width: fit-content;
     height: fit-content;
     padding: 20px;
-    width: 250px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-bottom: 30px;
+    margin-inline: auto;
+    width: 400px;
 }
 
 .firstRowCard {
@@ -56,4 +57,10 @@
     width: 100%;
     margin-top: 20px;
     align-self: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .eventCard {
+        width: 250px;
+    }
 }

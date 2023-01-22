@@ -16,7 +16,8 @@ function EditProfileTextInput(props: Props) {
             sx={{
                 borderBottom: "1px solid purple",
                 fontSize: "15px",
-                fontFamily: "Montserrat, sans-serif"
+                fontFamily: "Montserrat, sans-serif",
+                marginBottom: { xs: "30px", sm: "30px" },
             }}
             id="standard-error-helper-text"
             variant="standard"

@@ -54,8 +54,7 @@
 }
 
 .editProfileButton {
-    width: 300px;
-    align-self: center;
+    align-self: flex-start;
     background-color: white;
     border: 1px solid darkblue;
     padding: 3px 10px;
@@ -97,5 +96,15 @@
         width: 100%;
         margin-left: 0;
         padding-left: 0;
+    }
+
+    .editProfileButton {
+        width: 300px;
+        align-self: center;
+    }
+
+    .followInfo {
+        margin-top: 15px;
+        justify-content: space-around;
     }
 }

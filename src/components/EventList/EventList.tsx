@@ -3,14 +3,21 @@ import { IEvent } from "../../models/event";
 import { useStore } from "../../stores/store";
 import EventCard from "../EventCard/EventCard";
 import EventHorizontal from "../EventHorizontal/EventHorizontal";
+import { useMediaQuery } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2";
 
 function EventList() {
     const { eventStore: { eventsByDate } } = useStore();
+    const match = useMediaQuery('(max-width: 1270px)');
 
     return (
         <>
             {eventsByDate && eventsByDate.map((event: IEvent) => (
-                <EventHorizontal key={event.id} event={event}/>
+                match ? (
+                    <EventCard event={event} key={event.id} />
+                ) : (
+                    <EventHorizontal event={event} key={event.id} />
+                )
             ))}
         </>
     );
