@@ -13,17 +13,17 @@
 }
 
 .profilna {
-    width: 300px;
+    width: 200px;
     height: 200px;
     border-radius: 5px;
     background-size: cover;
-    background-position: top;
+    background-position: center;
     background-repeat: no-repeat;
     border: 2px solid purple;
 }
 
 .profileInfo {
-    margin-left: 20px;
+    margin-inline: auto;
     padding: 20px 0;
     display: flex;
     flex-direction: column;
@@ -94,17 +94,21 @@
     .profileInfo {
         align-self: center;
         width: 100%;
-        margin-left: 0;
+        margin-inline: 0;
         padding-left: 0;
     }
 
     .editProfileButton {
-        width: 300px;
+        width: 150px;
         align-self: center;
     }
 
     .followInfo {
         margin-top: 15px;
         justify-content: space-around;
+    }
+
+    .profilna {
+        margin-inline: auto;
     }
 }

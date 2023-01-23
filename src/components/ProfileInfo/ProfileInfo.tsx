@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Typography, useMediaQuery } from "@mui/material";
 import profilePic from "../../assets/profilna.jpg";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
@@ -24,7 +24,7 @@ function ProfileInfo({ profile }: Props) {
                     ...styleHelper(profile),
                     display: "flex",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                 }}>
                     {!profile.image && <Typography sx={{
                         fontSize: "100px",

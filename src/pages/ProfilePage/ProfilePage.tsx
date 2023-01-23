@@ -94,7 +94,7 @@ function ProfilePage() {
         <div className="profilePageContainer">
             {profileStore.isCurrentUser && (
                 <button className="editProfileButton" onClick={handleEditClick}>
-                    {editMode ? 'Cancel' : 'Edit'}
+                    {editMode ? 'Cancel' : 'Edit profile'}
                 </button>
             )}
             {editMode ? <EditProfileForm profile={profile} setEditMode={setEditMode} /> : <ProfileInfo profile={profile}/>}
