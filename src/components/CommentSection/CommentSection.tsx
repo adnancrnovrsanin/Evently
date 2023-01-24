@@ -47,7 +47,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                     sx={{
                         fontFamily: "Playfair Display, serif",
                         color: "darkblue",
-                        fontSize: "1.5rem",
+                        fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1.1rem", lg: "1.3rem", xl: "1.5rem" },
                     }}
                 >
                     Chat about this event
@@ -109,6 +109,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                                                     marginTop: "20px",
                                                     borderRadius: "3px",
                                                     padding: '20px',
+                                                    fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                                 }}
                                                 
                                                 error={props.meta.touched && Boolean(props.meta.error)}
@@ -128,6 +129,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                                     sx={{
                                         float: "right",
                                         margin: "10px",
+                                        fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                     }}
                                 >
                                     POST
@@ -147,6 +149,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                                 fontWeight: "bold",
                                 margin: "50px",
                                 textAlign: "center",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
                             No comments yet
@@ -163,9 +166,9 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                         sx={{
                             fontFamily: "Playfair Display, serif",
                             color: "darkblue",
-                            fontSize: "1.5rem",
                             textAlign: "center",
                             margin: "50px",
+                            fontSize: { xs: "0.9rem", sm: "0.9rem", md: "1.1rem", lg: "1.3rem", xl: "1.5rem" },
                         }}
                     >
                         Comment section is not available <br />

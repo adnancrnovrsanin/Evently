@@ -22,6 +22,8 @@ function Comment({ comment }: Props) {
             <Grid2 xs={12} sm={12} md={12} lg={12} display="flex" alignItems="center">
                 <Avatar variant="square" alt="Profile photo" src={comment.image} {...stringAvatar(comment.displayName!)} sx={{
                     bgcolor: stringToColor(comment.username!),
+                    width: { xs: "30px", sm: "40px", md: "40px", lg: "50px" },
+                    height: { xs: "30px", sm: "40px", md: "40px", lg: "50px" },
                 }} />
 
                 <div
@@ -66,7 +68,7 @@ function Comment({ comment }: Props) {
                         fontFamily: 'Montserrat, sans-serif',
                         fontWeight: "500",
                         color: "black",
-                        fontSize: "1.2rem",
+                        fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                         marginInline: "auto",
                         whiteSpace: "pre-wrap",
                         maxWidth: { xs: "300px", sm: "500px", md: "700px", lg: "850px", xl: "850px" },

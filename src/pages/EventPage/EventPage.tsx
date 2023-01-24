@@ -164,15 +164,15 @@ function EventPage() {
                     >
                         <Avatar variant="square" alt="Profile photo" src={selectedEvent.host?.image} {...stringAvatar(selectedEvent.host?.displayName!)} sx={{
                             bgcolor: stringToColor(selectedEvent.host?.username!),
-                            width: "56px",
-                            height: '56px',
+                            width: { xs: "35px", sm: "40px", md: "45px", lg: "50px", xl: "56px" },
+                            height: { xs: "35px", sm: "40px", md: "45px", lg: "50px", xl: "56px" },
                         }} />
                         <Typography 
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
                                 fontWeight: "800",
                                 color: "dodgerblue",
-                                fontSize: "1.5rem",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                 marginLeft: "10px",
                                 textDecoration: "none",
                             }}
@@ -189,6 +189,7 @@ function EventPage() {
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
                                 textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
                             Date: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('MMMM D, YYYY')}</span>
@@ -201,6 +202,7 @@ function EventPage() {
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
                                 textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
                             Time: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('h:mm A')}</span>
@@ -213,6 +215,7 @@ function EventPage() {
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
                                 textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
                             {"Category: " + makeFirstLetterCapital(selectedEvent.category) + " Event"}
@@ -225,12 +228,14 @@ function EventPage() {
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
                                 textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
                             Anonimity: 
                             <span style={{
                                 color: colorFromAnonimity(selectedEvent.anonimity),
                                 fontWeight: "bold",
+                                fontSize: mobileMatch ? "0.8rem" : "1.2rem"
                             }}>{" " + selectedEvent.anonimity}</span> 
                         </Typography>
                     </Grid2>
@@ -253,10 +258,10 @@ function EventPage() {
                             sx={{
                                 fontFamily: "Playfair Display, serif",
                                 textDecoration: "underline",
-                                fontSize: "1.5rem",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
-                            <span style={{ fontWeight: "bold", fontSize: "2rem" }}>{selectedEvent.attendees.length}</span> {selectedEvent.attendees.length === 1 ? "person" : "people"} comming
+                            <span style={{ fontWeight: "bold", fontSize: mobileMatch ? "1.5rem" : "2rem" }}>{selectedEvent.attendees.length}</span> {selectedEvent.attendees.length === 1 ? "person" : "people"} comming
                         </Typography>
                     </Grid2>
 
@@ -463,10 +468,10 @@ function EventPage() {
                                             backgroundColor: "purple",
                                             fontStyle: "italic",
                                             padding: "5px 50px",
-                                            fontSize: "1.125rem",
                                             '&:hover': {
                                                 backgroundColor: "rgb(81, 0, 81)"
-                                            }
+                                            },
+                                            fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                         }}
                                     >
                                         Manage Event
@@ -482,7 +487,7 @@ function EventPage() {
                                             backgroundColor: selectedEvent.isCancelled ? "green" : "red",
                                             fontStyle: "italic",
                                             padding: "5px 50px",
-                                            fontSize: "1.125rem",
+                                            fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                             '&:hover': {
                                                 backgroundColor: selectedEvent.isCancelled ? "darkgreen" : "darkred"
                                             }
@@ -502,7 +507,7 @@ function EventPage() {
                                         backgroundColor: "red",
                                         fontStyle: "italic",
                                         padding: "5px 50px",
-                                        fontSize: "1.125rem",
+                                        fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                                         '&:hover': {
                                             backgroundColor: "darkred"
                                         },
@@ -546,6 +551,7 @@ function EventPage() {
                                 fontWeight: "bold",
                                 textAlign: "center",
                                 marginTop: "50px",
+                                fontSize: { xs: "1rem", sm: "1.1rem", md: "1.1rem", lg: "1.2rem", xl: "1.3rem" },
                             }}
                         >
                             Description
@@ -561,6 +567,7 @@ function EventPage() {
                                 padding: "20px",
                                 borderRadius: "10px",
                                 border: "1px solid purple",
+                                fontSize: { xs: "0.7rem", sm: "0.7rem", md: "0.8rem", lg: "0.9rem", xl: "1rem" },
                             }}
                             component={Paper}
                             elevation={3}
