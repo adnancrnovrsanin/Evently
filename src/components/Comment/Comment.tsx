@@ -17,49 +17,59 @@ interface Props {
 
 function Comment({ comment }: Props) {
     return (
-        <Grid2 lg={12} display="flex" flexDirection="column">
+        <Grid2 xs={12} sm={12} md={12} lg={12} display="flex" flexDirection="column">
             <Divider />
-            <Grid2 lg={12} display="flex" alignItems="center">
+            <Grid2 xs={12} sm={12} md={12} lg={12} display="flex" alignItems="center">
                 <Avatar variant="square" alt="Profile photo" src={comment.image} {...stringAvatar(comment.displayName!)} sx={{
                     bgcolor: stringToColor(comment.username!),
                 }} />
 
-                <Typography 
-                    sx={{
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: "800",
-                        color: "dodgerblue",
-                        marginLeft: "10px",
-                        textDecoration: "none",
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                        marginLeft: "20px",
                     }}
-                    component={Link}
-                    to={`/profile/${comment.username}`}
                 >
-                    {comment.displayName}
-                </Typography>
+                    <Typography 
+                        sx={{
+                            fontFamily: 'Montserrat, sans-serif',
+                            fontWeight: "800",
+                            color: "dodgerblue",
+                            textDecoration: "none",
+                            fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem", lg: "1.1rem" },
+                        }}
+                        component={Link}
+                        to={`/profile/${comment.username}`}
+                    >
+                        {comment.displayName}
+                    </Typography>
 
-                <Typography
-                    sx={{
-                        fontFamily: 'Montserrat, sans-serif',
-                        fontWeight: "800",
-                        color: "grey",
-                        fontSize: "0.8rem",
-                        marginLeft: "50px",
-                    }}
-                >
-                    {comment.createdAt && dayjs(comment.createdAt).format('MMMM D, YYYY h:mm A')}
-                </Typography>
+                    <Typography
+                        sx={{
+                            fontFamily: 'Montserrat, sans-serif',
+                            fontWeight: "800",
+                            color: "grey",
+                            fontSize: { xs: "0.6rem", sm: "0.7rem", md: "0.8rem", lg: "0.9rem" },
+                        }}
+                    >
+                        {comment.createdAt && dayjs(comment.createdAt).format('MMMM D, YYYY h:mm A')}
+                    </Typography>
+                </div>
             </Grid2>
 
-            <Grid2 lg={12}>
+            <Grid2 xs={12} sm={12} md={12} lg={12}>
                 <Typography
                     sx={{
                         fontFamily: 'Montserrat, sans-serif',
                         fontWeight: "500",
                         color: "black",
                         fontSize: "1.2rem",
-                        marginLeft: "40px",
+                        marginInline: "auto",
                         whiteSpace: "pre-wrap",
+                        maxWidth: { xs: "300px", sm: "500px", md: "700px", lg: "850px", xl: "850px" },
                     }}
                 >
                     {comment.body}

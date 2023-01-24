@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Button, CircularProgress, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Typography } from "@mui/material";
+import { Avatar, Button, CircularProgress, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Typography, useMediaQuery } from "@mui/material";
 import { colorFromAnonimity, getCategoryImage, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
 import Comment from "../../components/Comment/Comment";
@@ -20,6 +20,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FlagIcon from '@mui/icons-material/Flag';
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import CloseIcon from '@mui/icons-material/Close';
 
 function EventPage() {
     const { id } = useParams();
@@ -35,6 +36,8 @@ function EventPage() {
         updateAttendeance,
         reportHost,
     } = eventStore;
+    const mobileMatch = useMediaQuery('(max-width: 1200px)');
+    const [attendeesOpened, setAttendeesOpened] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -60,9 +63,9 @@ function EventPage() {
 
     return (
         <div className="eventPageContainer">
-            <Grid2 container spacing={3} width="100%">
+            <Grid2 container spacing={3} xs={12} sm={12} md={12} lg={12} xl={12}>
                 {selectedEvent.isCancelled && 
-                    <Grid2 lg={12}
+                    <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
                         sx={{
                             backgroundColor: "red",
                             textAlign: "center",
@@ -82,10 +85,10 @@ function EventPage() {
                     </Grid2>
                 }
 
-                <Grid2 xl={12} sx={{
+                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} sx={{
                         display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
+                        flexDirection: 'column-reverse',
+                        justifyContent: 'space-between',
                         height: '350px',
                         boxShadow: "0 0 10px 10px rgb(240, 240, 240) inset",
                         backgroundImage: `url(${getCategoryImage(selectedEvent.category!)})`,
@@ -94,16 +97,19 @@ function EventPage() {
                         backgroundRepeat: "no-repeat"
                     }}
                 >
+                    <div></div>
+                    
                     <Typography variant="h1"
                         sx={{
                             color: 'white',
                             fontFamily: 'Playfair Display, serif',
                             fontStyle: "italic",
                             fontWeight: "300",
-                            fontSize: "3rem",
+                            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem", lg: "3.5rem", xl: "4rem" },
                             backgroundColor: "rgba(0, 0, 0, 0.6)",
-                            padding: "20px 100px",
+                            padding: { xs: "10px 40px", sm: "10px 60px", md: "10px 80px", lg: "10px 100px", xl: "10px 120px" },
                             borderRadius: "10px",
+                            alignSelf: "center",
                         }}
                     >
                         {selectedEvent.title}
@@ -117,16 +123,16 @@ function EventPage() {
                         aria-haspopup="true"
                         onClick={handleClick}
                         sx={{
-                            position: "absolute",
-                            top: "140px",
-                            right: "280px",
                             border: "2px solid white",
+                            margin: "20px 20px 0 0",
+                            padding: "3px",
+                            alignSelf: "flex-end",
                         }}
                     >
                         <MoreVertIcon 
                             sx={{
                                 color: "white",
-                                fontSize: "2.5rem",
+                                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem", lg: "2.75rem", xl: "3rem" },
                             }}
                         />
                     </IconButton>
@@ -148,8 +154,14 @@ function EventPage() {
                     </Menu>
                 </Grid2>
 
-                <Grid2 lg={3}>
-                    <Grid2 lg={12} display='flex' alignItems="center">
+                <Grid2 xs={12} sm={12} md={12} lg={3} xl={3}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: mobileMatch ? 'center' : 'flex-start',
+                        }}
+                    >
                         <Avatar variant="square" alt="Profile photo" src={selectedEvent.host?.image} {...stringAvatar(selectedEvent.host?.displayName!)} sx={{
                             bgcolor: stringToColor(selectedEvent.host?.username!),
                             width: "56px",
@@ -171,33 +183,36 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
+                                textAlign: mobileMatch ? "center" : "left",
                             }}
                         >
                             Date: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('MMMM D, YYYY')}</span>
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
+                                textAlign: mobileMatch ? "center" : "left",
                             }}
                         >
                             Time: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{dayjs(selectedEvent.date).format('h:mm A')}</span>
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
-                                color: 'dodgerblue'
+                                color: 'dodgerblue',
+                                textAlign: mobileMatch ? "center" : "left",
                             }}
                         >
                             {"Category: " + makeFirstLetterCapital(selectedEvent.category) + " Event"}
@@ -209,6 +224,7 @@ function EventPage() {
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
                                 color: 'dodgerblue',
+                                textAlign: mobileMatch ? "center" : "left",
                             }}
                         >
                             Anonimity: 
@@ -219,7 +235,20 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}
+                        sx={{
+                            display: "flex",
+                            justifyContent: mobileMatch ? "center" : "flex-start",
+                            '&:hover': {
+                                cursor: mobileMatch ? "pointer" : "default",
+                            },
+                        }}
+                        component="div"
+                        onClick={() => {
+                            if (mobileMatch)
+                                setAttendeesOpened(true);  
+                        }}
+                    >
                         <Typography
                             sx={{
                                 fontFamily: "Playfair Display, serif",
@@ -231,75 +260,193 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
-                        <List>
-                            {selectedEvent.attendees.map(attendee => (
-                                <ListItem key={attendee.username}>
-                                    <ListItemAvatar>
-                                        <Avatar variant="square" alt="Profile photo" src={attendee.image} {...stringAvatar(attendee.displayName!)} sx={{
-                                            bgcolor: stringToColor(attendee.username!),
-                                            width: "56px",
-                                            height: '56px',
-                                        }} />
-                                    </ListItemAvatar>
-                                    <ListItemText
-                                        primary={
-                                            <React.Fragment>
-                                                <Typography
-                                                    sx={{
-                                                        fontFamily: 'Montserrat, sans-serif',
-                                                        fontWeight: "800",
-                                                        fontSize: "1.125rem",
-                                                        marginLeft: "10px",
-                                                        textDecoration: "none",
-                                                        color: "black",
-                                                    }}
-                                                    component={Link}
-                                                    to={`/profile/${attendee.username}`}
-                                                >
-                                                    {attendee.displayName}
-                                                </Typography>
-                                            </React.Fragment>
-                                        }
-                                        secondary={
-                                            <React.Fragment>
-                                                <Typography
-                                                    sx={{
-                                                        fontFamily: 'Montserrat, sans-serif',
-                                                        marginLeft: "10px",
-                                                        textDecoration: "none",
-                                                        color: "gray",
-                                                        fontWeight: "500",
-                                                    }}
-                                                    component={Link}
-                                                    to={`/profile/${attendee.username}`}
-                                                >
-                                                    {attendee.username}
-                                                </Typography>
-                                            </React.Fragment>
-                                        }
+                    <Drawer
+                        anchor="bottom"
+                        open={attendeesOpened}
+                        onClose={() => setAttendeesOpened(false)}
+                    >
+                        <Grid2 xs={12} sm={12} md={12} lg={12} container>
+                            <Grid2 xs={12} sm={12} md={12} lg={12}
+                                sx={{
+                                    display: "flex",
+                                    gap: "10px",
+                                    borderBottom: "1px solid black",
+                                    padding: "10px 0",
+                                    marginBottom: "10px",
+                                }}
+                            >
+                                <IconButton
+                                    sx={{
+                                        alignSelf: "flex-start",
+                                        padding: "5px",
+                                    }}
+                                >
+                                    <CloseIcon onClick={() => setAttendeesOpened(false)} 
+                                        sx={{
+                                            fontSize: "2rem",
+                                            color: "black",
+                                        }}
                                     />
-                                    {selectedEvent.isHost && (attendee.username !== userStore.user?.username) && (
-                                        <ListItemSecondaryAction>
-                                            <IconButton edge="end" aria-label="delete"
-                                                // onClick={() => updateAttendeance(selectedEvent, attendee)}
-                                            >
-                                                <DeleteIcon />
-                                            </IconButton>
-                                        </ListItemSecondaryAction>
-                                    )}
-                                </ListItem>
-                            ))}
-                            
-                        </List>
-                    </Grid2>
+                                </IconButton>
+
+                                <Typography
+                                    sx={{
+                                        fontFamily: "Playfair Display, serif",
+                                        fontSize: "1.75rem",
+                                        alignSelf: "center",
+                                    }}
+                                >
+                                    List of people comming
+                                </Typography>
+                            </Grid2>
+
+                            <Grid2 xs={12} sm={12} md={12} lg={12}>
+                                <List>
+                                    {selectedEvent.attendees.map(attendee => (
+                                        <ListItem key={attendee.username}
+                                            sx={{
+                                                marginInline: "auto",
+                                            }}
+                                        >
+                                            <ListItemAvatar>
+                                                <Avatar variant="square" alt="Profile photo" src={attendee.image} {...stringAvatar(attendee.displayName!)} sx={{
+                                                    bgcolor: stringToColor(attendee.username!),
+                                                    width: "56px",
+                                                    height: '56px',
+                                                }} />
+                                            </ListItemAvatar>
+                                            <ListItemText
+                                                primary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            sx={{
+                                                                fontFamily: 'Montserrat, sans-serif',
+                                                                fontWeight: "800",
+                                                                fontSize: "1rem",
+                                                                marginLeft: "10px",
+                                                                textDecoration: "none",
+                                                                color: "black",
+                                                                textAlign: "left",
+                                                            }}
+                                                            component={Link}
+                                                            to={`/profile/${attendee.username}`}
+                                                        >
+                                                            {attendee.displayName}
+                                                        </Typography>
+                                                    </React.Fragment>
+                                                }
+                                                secondary={
+                                                    <React.Fragment>
+                                                        <Typography
+                                                            sx={{
+                                                                fontFamily: 'Montserrat, sans-serif',
+                                                                marginLeft: "10px",
+                                                                textDecoration: "none",
+                                                                color: "gray",
+                                                                fontWeight: "500",
+                                                            }}
+                                                            component={Link}
+                                                            to={`/profile/${attendee.username}`}
+                                                        >
+                                                            {attendee.username}
+                                                        </Typography>
+                                                    </React.Fragment>
+                                                }
+                                            />
+                                            {/* {selectedEvent.isHost && (attendee.username !== userStore.user?.username) && (
+                                                <ListItemSecondaryAction>
+                                                    <IconButton edge="end" aria-label="delete"
+                                                        // onClick={() => updateAttendeance(selectedEvent, attendee)}
+                                                    >
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </ListItemSecondaryAction>
+                                            )} */}
+                                        </ListItem>
+                                    ))}
+                                </List>
+
+                            </Grid2>
+                        </Grid2>
+                    </Drawer>
+
+                    {!mobileMatch && (
+                        <Grid2 xs={12} sm={12} md={12} lg={12}>
+                            <List>
+                                {selectedEvent.attendees.map(attendee => (
+                                    <ListItem key={attendee.username}
+                                        sx={{
+                                            padding: "0px",
+                                        }}
+                                    >
+                                        <ListItemAvatar>
+                                            <Avatar variant="square" alt="Profile photo" src={attendee.image} {...stringAvatar(attendee.displayName!)} sx={{
+                                                bgcolor: stringToColor(attendee.username!),
+                                                width: "56px",
+                                                height: '56px',
+                                            }} />
+                                        </ListItemAvatar>
+                                        <ListItemText
+                                            primary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{
+                                                            fontFamily: 'Montserrat, sans-serif',
+                                                            fontWeight: "800",
+                                                            fontSize: "1rem",
+                                                            marginLeft: "10px",
+                                                            textDecoration: "none",
+                                                            color: "black",
+                                                            textAlign: "left",
+                                                        }}
+                                                        component={Link}
+                                                        to={`/profile/${attendee.username}`}
+                                                    >
+                                                        {attendee.displayName}
+                                                    </Typography>
+                                                </React.Fragment>
+                                            }
+                                            secondary={
+                                                <React.Fragment>
+                                                    <Typography
+                                                        sx={{
+                                                            fontFamily: 'Montserrat, sans-serif',
+                                                            marginLeft: "10px",
+                                                            textDecoration: "none",
+                                                            color: "gray",
+                                                            fontWeight: "500",
+                                                        }}
+                                                        component={Link}
+                                                        to={`/profile/${attendee.username}`}
+                                                    >
+                                                        {attendee.username}
+                                                    </Typography>
+                                                </React.Fragment>
+                                            }
+                                        />
+                                        {/* {selectedEvent.isHost && (attendee.username !== userStore.user?.username) && (
+                                            <ListItemSecondaryAction>
+                                                <IconButton edge="end" aria-label="delete"
+                                                    // onClick={() => updateAttendeance(selectedEvent, attendee)}
+                                                >
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        )} */}
+                                    </ListItem>
+                                ))}
+                                
+                            </List>
+                        </Grid2>
+                    )}
                 </Grid2>
 
-                <Grid2 lg={9}>
-                    <Grid2 lg={12} container
+                <Grid2 xs={12} sm={12} md={12} lg={9} xl={9}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12} container
                         sx={{
                             display: 'flex',
-                            justifyContent: selectedEvent.isHost ? 'space-between' : 'flex-end',
+                            justifyContent: mobileMatch ? "center" : (selectedEvent.isHost ? 'space-between' : 'flex-end'),
+                            gap: { xs: "20px" },
                         }}
                     >
                         {
@@ -390,7 +537,7 @@ function EventPage() {
                         }
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             variant="h5"
                             sx={{
@@ -405,7 +552,7 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <Grid2 lg={12}>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             variant="body1"
                             sx={{

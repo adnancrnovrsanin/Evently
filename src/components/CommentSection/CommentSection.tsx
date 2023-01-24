@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useStore } from "../../stores/store";
 import * as Yup from "yup";
 import Comment from "../Comment/Comment";
+import { LoadingButton } from "@mui/lab";
 
 interface Props {
     eventId: string;
@@ -28,8 +29,8 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
         }
     }, [commentStore, eventId]);
     return (
-        <Grid2 lg={12} container marginTop="50px">
-            <Grid2 lg={12}
+        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}  container marginTop="50px">
+            <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
                 component={Paper}
                 elevation={3}
                 sx={{
@@ -54,7 +55,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
             </Grid2>
 
             {(isJoined && !isCancelled) ? (
-                <Grid2 lg={12} 
+                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
                     sx={{
                         bgcolor: "background.paper",
                         padding: "20px",
@@ -78,8 +79,8 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                             body: Yup.string().required()
                         })}
                     >
-                        {({ isSubmitting, isValid, handleSubmit }) => (
-                            <Form style={{ width: "100%" }}>
+                        {({ isSubmitting, isValid, handleSubmit, dirty }) => (
+                            <Form style={{ width: "100%" }} onSubmit={handleSubmit}>
                                 <Field name="body">
                                     {(props: FieldProps) => (
                                         <div>
@@ -102,7 +103,6 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                                                 }}
 
                                                 sx={{
-                                                    width: "100%",
                                                     border: "1px solid purple",
                                                     fontFamily: "Montserrat, sans-serif",
                                                     fontWeight: 500,
@@ -113,10 +113,25 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                                                 
                                                 error={props.meta.touched && Boolean(props.meta.error)}
                                             />
+                                            
                                             {isSubmitting && <CircularProgress color="secondary" sx={{ margin: "20px" }}/>}
                                         </div>
                                     )}
                                 </Field>
+
+                                <LoadingButton
+                                    variant="contained"
+                                    color="secondary"
+                                    loading={isSubmitting}
+                                    disabled={!isValid || isSubmitting || !dirty}
+                                    type="submit"
+                                    sx={{
+                                        float: "right",
+                                        margin: "10px",
+                                    }}
+                                >
+                                    POST
+                                </LoadingButton>
                             </Form>
                         )}
                     </Formik>
@@ -139,7 +154,7 @@ function CommentSection({ eventId, isJoined, isCancelled }: Props) {
                     )}
                 </Grid2>
             ) : (
-                <Grid2 lg={12}
+                <Grid2 xs={12} sm={12} md={12} lg={12} 
                     sx={{
                         bgcolor: "rgba(181, 154, 216, 0.464)",
                     }}

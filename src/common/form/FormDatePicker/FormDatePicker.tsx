@@ -78,7 +78,7 @@ function FormDatePicker(props: Props) {
                 <StaticDateTimePicker
                     components={{
                         LeftArrowIcon: ArrowLeft,
-                        RightArrowIcon: ArrowRight
+                        RightArrowIcon: ArrowRight,
                     }}
                     renderDay={renderWeekPickerDay}
                     displayStaticWrapperAs="desktop"
@@ -88,6 +88,7 @@ function FormDatePicker(props: Props) {
                         helpers.setValue(new Date(newValue?.toISOString()!));
                     }}
                     renderInput={(params) => <TextField {...params} />}
+                    ampm={false}
                 />
             </LocalizationProvider>
       </div>

@@ -6,26 +6,26 @@
     width: fit-content;
 }
 
-.css-3eghsz-PrivatePickersYear-button.Mui-selected {
+.PrivatePickersYear-yearButton.Mui-selected {
     background-color: #7C05F2 !important;
 }
 
-.css-dplwbx-MuiPickersCalendarHeader-label {
+.MuiPickersCalendarHeader-label {
     color: #7C05F2;
     font-family: 'Montserrat', sans-serif !important;
     font-weight: 700;
     font-size: 15px;
 }
 
-.css-12mkn7b-MuiButtonBase-root-MuiIconButton-root-MuiPickersCalendarHeader-switchViewButton {
+.MuiPickersCalendarHeader-switchViewButton {
     color: #7C05F2 !important;
 }
 
-.css-xelq0e-MuiPickerStaticWrapper-content {
+.MuiPickerStaticWrapper-content {
     border-radius: 15px;
 }
 
-.css-sf5t6v-PrivatePickersSlideTransition-root-MuiDayPicker-slideTransition {
+.PrivatePickersSlideTransition-root.MuiDayPicker-slideTransition {
     min-height: 200px !important;
 }
 
@@ -33,11 +33,11 @@
     border: 2px solid #7C05F2 !important;
 }
 
-.css-xb7uwb-MuiPickersArrowSwitcher-spacer {
+.MuiPickersArrowSwitcher-spacer {
     width: 10px !important;
 }
 
-.css-nk89i7-MuiPickersCalendarHeader-root {
+.MuiPickersCalendarHeader-root {
     border-bottom: 2px solid #7B80CD;
     margin-bottom: 0 !important;
     padding: 0 !important;
@@ -46,52 +46,22 @@
     padding: 0 10px !important;
 }
 
-.css-1sn4lm3-MuiTypography-root {
-    font-family: 'Montserrat', sans-serif !important;
-    font-size: 2rem !important;
-}
-
-.css-h2z9v1-MuiButtonBase-root-MuiIconButton-root-MuiClock-amButton,
-.css-rjqbug-MuiButtonBase-root-MuiIconButton-root-MuiClock-pmButton {
-    color: white !important;
-    background-color: #7C05F2 !important;
-}
-
-.css-h2z9v1-MuiButtonBase-root-MuiIconButton-root-MuiClock-amButton,
-.css-1gp5qnb-MuiButtonBase-root-MuiIconButton-root-MuiClock-amButton {
-    position: relative !important;
-    left: 40px !important;
-    top: -70px !important;
-}
-
-.css-u791bf-MuiPickersArrowSwitcher-root-MuiClockPicker-arrowSwitcher {
+.MuiPickersArrowSwitcher-root.MuiClockPicker-arrowSwitcher {
     position: relative !important;
     right: -90px !important;
     top: 7px !important;
 }
 
-.css-zcgqxx-MuiButtonBase-root-MuiIconButton-root-MuiClock-pmButton,
-.css-rjqbug-MuiButtonBase-root-MuiIconButton-root-MuiClock-pmButton {
-    position: relative !important;
-    right: 25px !important;
-    top: 50px !important;
-}
-
-.css-umzx0k-MuiClock-pin,
-.css-d0vs79-MuiClockPointer-root {
+.MuiClock-pin,
+.MuiClockPointer-root {
     background-color: #7C05F2 !important;
 }
 
-.css-12t0dn4-MuiClockPointer-thumb {
-    border: 16px solid #7C05F2 !important;
-}
-
-.css-eg3pzz-MuiClockPointer-thumb {
+.MuiClockPointer-thumb {
     border: 16px solid #7C05F2 !important;
     background-color: #7C05F2 !important;
 }
 
-.css-1jm66jt-MuiClockPicker-root,
-.css-epd502 {
+.MuiClockPicker-root{
     width: fit-content !important;
 }
