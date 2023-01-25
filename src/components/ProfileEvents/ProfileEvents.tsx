@@ -112,7 +112,7 @@ export default function ProfileEvents({ profile }: Props) {
                 userEvents.length > 0 ? (
                   userEvents.map((event: UserEvent) => {
                       return (
-                          <Grid2 xs={12} sm={6} md={4} lg={3} xl={2} key={event.id}>
+                          <Grid2 xs={12} sm={6} md={4} lg={3} xl={3} key={event.id}>
                               <Card sx={{ maxWidth: "100%", height: "100%", cursor: "pointer" }} onClick={() => navigate(`/events/${event.id}`)}>
                                   <CardMedia
                                       sx={{ height: 140 }}

@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useStore } from "../../stores/store";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import EventPlaceholder from "../../components/EventPlaceholder/EventPlaceholder";
@@ -7,11 +7,12 @@ import InfiniteScroll from "react-infinite-scroller";
 import EventList from "../../components/EventList/EventList";
 import { PagingParams } from "../../models/pagination";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { Button, IconButton, Menu, MenuItem, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Button, Drawer, FormControl, IconButton, InputLabel, Menu, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery } from "@mui/material";
 import './style.css';
 import Calendar from "../../components/Calendar/Calendar";
 import SortIcon from '@mui/icons-material/Sort';
 import TuneIcon from '@mui/icons-material/Tune';
+import CloseIcon from '@mui/icons-material/Close';
 
 function SearchPage() {
     const { eventStore } = useStore();
@@ -22,6 +23,11 @@ function SearchPage() {
     const mobileMatch = useMediaQuery('(max-width: 600px)');
     const cardMatch = useMediaQuery('(max-width: 1270px)');
     const calendarMatch = useMediaQuery('(max-width: 1300px)');
+    const [openedFiltersMobile, setOpenedFiltersMobile] = useState(false);
+    const [mobileFilters, setMobileFilters] = useState({
+        whoseEvents: "all",
+        sortBy: "dateAscending",
+    });
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -47,14 +53,59 @@ function SearchPage() {
 
     useEffect(() => {
         loadEvents();
+        if (mobileMatch) {
+            if (predicate.get("dateAscending") === "true") {
+                setMobileFilters({
+                    ...mobileFilters,
+                    sortBy: "dateAscending",
+                });
+            } else if (predicate.get("dateDescending") === "true") {
+                setMobileFilters({
+                    ...mobileFilters,
+                    sortBy: "dateDescending",
+                });
+            }
+
+            if (predicate.get("all") === "true") {
+                setMobileFilters({
+                    ...mobileFilters,
+                    whoseEvents: "all",
+                });
+            } else if (predicate.get("isHost") === "true") {
+                setMobileFilters({
+                    ...mobileFilters,
+                    whoseEvents: "isHost",
+                });
+            } else if (predicate.get("isGoing") === "true") {
+                setMobileFilters({
+                    ...mobileFilters,
+                    whoseEvents: "isGoing",
+                });
+            }
+        }
         return () => resetAllPredicates();
-    }, [loadEvents]);
+    }, [loadEvents, predicate, mobileMatch]);
+
+    function handleChange(event: SelectChangeEvent<string>, child: ReactNode): void {
+        setPredicate((event.target.value as string), "true");
+        if (event.target.name === "whoseEvents") {
+            setMobileFilters({
+                ...mobileFilters,
+                whoseEvents: event.target.value as string,
+            });
+        } else {
+            setMobileFilters({
+                ...mobileFilters,
+                sortBy: event.target.value as string,
+            });
+        }
+    }
 
     return (
         <Grid2 xs={11} sm={11} md={10} lg={9} xl={9} container
             sx={{
                 alignSelf: "center",
-                marginTop: "50px",
+                marginTop: { xs: "20px", sm: "20px", md: "20px", lg: "50px", xl: "50px" },
             }}
         >
             <Grid2 xs={12} sm={12} md={12} lg={8} xl={8} container>
@@ -98,6 +149,7 @@ function SearchPage() {
                                 sx={{
                                     marginLeft: "20px",
                                 }}
+                                onClick={() => setOpenedFiltersMobile(true)}
                             >
                                 <TuneIcon 
                                     sx={{
@@ -106,6 +158,111 @@ function SearchPage() {
                                     }}
                                 />
                             </IconButton>
+
+                            <Drawer
+                                anchor="bottom"
+                                open={openedFiltersMobile}
+                                onClose={() => setOpenedFiltersMobile(false)}
+                                sx={{
+                                    '& .MuiDrawer-paper': {
+                                        boxSizing: 'border-box',
+                                        width: '100%',
+                                        height: '100%',
+                                        backgroundColor: "#F5F5F5",
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "flex-start",
+                                        alignItems: "center",
+                                        gap: "20px",
+                                    }
+                                }}
+                            >
+                                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} container
+                                    sx={{
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        width: '100%',
+                                        padding: "10px",
+                                        borderBottom: "1px solid #E0E0E0",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontFamily: "Playfair Display, serif",
+                                            fontSize: "20px",
+                                            color: "black",
+                                        }}
+                                    >Filters</Typography>
+
+                                    <IconButton
+                                        sx={{
+                                            alignSelf: "flex-end",
+                                            marginTop: "10px",
+                                            marginBottom: "10px",
+                                        }}
+                                        onClick={() => setOpenedFiltersMobile(false)}
+                                    >
+                                        <CloseIcon 
+                                            sx={{
+                                                color: "black",
+                                                fontSize: "30px",
+                                            }}
+                                        />
+                                    </IconButton>
+                                </Grid2>
+
+                                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} container
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
+                                        gap: "50px",
+                                    }}
+                                >
+                                    <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <Calendar />
+                                    </Grid2>
+
+                                    <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-simple-select-label" color="secondary">Filter which events to show:</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={mobileFilters.whoseEvents}
+                                                label="Filter which events to show:"
+                                                onChange={handleChange}
+                                                name="whoseEvents"
+                                                color="secondary"
+                                            >
+                                            <MenuItem value={"all"}>All events</MenuItem>
+                                            <MenuItem value={"isHost"}>I'm hosting</MenuItem>
+                                            <MenuItem value={"isGoing"}>I'm going</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid2>
+
+                                    <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-simple-select-label" color="secondary">{"Sort by:"}</InputLabel>
+                                            <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={mobileFilters.sortBy}
+                                                label="Sort by:"
+                                                onChange={handleChange}
+                                                name="sortBy"
+                                                color="secondary"
+                                            >
+                                            <MenuItem value={"dateAscending"}>{"Closer events (by Date)"}</MenuItem>
+                                            <MenuItem value={"dateDescending"}>{"Farther events (by Date)"}</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                    </Grid2>
+                                </Grid2>
+                            </Drawer>
                         </Grid2>
                     ) : (
                         <Grid2 xs={2} sm={2} md={2} lg={2} display="flex" alignItems="flex-start" justifyContent="flex-start">
@@ -165,7 +322,7 @@ function SearchPage() {
                                 open={open}
                                 onClose={handleClose}
                                 MenuListProps={{
-                                'aria-labelledby': 'basic-button',
+                                    'aria-labelledby': 'basic-button',
                                 }}
                             >
                                 <MenuItem onClick={() => {

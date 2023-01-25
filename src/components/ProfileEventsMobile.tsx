@@ -42,8 +42,8 @@ export default function ProfileEventsMobile({ profile }: Props) {
   return (
     <Box 
         sx={{ 
+            width: "100%",
             borderTop: "1px solid purple",
-            maxWidth: { xs: 320, sm: 480 }, 
             bgcolor: 'background.paper',
             padding: 0,
             '&.MuiTabPanel-root': {

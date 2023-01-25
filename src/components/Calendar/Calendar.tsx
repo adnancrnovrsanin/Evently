@@ -30,27 +30,22 @@ const ArrowRight = () => {
 function Calendar() {
     const { eventStore: { loadEventsUserIsGoing, usersEvents, predicate, setPredicate }, userStore: { user }, userDashboardStore } = useStore();
 
+    const checkEventDay = (date: Dayjs) => {
+      let result = false;
+      for (const event of usersEvents) {
+        if (date.diff(dayjs(event.date!), "day") === 0 && date.diff(dayjs(event.date!), "month") === 0 && date.diff(dayjs(event.date!), "year") === 0) {
+          result = true;
+          break;
+        }
+      }
+      return result;
+    }
+
     const renderWeekPickerDay = (
       date: Dayjs,
       selectedDates: Array<Dayjs | null>,
       pickersDayProps: PickersDayProps<Dayjs>
     ) => {
-      const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
-        let dateToCompare = dayjs(eventDate);
-        return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
-      };
-    
-      const checkEventDay = () => {
-        let result = false;
-        for (const event of usersEvents) {
-          if (compareDay(date, event.date!)) {
-            result = true;
-            break;
-          }
-        }
-        return result;
-      }
-    
       return (
         <PickersDay
           {...pickersDayProps}
@@ -59,8 +54,8 @@ function Calendar() {
               backgroundColor: "#7C05F2"
             },
             fontSize: "13px",
-            borderRadius: () => (!checkEventDay())? "100%" : "0",
-            borderBottom: () => (!checkEventDay())? "none" : "3px solid #7C05F2"
+            borderRadius: checkEventDay(date) ? "0" : "100%",
+            borderBottom: checkEventDay(date) ? "3px solid #7C05F2" : "none" 
           }}
         />
       );

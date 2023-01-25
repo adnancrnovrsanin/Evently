@@ -23,17 +23,18 @@ export default function EventCard({ event, style }: Props) {
         <div className="eventCard"
             style={{
                 backgroundColor: event.isGoing ? '#ACCAF2' : 'white',
+                border: event.isCancelled ? '1px solid red' : 'none',
                 ...style
             }}
             onClick={() => navigate(`/events/${event.id}`)}
         >
-            <Grid2 width="100%"
-                sx={{
-                    backgroundColor: event.isCancelled ? "red" : "green",
-                    marginBottom: "20px",
-                }}
-            >
-                {event.isCancelled ? (
+            {event.isCancelled && (
+                <Grid2 xs={12} sm={12} md={12} lg={12} xl={12}
+                    sx={{
+                        backgroundColor: event.isCancelled ? "red" : "green",
+                        marginBottom: "20px",
+                    }}
+                >
                     <Typography
                         sx={{
                             fontFamily: 'Playfair Display, serif',
@@ -46,21 +47,8 @@ export default function EventCard({ event, style }: Props) {
                     >
                         Cancelled
                     </Typography>
-                ) : (event.isGoing && (
-                    <Typography
-                        sx={{
-                            fontFamily: 'Playfair Display, serif',
-                            fontStyle: "italic",
-                            color: "white",
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            textAlign: "center",
-                        }}
-                    >
-                        Booked
-                    </Typography>
-                ))}
-            </Grid2>
+                </Grid2>
+            )}
 
             <div className="firstRowCard">
                 <div className="eventProfileSectionCard">
@@ -69,12 +57,13 @@ export default function EventCard({ event, style }: Props) {
                         width: '30px',
                         height: '30px',
                         fontSize: '0.8rem',
+                        marginRight: "10px",
                     }} />
                     <p>{event.host?.displayName}</p>
                 </div>
 
                 <div className="eventTimePostedCard">
-                    <AccessTimeIcon sx={{ width: '15px' }} />
+                    <AccessTimeIcon sx={{ width: '15px', marginRight: "5px" }} />
                     <p>{dayjs(event.date)?.fromNow()}</p>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDatePicker, StaticDateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
@@ -9,6 +9,7 @@ import './style.css';
 import { useField } from "formik";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../stores/store";
+import { IEvent } from "../../../models/event";
 
 const ArrowLeft = () => {
   return (
@@ -36,37 +37,32 @@ function FormDatePicker(props: Props) {
     const [meta, field, helpers] = useField(props.name);
     const { eventStore: { usersEvents }} = useStore();
 
+    const checkEventDay = (date: Dayjs) => {
+      let result = false;
+      for (const event of usersEvents) {
+        if (date.diff(dayjs(event.date!), "day") === 0 && date.diff(dayjs(event.date!), "month") === 0 && date.diff(dayjs(event.date!), "year") === 0) {
+          result = true;
+          break;
+        }
+      }
+      return result;
+    }
+
     const renderWeekPickerDay = (
       date: Dayjs,
       selectedDates: Array<Dayjs | null>,
       pickersDayProps: PickersDayProps<Dayjs>
     ) => {
-      const compareDay = (calendarDate: Dayjs, eventDate: Date) => {
-        let dateToCompare = dayjs(eventDate);
-        return calendarDate.diff(dateToCompare, "day") === 0 && calendarDate.diff(dateToCompare, "month") === 0 && calendarDate.diff(dateToCompare, "year") === 0;
-      };
-    
-      const checkEventDay = () => {
-        let result = false;
-        for (const event of usersEvents) {
-          if (compareDay(date, event.date!)) {
-            result = true;
-            break;
-          }
-        }
-        return result;
-      }
-    
       return (
         <PickersDay
           {...pickersDayProps}
           sx={{
             [`&&.${pickersDayClasses.selected}`]: {
-              backgroundColor: "purple"
+              backgroundColor: "#7C05F2"
             },
             fontSize: "13px",
-            borderRadius: () => (checkEventDay())? "0" : "100%",
-            borderBottom: () => (checkEventDay())? "3px solid purple": "none"
+            borderRadius: checkEventDay(date) ? "0" : "100%",
+            borderBottom: checkEventDay(date) ? "3px solid #7C05F2" : "none" 
           }}
         />
       );

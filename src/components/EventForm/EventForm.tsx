@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import EditProfileTextInput from "../../common/form/EditProfileTextInput/EditProfileTextInput";
 import { useEffect, useState } from "react";
 import { EventFormValues } from "../../models/event";
-import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography, useMediaQuery } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import * as Yup from "yup";
 import './style.css';
@@ -19,12 +19,14 @@ import { anonimityOptions } from "../../common/options/anonimityOptions";
 import FormDatePicker from "../../common/form/FormDatePicker/FormDatePicker";
 import EventFormTextarea from "../../common/form/EventFormTextarea/EventFormTextarea";
 import { Profile } from "../../models/profile";
+import { LoadingButton } from "@mui/lab";
 
 function EventForm() {
     const { eventStore, userStore: { user } } = useStore();
     const { createEvent, updateEvent, loadingInitial, loadEvent } = eventStore;
     const { id } = useParams();
     const navigate = useNavigate();
+    const calendarLabelMatch = useMediaQuery('(max-width: 900px)');
 
     const [event, setEvent] = useState<EventFormValues>(new EventFormValues());
 
@@ -68,14 +70,12 @@ function EventForm() {
                 onSubmit={values =>  handleFormSubmit(values)}
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
-                    <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'
-                        style={{
-                            width: "80%",
-                            display: "flex",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Box display="flex" flexDirection="column" width={"300px"}>
+                    <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'>
+                        <Box display="flex" flexDirection="column" width={"300px"}
+                            sx={{
+                                marginTop: calendarLabelMatch ? "40px" : "0px",
+                            }}
+                        >
 
                             <EventFormTextInput placeholder="Title of your event" name="title" label="Title" />
 
@@ -91,25 +91,48 @@ function EventForm() {
 
                             <EventFormTextarea placeholder="Describe your event..." name="description" rows={4} />
 
-                            <button type='submit' className="formPostBtn" disabled={isSubmitting || !isValid || !dirty}>
+                            <LoadingButton type='submit' 
+                                // disabled={isSubmitting || !isValid || !dirty}
+                                variant="contained"
+                                sx={{
+                                    padding: "3px 25px",
+                                    width: "fit-content",
+                                    borderRadius: "7px",
+                                    backgroundColor: "white",
+                                    fontFamily: "Montserrat, sans-serif",
+                                    fontStyle: "italic",
+                                    border: "0.5px solid grey",
+                                    marginTop: "15px",
+                                    alignSelf: "flex-end",
+                                    fontWeight: "400",
+                                    color: "black",
+                                    '&:hover': {
+                                        backgroundColor: "rgb(191, 215, 237)",
+                                        color: 'black',
+                                    },
+                                }}
+                            >
                                 POST
-                            </button>
+                            </LoadingButton>
                         </Box>
 
                         <div className="datePickerForm">
                             <FormDatePicker name="date"/>
-                            <Typography sx={{
-                                padding: "5px 70px",
-                                backgroundColor: "rgb(191, 215, 237)",
-                                marginTop: "20px",
-                                borderRadius: "10px",
-                                fontFamily: "Montserrat, sans-serif",
-                                fontStyle: "italic",
-                                color: "darkblue",
-                                fontWeight: "400",
-                            }}>
-                                Pick a date for your event
-                            </Typography>
+                            {!calendarLabelMatch && (
+                                <Typography sx={{
+                                    padding: { xs: "5px 20px", sm: "5px 20px", md: "5px 20px", lg: "5px 2px", xl: "5px 20px" },
+                                    backgroundColor: "rgb(191, 215, 237)",
+                                    marginTop: "20px",
+                                    // borderRadius: "10px",
+                                    fontFamily: "Montserrat, sans-serif",
+                                    fontStyle: "italic",
+                                    color: "black",
+                                    fontWeight: "400",
+                                    fontSize: { xs: "10px", sm: "14px", md: "14px", lg: "14px", xl: "14px" },
+                                }}>
+                                    Pick a date for your event using the calendar above
+                                </Typography>
+                            )}
                         </div>
                     </Form>
                 )}
