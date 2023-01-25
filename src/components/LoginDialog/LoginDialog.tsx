@@ -7,7 +7,7 @@ import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 function LoginDialog() {
-    const { userStore, loginDialogStore, profileStore } = useStore();
+    const { userStore, loginDialogStore } = useStore();
     return (
         <Dialog open={loginDialogStore.loginDialog.open} onClose={() => loginDialogStore.closeLoginDialog()}>
             <DialogContent sx={{ 
@@ -21,7 +21,7 @@ function LoginDialog() {
                 <Formik
                     initialValues={{ email: '', password: '', error: null }}
                     onSubmit={(values, { setErrors }) => userStore.login(values)
-                        .catch(error => setErrors({ error: 'Invalid input' }))}
+                        .catch(error => setErrors({ error: "Invalid email or password" }))}
                 >
                     {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                         <Form onSubmit={handleSubmit} autoComplete='off'

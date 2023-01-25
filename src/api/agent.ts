@@ -27,49 +27,50 @@ axios.interceptors.response.use(async response => {
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response as AxiosResponse;
-    switch (status) {
-        case 400:
-            if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
-                router.navigate('/not-found');
-            }
-            if (data.errors) {
-                const modalStateErrors = [];
-                for (const key in data.errors) {
-                    if (data.errors[key]) {
-                        modalStateErrors.push(data.errors[key])
-                    }
+    if (status)
+        switch (status) {
+            case 400:
+                if (config.method === 'get' && data.errors.hasOwnProperty('id')) {
+                    router.navigate('/not-found');
                 }
-                throw modalStateErrors.flat();
-            } else {
-                toast.error(data);
-            }
-            break;
-        case 401:
-            if (data.split("|")[0].trim() === "Email not verified") {
-                toast.error("Email not verified");
-                const email = data.split("|")[1];
-                requests.get<void>(`/account/resendEmailConfirmationLink?email=${email}`);
-                router.navigate(`/account/registerSuccess?email=${email}`);
-                store.loginDialogStore.closeLoginDialog();
-            } else {
-                if (!data || data === "") {
-                    toast.error("Unauthorized");
+                if (data.errors) {
+                    const modalStateErrors = [];
+                    for (const key in data.errors) {
+                        if (data.errors[key]) {
+                            modalStateErrors.push(data.errors[key])
+                        }
+                    }
+                    throw modalStateErrors.flat();
                 } else {
                     toast.error(data);
                 }
-            }
-            break;
-        case 403:
-            toast.error('forbidden')
-            break;
-        case 404:
-            router.navigate('/not-found');
-            break;
-        case 500:
-            store.commonStore.setServerError(data);
-            router.navigate('/server-error');
-            break;
-    }
+                break;
+            case 401:
+                if (data.split("|")[0].trim() === "Email not verified") {
+                    toast.error("Email not verified");
+                    const email = data.split("|")[1];
+                    requests.get<void>(`/account/resendEmailConfirmationLink?email=${email}`);
+                    router.navigate(`/account/registerSuccess?email=${email}`);
+                    store.loginDialogStore.closeLoginDialog();
+                } else {
+                    if (!data || data === "") {
+                        toast.error("Unauthorized");
+                    } else {
+                        toast.error(data);
+                    }
+                }
+                break;
+            case 403:
+                toast.error('forbidden')
+                break;
+            case 404:
+                router.navigate('/not-found');
+                break;
+            case 500:
+                store.commonStore.setServerError(data);
+                router.navigate('/server-error');
+                break;
+        }
     return Promise.reject(error);
 })
 

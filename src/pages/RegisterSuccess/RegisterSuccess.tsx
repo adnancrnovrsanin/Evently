@@ -21,7 +21,7 @@ export default function RegisterSuccess() {
                 <Typography
                     sx={{
                         fontFamily: "Playfair Display, serif",
-                        fontSize: "30px",
+                        fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem", lg: "2rem" },
                         fontStyle: "italic",
                         color: "purple",
                         marginTop: "20px",
@@ -34,7 +34,7 @@ export default function RegisterSuccess() {
                 <Typography
                     sx={{
                         fontFamily: "Playfair Display, serif",
-                        fontSize: "20px",
+                        fontSize: { xs: "1rem", sm: "1rem", md: "1.25rem", lg: "1.5rem" },
                     }}
                 >
                     Didn't receive the email? Click <span onClick={handleConfirmEmailResend} style={{color: "blue", cursor: "pointer"}}>here</span> to resend.

@@ -45,9 +45,10 @@ export default function ConfirmEmail() {
                         <Typography
                             sx={{
                                 fontFamily: "Montserrat, sans-serif",
-                                fontSize: "1.75rem",
+                                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem", lg: "2rem" },
                                 fontWeight: 500,
                                 marginBottom: "20px",
+                                textAlign: "center"
                             }}
                         >
                             Verifying...
@@ -60,10 +61,11 @@ export default function ConfirmEmail() {
                         <Typography
                             sx={{
                                 fontFamily: "Playfair Display, serif",
-                                fontSize: "1.75rem",
+                                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem", lg: "2rem" },
                                 fontStyle: "italic",
                                 color: "purple",
                                 marginBottom: "20px",
+                                textAlign: "center"
                             }}
                         >
                             You have successfully verified your email! Now you can log in to your account.
@@ -84,10 +86,11 @@ export default function ConfirmEmail() {
                         <Typography
                             sx={{
                                 fontFamily: "Playfair Display, serif",
-                                fontSize: "1.75rem",
+                                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem", lg: "2rem" },
                                 fontStyle: "italic",
                                 color: "purple",
                                 marginBottom: "20px",
+                                textAlign: "center"
                             }}
                         >
                             Verification failed. You can try resending the confirmation email.

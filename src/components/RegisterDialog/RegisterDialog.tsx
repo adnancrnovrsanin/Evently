@@ -5,6 +5,9 @@ import { ErrorMessage, Form, Formik } from "formik";
 import './style.css';
 import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
 import { LoadingButton } from "@mui/lab";
+import * as Yup from "yup";
+import ValidationError from "../../common/form/ValidationError";
+import { ErrorSharp } from "@mui/icons-material";
 
 function RegisterDialog() {
     const { userStore, registerDialogStore, profileStore } = useStore();
@@ -22,6 +25,12 @@ function RegisterDialog() {
                     initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
                     onSubmit={(values, { setErrors }) => userStore.register(values)
                         .catch(error => setErrors({ error: error }))}
+                    validationSchema={Yup.object({
+                        displayName: Yup.string().required(),
+                        username: Yup.string().required(),
+                        email: Yup.string().required(),
+                        password: Yup.string().required(),
+                    })}
                 >
                     {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                         <Form onSubmit={handleSubmit} autoComplete='off'
@@ -41,7 +50,7 @@ function RegisterDialog() {
                             <MyTextInput choice="registerTextField" placeholder="Name Surname" name="displayName" label="Display Name" />
                             <MyTextInput choice="registerTextField" placeholder="username" name="username" label="Username" />
 
-                            <ErrorMessage name="error" render={() => <label style={{ marginBottom: 10 }} color="red">{errors.error}</label>} />
+                            <ErrorMessage name="error" render={() => <ValidationError errors={errors.error} />} />
 
                             <LoadingButton loading={isSubmitting} sx={{
                                 fontFamily: "Playfair Display, serif",
