@@ -5,9 +5,11 @@ import { ErrorMessage, Form, Formik } from "formik";
 import './style.css';
 import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
 import LoadingButton from "@mui/lab/LoadingButton";
+import GoogleIcon from '@mui/icons-material/Google';
 
 function LoginDialog() {
     const { userStore, loginDialogStore } = useStore();
+
     return (
         <Dialog open={loginDialogStore.loginDialog.open} onClose={() => loginDialogStore.closeLoginDialog()}>
             <DialogContent sx={{ 
@@ -49,10 +51,36 @@ function LoginDialog() {
                                 fontSize: { xs: "12px", sm: "12px", md: "14px", lg: "16px", xl: "16px" },
                                 marginTop: "20px",
                                 borderRadius: "10px",
+                                width: "100%",
                                 '&:hover': {
                                     backgroundColor: "#410a78",
                                 },
                             }} type="submit" variant="contained">SUBMIT</LoadingButton>
+
+                            <LoadingButton
+                                sx={{
+                                    fontFamily: "Montserrat, serif",
+                                    backgroundColor: "white",
+                                    color: "black",
+                                    padding: "5px 20px",
+                                    border: "2px solid #7C05F2",
+                                    fontSize: { xs: "10px", sm: "10px", md: "12px", lg: "14px", xl: "14px" },
+                                    marginTop: "20px",
+                                    borderRadius: "10px",
+                                    width: "100%",
+                                    '&:hover': {
+                                        backgroundColor: "#7C05F2",
+                                        color: "white",
+                                    },
+                                }}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    userStore.googleAuth();
+                                }}
+                            >
+                                <GoogleIcon sx={{ marginRight: "10px" }} />
+                                CONTINUE WITH GOOGLE
+                            </LoadingButton>
                         </Form>
                     )}
                 </Formik>

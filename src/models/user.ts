@@ -11,3 +11,10 @@ export interface UserFormValues {
     displayName?: string;
     username?: string;
 }
+
+export interface GoogleAuthDto {
+    email: string | null;
+    displayName: string | null;
+    username: string | undefined;
+    googleId: string | null;
+}

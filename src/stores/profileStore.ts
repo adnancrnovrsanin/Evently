@@ -132,8 +132,8 @@ export default class ProfileStore {
     deleteProfile = async () => {
         this.loading = true;
         try {
-            await agent.Profiles.deleteProfile();
             store.userStore.logout();
+            await agent.Profiles.deleteProfile();
             runInAction(() => this.loading = false);
         } catch (error) {
             console.log(error);

@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Button, CircularProgress, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Button, CircularProgress, Dialog, DialogActions, DialogTitle, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import { colorFromAnonimity, getCategoryImage, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
 import Comment from "../../components/Comment/Comment";
@@ -15,12 +15,22 @@ import * as Yup from "yup";
 import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
 import { Textarea } from "@mui/joy";
 import CommentSection from "../../components/CommentSection/CommentSection";
-import DeleteIcon from '@mui/icons-material/Delete';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FlagIcon from '@mui/icons-material/Flag';
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { TransitionProps } from "@mui/material/transitions";
+
+const Transition = React.forwardRef(function Transition(
+    props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+    },
+    ref: React.Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 function EventPage() {
     const { id } = useParams();
@@ -35,9 +45,11 @@ function EventPage() {
         cancelEventToggle,
         updateAttendeance,
         reportHost,
+        deleteEvent,
     } = eventStore;
     const mobileMatch = useMediaQuery('(max-width: 1200px)');
     const [attendeesOpened, setAttendeesOpened] = useState(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     useEffect(() => {
         if (id) {
@@ -151,7 +163,37 @@ function EventPage() {
                         }}>
                             <FlagIcon sx={{ marginRight: "10px" }} /> Report the host
                         </MenuItem>
+
+                        {selectedEvent.isHost && (
+                            <MenuItem
+                                onClick={() => {
+                                    handleClose();
+                                    setOpenDeleteDialog(true);
+                                }}
+                            >
+                                <DeleteIcon sx={{ marginRight: "10px" }} /> Delete event
+                            </MenuItem>
+                        )}
                     </Menu>
+                    <Dialog
+                        open={openDeleteDialog}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={() => setOpenDeleteDialog(false)}
+                        aria-describedby="alert-dialog-slide-description"
+                    >
+                        <DialogTitle>{"Are you sure you want to delete this event?"}</DialogTitle>
+                        <DialogActions sx={{ display: "flex", justifyContent: "space-between"}}>
+                            <Button onClick={() => setOpenDeleteDialog(false)} variant="contained" color='primary'>Cancel</Button>
+                            <Button variant="outlined" color="error"
+                                onClick={() => {
+                                    deleteEvent(selectedEvent.id);
+                                    handleClose();
+                                    navigate('/');
+                                }}
+                            >DELETE</Button>
+                        </DialogActions>
+                    </Dialog>
                 </Grid2>
 
                 <Grid2 xs={12} sm={12} md={12} lg={3} xl={3}>

@@ -7,6 +7,7 @@ import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
 import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import ValidationError from "../../common/form/ValidationError";
+import GoogleIcon from '@mui/icons-material/Google';
 import { ErrorSharp } from "@mui/icons-material";
 
 function RegisterDialog() {
@@ -62,6 +63,7 @@ function RegisterDialog() {
                                 marginTop: "20px",
                                 borderRadius: "10px",
                                 color: "black",
+                                width: "100%",
                                 '&:hover': {
                                     backgroundColor: "#BCE0FD",   
                                     color: "black",
@@ -70,6 +72,32 @@ function RegisterDialog() {
                                 disabled={!isValid || !dirty || isSubmitting}
                             >
                                 SUBMIT
+                            </LoadingButton>
+
+                            <LoadingButton
+                                sx={{
+                                    fontFamily: "Montserrat, serif",
+                                    backgroundColor: "white",
+                                    color: "black",
+                                    padding: "5px 20px",
+                                    border: "2px solid dodgerblue",
+                                    fontSize: { xs: "10px", sm: "10px", md: "12px", lg: "14px", xl: "14px" },
+                                    marginTop: "20px",
+                                    borderRadius: "10px",
+                                    width: "100%",
+                                    '&:hover': {
+                                        backgroundColor: "#BCE0FD",
+                                        color: "white",
+                                    },
+                                }}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    userStore.googleAuth();
+                                }}
+                                loading={userStore.loading}
+                            >
+                                <GoogleIcon sx={{ marginRight: "10px" }} />
+                                CONTINUE WITH GOOGLE
                             </LoadingButton>
                         </Form>
                     )}

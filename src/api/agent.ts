@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { EventFormValues, IEvent } from "../models/event";
 import { PaginatedResult } from "../models/pagination";
 import { Photo, Profile, UserEvent } from "../models/profile";
-import { User, UserFormValues } from "../models/user";
+import { GoogleAuthDto, User, UserFormValues } from "../models/user";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
 
@@ -64,7 +64,7 @@ axios.interceptors.response.use(async response => {
                 toast.error('forbidden')
                 break;
             case 404:
-                router.navigate('/not-found');
+                toast.error('Not Found');
                 break;
             case 500:
                 store.commonStore.setServerError(data);
@@ -96,6 +96,7 @@ const Account = {
     current: () => requests.get<User>('account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/account/register', user),
+    googleAuth: (user: GoogleAuthDto) => requests.post<User>('/account/googleAuth', user),
     verifyEmail: (token: string, email: string) => requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
     resendEmailConfirmationLink: (email: string) => requests.get(`/account/resendEmailConfirmationLink?email=${email}`),
 }

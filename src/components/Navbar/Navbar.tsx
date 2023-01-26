@@ -472,6 +472,7 @@ function Navbar() {
                                         bgcolor: stringToColor(userStore.user.username!),
                                         width: "25px",
                                         height: '25px',
+                                        fontSize: "10px",
                                     }} />
 
                                     <Typography
