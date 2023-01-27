@@ -3,10 +3,10 @@ import { GoogleAuthDto, User, UserFormValues } from "../models/user";
 import agent from "../api/agent";
 import { store } from "./store";
 import { router } from "../router/Routes";
-import { useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../firebase";
 import { toast } from "react-toastify";
+import { ResetPasswordDto } from "../models/resetPasswordDto";
 
 export default class UserStore {
     user: User | null = null;
@@ -107,5 +107,36 @@ export default class UserStore {
 
     setUserPhoto = (url: string) => {
         if (this.user) this.user.image = url;
+    }
+
+    requestPasswordReset = async (email: string) => {
+        try {
+            await agent.Account.requestPasswordReset(email);
+            toast.success("Check your email for the reset link");
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    resetPassword = async (email: string, password: string, token: string) => {
+        this.loading = true;
+        try {
+            const dto: ResetPasswordDto = {
+                email: email,
+                password: password,
+                token: token
+            };
+            await agent.Account.resetPassword(dto);
+            toast.success("Password reset successfully");
+            runInAction(() => {
+                this.loading = false;
+                this.user = null;
+                store.commonStore.setToken(null);
+                router.navigate('/');
+            });
+        } catch (error) {
+            runInAction(() => this.loading = false);
+            throw error;
+        }
     }
 }

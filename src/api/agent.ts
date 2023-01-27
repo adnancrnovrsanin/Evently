@@ -6,6 +6,7 @@ import { Photo, Profile, UserEvent } from "../models/profile";
 import { GoogleAuthDto, User, UserFormValues } from "../models/user";
 import { router } from "../router/Routes";
 import { store } from "../stores/store";
+import { ResetPasswordDto } from "../models/resetPasswordDto";
 
 
 axios.defaults.baseURL = import.meta.env.VITE_APP_API_URL;
@@ -90,6 +91,9 @@ const Events = {
     delete: (id: string) => requests.del<void>(`/events/${id}`),
     attend: (id: string) => requests.post<void>(`/events/${id}/attend`, {}),
     reportHost: (id: string) => requests.post<void>(`/events/${id}/reportHost`, {}),
+    requestInvite: (id: string) => requests.post<void>(`/events/${id}/requestInvite`, {}),
+    removeInviteRequest: (id: string, username: string) => requests.del<void>(`/events/${id}/removeRequest?username=${username}`),
+    acceptInviteRequest: (id: string, username: string) => requests.post<void>(`/events/${id}/acceptRequest?username=${username}`, {}),
 }
 
 const Account = {
@@ -99,6 +103,8 @@ const Account = {
     googleAuth: (user: GoogleAuthDto) => requests.post<User>('/account/googleAuth', user),
     verifyEmail: (token: string, email: string) => requests.post<void>(`/account/verifyEmail?token=${token}&email=${email}`, {}),
     resendEmailConfirmationLink: (email: string) => requests.get(`/account/resendEmailConfirmationLink?email=${email}`),
+    requestPasswordReset: (email: string) => requests.post<void>(`/account/forgotPassword?email=${email}`, {}),
+    resetPassword: (resetPasswordDto: ResetPasswordDto) => requests.post<void>(`/account/resetPassword`, resetPasswordDto),
 }
 
 const Profiles = {

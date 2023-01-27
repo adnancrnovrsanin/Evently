@@ -1,3 +1,4 @@
+import { InviteRequest } from "./inviteRequest";
 import { Profile } from "./profile";
 
 export interface IEvent {
@@ -15,6 +16,7 @@ export interface IEvent {
     isGoing?: boolean;
     isHost?: boolean
     attendees: Profile[]
+    inviteRequests: InviteRequest[]
     host?: Profile;
 }
 
