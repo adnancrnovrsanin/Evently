@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useStore } from "../../stores/store";
 import React from "react";
 import { stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
-import userStore from "../../stores/userStore";
 import { Link } from "react-router-dom";
 import DeleteIcon from '@mui/icons-material/Delete';
 

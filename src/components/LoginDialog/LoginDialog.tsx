@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, Divider, Typography } from "@mui/material";
+import { Dialog, DialogContent, Typography } from "@mui/material";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
 import { ErrorMessage, Form, Formik } from "formik";
@@ -6,9 +6,11 @@ import './style.css';
 import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
 import LoadingButton from "@mui/lab/LoadingButton";
 import GoogleIcon from '@mui/icons-material/Google';
+import { useNavigate } from "react-router-dom";
 
 function LoginDialog() {
     const { userStore, loginDialogStore } = useStore();
+    const navigate = useNavigate();
 
     return (
         <Dialog open={loginDialogStore.loginDialog.open} onClose={() => loginDialogStore.closeLoginDialog()}>
@@ -41,6 +43,25 @@ function LoginDialog() {
                             <MyTextInput choice="loginTextField" placeholder="example@domain.com" name='email' label="E-mail" />
                             <MyTextInput choice="loginTextField" placeholder="password" name="password" type="password" label="Password" />
                             <ErrorMessage name="error" render={() => <label style={{ marginBottom: 10 }} color="red">{errors.error}</label>}/>
+
+                            <Typography
+                                sx={{
+                                    fontFamily: "Montserrat, serif",
+                                    fontSize: { xs: "11px", sm: "11px", md: "12px", lg: "14px", xl: "14px" },
+                                    '&:hover': {
+                                        cursor: "pointer",
+                                        color: "#7C05F2"
+                                    },
+                                    textDecoration: "underline",
+                                }}
+                                onClick={() => {
+                                    navigate('/account/forgotPassword');
+                                    loginDialogStore.closeLoginDialog();
+                                }}
+                            >
+                                Forgot password?
+                            </Typography>
+
                             <LoadingButton disabled={!isValid || !dirty || isSubmitting} loading={isSubmitting} sx={{
                                 fontFamily: "Playfair Display, serif",
                                 backgroundColor: "#7C05F2",

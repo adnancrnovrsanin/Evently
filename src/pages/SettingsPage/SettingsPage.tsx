@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { observer } from 'mobx-react-lite';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Slide } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogTitle, Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import { useStore } from '../../stores/store';
 import { useNavigate } from 'react-router-dom';
@@ -88,7 +88,9 @@ function SettingsPage() {
           sx={{ borderRight: 1, borderColor: 'divider' }}
         >
           <Tab label="Account" {...a11yProps(0)} />
+          <Tab label="Security" {...a11yProps(1)} />
         </Tabs>
+
         <TabPanel value={value} index={0}>
           <Button
               variant='contained'
@@ -117,6 +119,18 @@ function SettingsPage() {
                   >DELETE</Button>
               </DialogActions>
           </Dialog>
+        </TabPanel>
+
+        <TabPanel value={value} index={1}>
+          <Button
+            variant='contained'
+            sx={{ width: '100%' }}
+            onClick={() => {
+              navigate('/account/forgotPassword');
+            }}
+          >
+            Reset password
+          </Button>
         </TabPanel>
       </Box>
     </Grid2>

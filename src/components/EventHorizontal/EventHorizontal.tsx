@@ -1,5 +1,4 @@
 import { Avatar, Typography } from '@mui/material';
-import { deepPurple } from '@mui/material/colors';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import './style.css';

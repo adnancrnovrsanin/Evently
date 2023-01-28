@@ -1,4 +1,4 @@
-import { Button, IconButton, Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
@@ -6,7 +6,6 @@ import PhotoUploadWidgetDropzone from "./PhotoWidgetDropzone";
 import PhotoWidgetCropper from "./PhotoWidgetCropper";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { CircularProgress } from "@mui/joy";
 import { LoadingButton } from "@mui/lab";
 
 interface Props {

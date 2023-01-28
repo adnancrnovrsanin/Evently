@@ -1,7 +1,6 @@
 import { TextField } from "@mui/material";
-import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDatePicker, StaticDateTimePicker } from "@mui/x-date-pickers";
+import { PickersDayProps, PickersDay, pickersDayClasses, LocalizationProvider, StaticDateTimePicker } from "@mui/x-date-pickers";
 import dayjs, { Dayjs } from "dayjs";
-import { useEffect, useState } from "react";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
@@ -9,7 +8,6 @@ import './style.css';
 import { useField } from "formik";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../stores/store";
-import { IEvent } from "../../../models/event";
 
 const ArrowLeft = () => {
   return (

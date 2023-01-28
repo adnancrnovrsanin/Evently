@@ -1,6 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
-import axios from "axios";
 import { Profile } from "../models/profile";
 import { toast } from "react-toastify";
 import agent from "../api/agent";

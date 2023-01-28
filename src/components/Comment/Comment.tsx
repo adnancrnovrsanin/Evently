@@ -1,10 +1,8 @@
-import { Avatar, Divider, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material";
+import { Avatar, Divider, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { observer } from "mobx-react-lite";
-import { IEvent } from "../../models/event";
 import { stringToColor, stringAvatar } from "../../helpers/usefulFunctions";
 import { ChatComment } from "../../models/comment";
-import React from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";

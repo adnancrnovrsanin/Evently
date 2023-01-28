@@ -1,18 +1,15 @@
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
-import Tab, { TabProps } from '@mui/material/Tab';
+import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import { SyntheticEvent, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useStore } from '../../stores/store';
-import EventCard from '../EventCard/EventCard';
 import { Profile, UserEvent } from '../../models/profile';
 import './style.css';
-import { Button, Card, CardActions, CardContent, CardMedia, CircularProgress } from '@mui/material';
-import eventPic from '../../assets/elevate-nYgy58eb9aw-unsplash.jpg';
+import { Card, CardContent, CardMedia, CircularProgress } from '@mui/material';
 import dayjs from 'dayjs';
-import InitialLoader from '../InitialLoader/InitialLoader';
 import { useNavigate } from 'react-router-dom';
 import { getCategoryImage } from '../../helpers/usefulFunctions';
 

@@ -5,18 +5,19 @@ import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import EventHorizontal from "../../components/EventHorizontal/EventHorizontal";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import heroPic from '../../assets/kelsey-chance-ZrhtQyGFG6s-unsplash.jpg';
-import { Avatar, Box, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Tab, Typography, styled, useMediaQuery } from "@mui/material";
+import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Tab, Typography, styled, useMediaQuery } from "@mui/material";
 import Calendar from "../../components/Calendar/Calendar";
 import React from "react";
 import { stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
-import userStore from "../../stores/userStore";
 import { Link } from "react-router-dom";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import ProfileEvents from "../../components/ProfileEvents/ProfileEvents";
-import ProfileEventsMobile from "../../components/ProfileEventsMobile";
 import ProfileFollowings from "../../components/ProfileFollowings/ProfileFollowings";
-import ProfilePhotos from "../../components/ProfilePhotos";
 import EventCard from "../../components/EventCard/EventCard";
+import InviteRequestCard from "../../components/InviteRequestCard/InviteRequestCard";
+import { Swiper, SwiperSlide } from "swiper/react";
+import 'swiper/css';
+import 'swiper/css/bundle';
+import { A11y, Navigation, Pagination, Scrollbar } from "swiper";
 
 interface Props {
     username: string;
@@ -57,7 +58,7 @@ const AntTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} /
 
 function UserHomePage({ username }: Props) {
     const { 
-        userDashboardStore: { loadEvents, loading, eventsByDate, setPredicate, initialLoad},
+        userDashboardStore: { loadEvents, loading, eventsByDate, setPredicate, initialLoad, getInviteRequestsForUserByDate },
         eventStore,
         userStore: { user },
         profileStore: { loadFollowings, followings, profile, loadProfile, loadingProfile, loadingFollowings }
@@ -65,6 +66,7 @@ function UserHomePage({ username }: Props) {
     const matchMobile = useMediaQuery('(max-width: 600px)');
     const matchEvents = useMediaQuery('(max-width: 1200px)');
     const [activeTab, setActiveTab] = useState("1");
+    const matchInvites = useMediaQuery('(max-width: 800px)');
 
     useEffect(() => {
         if (username) initialLoad(username);
@@ -111,13 +113,37 @@ function UserHomePage({ username }: Props) {
                         <TabList onChange={handleChange} aria-label="lab API tabs example" textColor="secondary" indicatorColor="secondary"
                             scrollButtons variant="scrollable" allowScrollButtonsMobile
                         >
-                            <AntTab label="See your upcoming events" value="1" />
-                            <AntTab label="See which people you follow" value="2" />
+                            <AntTab label="See your pending requests" value="1" />
+                            <AntTab label="See your upcoming events" value="2" />
+                            <AntTab label="See which people you follow" value="3" />
                         </TabList>
                         <Box sx={{ 
                             padding: "30px 0",
                         }}>
                             <TabPanel value="1">
+                                {getInviteRequestsForUserByDate.length > 0 ? (
+                                    <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} container>
+                                        {getInviteRequestsForUserByDate.map((inviteRequest, i) => (
+                                            <InviteRequestCard key={i} inviteRequest={inviteRequest} />
+                                        ))}
+                                    </Grid2>
+                                ) : (
+                                    <Typography
+                                        sx={{
+                                            fontFamily: 'Montserrat, sans-serif',
+                                            fontWeight: 'bold',
+                                            fontSize: "1.1rem",
+                                            padding: "20px 0px 0px 20px",
+                                            marginBottom: "20px",
+                                            textAlign: "center",
+                                        }}
+                                    >
+                                        You don't have any invite requests.
+                                    </Typography>
+                                )}
+                            </TabPanel>
+
+                            <TabPanel value="2">
                                 {eventsByDate.length > 0 ? (
                                     eventsByDate.map(event => (
                                         <EventCard key={event.id} event={event} />
@@ -139,14 +165,59 @@ function UserHomePage({ username }: Props) {
                                 )}
                             </TabPanel>
 
-                            <TabPanel value="2">
+                            <TabPanel value="3">
                                 <ProfileFollowings profile={profile}/>
                             </TabPanel>
+
                         </Box>
                     </TabContext>
                 </Box>
             ) : (
                 <>
+                    {getInviteRequestsForUserByDate.length > 0 && (
+                        <Grid2 xs={12} sm={12} md={12} lg={12}
+                            sx={{
+                                marginTop: "20px",
+                                marginBottom: "10px"
+                            }}
+                        >
+                            <Typography
+                                sx={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontWeight: 'bold',
+                                    fontSize: "2rem",
+                                    padding: "20px 0px 0px 20px",
+                                    marginBottom: "20px",
+                                }}
+                            >
+                                Requests that wait for your response:
+                            </Typography>
+                        </Grid2>
+                    )}
+
+                    {getInviteRequestsForUserByDate.length > 0 && (
+                        <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} marginBottom="20px">
+                            <Swiper
+                                modules={[Navigation, Pagination, Scrollbar, A11y]}
+                                spaceBetween={50}
+                                slidesPerView={matchInvites ? 2 : 3}
+                                navigation
+                                pagination={{ clickable: true }}
+                                scrollbar={{ draggable: true }}
+                                onSwiper={(swiper) => console.log(swiper)}
+                                onSlideChange={() => console.log('slide change')}
+                            >
+                                {getInviteRequestsForUserByDate.map((inviteRequest, i) => (
+                                    <SwiperSlide
+                                        key={i}
+                                    >
+                                        <InviteRequestCard inviteRequest={inviteRequest} />
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        </Grid2>
+                    )}
+
                     <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             sx={{

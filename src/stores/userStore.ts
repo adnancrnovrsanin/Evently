@@ -118,13 +118,14 @@ export default class UserStore {
         }
     }
 
-    resetPassword = async (email: string, password: string, token: string) => {
+    resetPassword = async (email: string, token: string, password: string, confirmPassword: string) => {
         this.loading = true;
         try {
             const dto: ResetPasswordDto = {
                 email: email,
+                token: token,
                 password: password,
-                token: token
+                confirmPassword: confirmPassword
             };
             await agent.Account.resetPassword(dto);
             toast.success("Password reset successfully");

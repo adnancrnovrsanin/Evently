@@ -3,12 +3,11 @@ import navLogo from '../../assets/LogoBlack.png';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PersonIcon from '@mui/icons-material/Person';
 import './style.css';
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Logout, Settings } from "@mui/icons-material";
-import { router } from "../../router/Routes";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { categoryOptions } from "../../common/options/categoryOptions";
@@ -632,7 +631,7 @@ function Navbar() {
                             <Typography 
                                 sx={{ 
                                     fontSize: "12px", fontWeight: 600,
-                                    textDecoration: "none", color: "white",
+                                    textDecoration: "none", color: "black",
                                     marginLeft: "7px",
                                 }}
                             >Sign Up</Typography>

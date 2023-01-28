@@ -1,5 +1,4 @@
 import { Avatar, Typography } from "@mui/material";
-import { deepPurple } from "@mui/material/colors";
 import { IEvent } from "../../models/event";
 import './style.css';
 import { getCategoryImage, stringToColor, stringAvatar, truncate } from "../../helpers/usefulFunctions";

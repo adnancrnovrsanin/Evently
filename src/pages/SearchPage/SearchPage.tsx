@@ -7,7 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import EventList from "../../components/EventList/EventList";
 import { PagingParams } from "../../models/pagination";
 import { Field, FieldProps, Form, Formik } from "formik";
-import { Button, Drawer, FormControl, IconButton, InputLabel, Menu, MenuItem, Select, SelectChangeEvent, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Button, Drawer, FormControl, IconButton, InputLabel, Menu, MenuItem, Select, SelectChangeEvent, Typography, useMediaQuery } from "@mui/material";
 import './style.css';
 import Calendar from "../../components/Calendar/Calendar";
 import SortIcon from '@mui/icons-material/Sort';

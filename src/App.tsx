@@ -10,7 +10,6 @@ import Navbar from './components/Navbar/Navbar';
 import LoginDialog from './components/LoginDialog/LoginDialog';
 import RegisterDialog from './components/RegisterDialog/RegisterDialog';
 import InitialLoader from './components/InitialLoader/InitialLoader';
-import Footer from './components/Footer/Footer';
 import UserHomePage from './pages/UserHomePage/UserHomePage';
 
 function App() {

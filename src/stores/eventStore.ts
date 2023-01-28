@@ -5,6 +5,7 @@ import { EventFormValues, IEvent } from "../models/event";
 import { Profile } from "../models/profile";
 import { store } from "./store";
 import { toast } from "react-toastify";
+import { InviteRequest } from "../models/inviteRequest";
 
 export default class EventStore {
     eventRegistry = new Map<string, IEvent>();
@@ -326,6 +327,62 @@ export default class EventStore {
                 }
             })
         })
+    }
+
+    acceptInviteRequest = async (id: string, username: string) => {
+        this.loading = true;
+        try {
+            await agent.Events.acceptInviteRequest(id, username);
+            runInAction(() => {
+                this.loadEvents();
+                store.userDashboardStore.loadEvents();
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
+    }
+
+    removeInviteRequest = async (id: string, username: string) => {
+        this.loading = true;
+        try {
+            await agent.Events.removeInviteRequest(id, username);
+            runInAction(() => {
+                this.loadEvents();
+                store.userDashboardStore.loadEvents();
+            });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
+    }
+
+    requestAnInvite = async (id: string | undefined) => {
+        this.loading = true;
+        try {
+            if (id) {
+                await agent.Events.requestInvite(id);
+                runInAction(() => {
+                    let inviteRequest: InviteRequest = {
+                        username: store.userStore.user!.username,
+                        displayName: store.userStore.user!.displayName,
+                        image: store.userStore.user?.image,
+                        createdAt: new Date(),
+                        //@ts-ignore
+                        event: this.getEvent(id)
+                    };
+                    this.selectedEvent!.inviteRequests?.push(inviteRequest);
+                    this.loadEvents();
+                    store.userDashboardStore.loadEvents();
+                });
+            } else toast.error('Problem with request');
+        } catch (error) {
+            console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
+        }
     }
 
     reportHost = async (id: string) => {

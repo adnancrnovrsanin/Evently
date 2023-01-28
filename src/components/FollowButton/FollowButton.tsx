@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { Profile } from "../../models/profile";
 import { useStore } from "../../stores/store";
-import { SyntheticEvent, useEffect } from "react";
-import { Button, Paper } from "@mui/material";
+import { SyntheticEvent } from "react";
+import { Paper } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 
 interface Props {

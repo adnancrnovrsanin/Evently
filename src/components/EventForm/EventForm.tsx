@@ -3,22 +3,18 @@ import { observer } from "mobx-react-lite";
 import InitialLoader from "../InitialLoader/InitialLoader";
 import { useStore } from "../../stores/store";
 import { useNavigate, useParams } from "react-router-dom";
-import EditProfileTextInput from "../../common/form/EditProfileTextInput/EditProfileTextInput";
 import { useEffect, useState } from "react";
 import { EventFormValues } from "../../models/event";
-import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select, TextField, Typography, useMediaQuery } from "@mui/material";
+import { Box, Typography, useMediaQuery } from "@mui/material";
 import { v4 as uuid } from "uuid";
 import * as Yup from "yup";
 import './style.css';
 import EventFormSelectInput from "../../common/form/EventFormSelectInput/EventFormSelectInput";
 import { categoryOptions } from "../../common/options/categoryOptions";
 import EventFormTextInput from "../../common/form/EventFormTextInput/EventFormTextInput";
-import Calendar from "../Calendar/Calendar";
-import Grid2 from "@mui/material/Unstable_Grid2";
 import { anonimityOptions } from "../../common/options/anonimityOptions";
 import FormDatePicker from "../../common/form/FormDatePicker/FormDatePicker";
 import EventFormTextarea from "../../common/form/EventFormTextarea/EventFormTextarea";
-import { Profile } from "../../models/profile";
 import { LoadingButton } from "@mui/lab";
 
 function EventForm() {

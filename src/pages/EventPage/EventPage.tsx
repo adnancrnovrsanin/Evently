@@ -1,24 +1,17 @@
 import { observer } from "mobx-react-lite";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useStore } from "../../stores/store";
 import React, { useEffect, useState } from "react";
 import InitialLoader from "../../components/InitialLoader/InitialLoader";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import './style.css';
-import { Avatar, Button, CircularProgress, Dialog, DialogActions, DialogTitle, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemSecondaryAction, ListItemText, Menu, MenuItem, Paper, Slide, Typography, useMediaQuery } from "@mui/material";
+import { Avatar, Button, Dialog, DialogActions, DialogTitle, Drawer, IconButton, List, ListItem, ListItemAvatar, ListItemText, Menu, MenuItem, Paper, Slide, Typography, useMediaQuery } from "@mui/material";
 import { colorFromAnonimity, getCategoryImage, makeFirstLetterCapital, stringAvatar, stringToColor } from "../../helpers/usefulFunctions";
 import { LoadingButton } from "@mui/lab";
-import Comment from "../../components/Comment/Comment";
-import { ChatComment } from "../../models/comment";
-import { Field, FieldProps, Form, Formik } from "formik";
-import * as Yup from "yup";
-import MyTextAreaInput from "../../common/form/MyTextAreaInput/MyTextAreaInput";
-import { Textarea } from "@mui/joy";
 import CommentSection from "../../components/CommentSection/CommentSection";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FlagIcon from '@mui/icons-material/Flag';
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TransitionProps } from "@mui/material/transitions";
@@ -46,6 +39,7 @@ function EventPage() {
         updateAttendeance,
         reportHost,
         deleteEvent,
+        requestAnInvite,
     } = eventStore;
     const mobileMatch = useMediaQuery('(max-width: 1200px)');
     const [attendeesOpened, setAttendeesOpened] = useState(false);
@@ -558,10 +552,30 @@ function EventPage() {
                                 >
                                     Cancel attendance
                                 </LoadingButton>
+                            ) : selectedEvent?.inviteRequests.some(r => r.username === userStore.user?.username) ? (
+                                <LoadingButton
+                                    loading={loading}
+                                    disabled={true}
+                                    variant="contained"
+                                    sx={{
+                                        fontFamily: 'Montserrat, sans-serif',
+                                        color: "white",
+                                        backgroundColor: "gray",
+                                        fontStyle: "italic",
+                                        padding: "5px 50px",
+                                        fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
+                                        '&:hover': {
+                                            backgroundColor: "gray"
+                                        },
+                                        float: "right"
+                                    }}
+                                >
+                                    Request Pending
+                                </LoadingButton>
                             ) : (
                                 <LoadingButton
                                     loading={loading}
-                                    disabled={selectedEvent.isCancelled}
+                                    disabled={selectedEvent?.isCancelled}
                                     variant="contained"
                                     sx={{
                                         fontFamily: 'Montserrat, sans-serif',
@@ -576,7 +590,12 @@ function EventPage() {
                                         float: "right"
                                     }}
 
-                                    onClick={updateAttendeance}
+                                    onClick={() => {
+                                        if (selectedEvent?.anonimity === "PUBLIC")
+                                            updateAttendeance();
+                                        else
+                                            requestAnInvite(selectedEvent?.id);
+                                    }}
                                 >
                                     Join Event
                                 </LoadingButton>

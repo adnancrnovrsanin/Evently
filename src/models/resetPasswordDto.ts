@@ -1,5 +1,6 @@
 export interface ResetPasswordDto {
     email: string;
-    password: string;
     token: string;
+    password: string;
+    confirmPassword: string;
 }

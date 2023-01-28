@@ -1,4 +1,3 @@
-import { optionClasses } from "@mui/joy";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useField } from "formik";
 import '../../../pages/EventFormPage/style.css';

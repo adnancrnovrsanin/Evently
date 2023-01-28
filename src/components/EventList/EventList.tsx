@@ -4,7 +4,6 @@ import { useStore } from "../../stores/store";
 import EventCard from "../EventCard/EventCard";
 import EventHorizontal from "../EventHorizontal/EventHorizontal";
 import { useMediaQuery } from "@mui/material";
-import Grid2 from "@mui/material/Unstable_Grid2";
 
 function EventList() {
     const { eventStore: { eventsByDate } } = useStore();

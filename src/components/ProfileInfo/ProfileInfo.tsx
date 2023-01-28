@@ -1,11 +1,10 @@
-import { Typography, useMediaQuery } from "@mui/material";
-import profilePic from "../../assets/profilna.jpg";
+import { Typography } from "@mui/material";
 import { useStore } from "../../stores/store";
 import { observer } from "mobx-react-lite";
 import '../../pages/ProfilePage/style.css';
 import FollowButton from "../FollowButton/FollowButton";
 import { Profile } from "../../models/profile";
-import { stringToColor, styleHelper } from "../../helpers/usefulFunctions";
+import { styleHelper } from "../../helpers/usefulFunctions";
 
 interface Props {
     profile: Profile;

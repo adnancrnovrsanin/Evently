@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { Profile } from "../../models/profile";
-import { Button, Card, CardActions, CardContent, CardMedia, Paper, Typography } from "@mui/material";
-import profilePic from '../../assets/profilna.jpg';
+import { Card, CardContent, CardMedia, Paper, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { stringAvatar, styleHelper, truncate } from "../../helpers/usefulFunctions";
+import { styleHelper, truncate } from "../../helpers/usefulFunctions";
 
 interface Props {
     profile: Profile;

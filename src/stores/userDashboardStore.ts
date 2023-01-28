@@ -1,7 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { IEvent } from "../models/event";
 import { store } from "./store";
-import { TroubleshootOutlined } from "@mui/icons-material";
 import agent from "../api/agent";
 
 export default class UserDashboardStore {
@@ -30,6 +29,13 @@ export default class UserDashboardStore {
                     return a.date!.getTime() - b.date!.getTime();
                 }
             });
+    }
+
+    get getInviteRequestsForUserByDate() {
+        let events = Array.from(this.eventRegistry.values()).filter(e => e.isHost && e.inviteRequests.length > 0);
+        events.map(e => e.inviteRequests.map(i => i.event = e));
+        let inviteRequests = events.map(e => e.inviteRequests).flat();
+        return inviteRequests.sort((a, b) => b.createdAt!.getTime() - a.createdAt!.getTime());
     }
 
     resetAllPredicates = () => {
@@ -116,6 +122,7 @@ export default class UserDashboardStore {
             event.host = event.attendees?.find(x => x.username === event.hostUsername);
         }
         event.date = new Date(event.date!);
+        event.inviteRequests.map(i => i.createdAt = new Date(i.createdAt));
         this.eventRegistry.set(event.id, event);
     }
 

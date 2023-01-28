@@ -1,4 +1,4 @@
-import { Skeleton, Stack } from '@mui/material'
+import { Skeleton } from '@mui/material'
 import Grid2 from '@mui/material/Unstable_Grid2'
 
 export default function EventPlaceholder() {

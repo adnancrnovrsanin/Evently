@@ -7,7 +7,6 @@ import explainedProcess4 from '../../assets/explainedProcess4.png';
 import { Field, FieldProps, Form, Formik } from 'formik';
 import { useStore } from '../../stores/store';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import { Button, useMediaQuery } from '@mui/material';
 
 function HomePage() {

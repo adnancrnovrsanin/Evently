@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores/store";
-import { Dialog, DialogContent } from "@mui/material";
+import { Dialog, DialogContent, Typography } from "@mui/material";
 import { ErrorMessage, Form, Formik } from "formik";
 import './style.css';
 import MyTextInput from "../../common/form/MyTextInput/MyTextInput";
@@ -8,10 +8,11 @@ import { LoadingButton } from "@mui/lab";
 import * as Yup from "yup";
 import ValidationError from "../../common/form/ValidationError";
 import GoogleIcon from '@mui/icons-material/Google';
-import { ErrorSharp } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 function RegisterDialog() {
     const { userStore, registerDialogStore, profileStore } = useStore();
+    const navigate = useNavigate();
     return (
         <Dialog open={registerDialogStore.registerDialog.open} onClose={() => registerDialogStore.closeRegisterDialog()}>
             <DialogContent sx={{
@@ -53,6 +54,24 @@ function RegisterDialog() {
 
                             <ErrorMessage name="error" render={() => <ValidationError errors={errors.error} />} />
 
+                            <Typography
+                                sx={{
+                                    fontFamily: "Montserrat, serif",
+                                    fontSize: { xs: "11px", sm: "11px", md: "12px", lg: "14px", xl: "14px" },
+                                    '&:hover': {
+                                        cursor: "pointer",
+                                        color: "#BCE0FD"
+                                    },
+                                    textDecoration: "underline",
+                                }}
+                                onClick={() => {
+                                    navigate('/account/forgotPassword');
+                                    registerDialogStore.closeRegisterDialog();
+                                }}
+                            >
+                                Forgot password?
+                            </Typography>
+
                             <LoadingButton loading={isSubmitting} sx={{
                                 fontFamily: "Playfair Display, serif",
                                 backgroundColor: "#BCE0FD",
@@ -87,7 +106,6 @@ function RegisterDialog() {
                                     width: "100%",
                                     '&:hover': {
                                         backgroundColor: "#BCE0FD",
-                                        color: "white",
                                     },
                                 }}
                                 onClick={e => {

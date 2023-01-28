@@ -3,7 +3,6 @@ import { Paper, Typography, CircularProgress } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Formik, Field, FieldProps } from "formik";
 import { Form } from "react-router-dom";
-import commentStore from "../../stores/commentStore";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useStore } from "../../stores/store";
