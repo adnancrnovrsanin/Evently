@@ -1,6 +1,7 @@
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
 import { useField } from "formik";
 import '../../../pages/EventFormPage/style.css';
+import { useEffect, useState } from "react";
 
 interface Props {
     placeholder: string;
@@ -11,12 +12,31 @@ interface Props {
 
 export default function EventFormSelectInput(props: Props) {
     const [field, meta, helpers] = useField(props.name);
+    const [helperTextValue, setHelperTextValue] = useState<string>("");
+
+    useEffect(() => {
+        switch (field.value) {
+            case "PUBLIC":
+                setHelperTextValue("Other users will be able to search for your event and see it on your profile page.");
+                break;
+            case "ON INVITE":
+                setHelperTextValue("Other users will be able to search for your event and see it on your profile page, but they will have to ask you for your permission to join it.");
+                break;
+            case "PRIVATE":
+                setHelperTextValue("Other users will not be able to search for your event and see it on your profile page. Only those who have a link to your event will be able to see it.");
+                break;
+            default:
+                setHelperTextValue("");
+                break;
+        }
+    }, [field.value])
+
     return (
         <FormControl variant="standard" sx={{ minWidth: 120, margin: "20px 0 20px 0" }}>
-            <InputLabel id="demo-simple-select-standard-label" sx={{ color: "darkblue", fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}>{props.label}</InputLabel>
+            <InputLabel id="demo-simple-select-helper-label" sx={{ color: "darkblue", fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}>{props.label}</InputLabel>
             <Select
-                labelId="demo-simple-select-standard-label"
-                id="demo-simple-select-standard"
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
                 value={field.value || ''}
                 //@ts-ignore
                 onChange={(e, d) => helpers.setValue(d.props.value)}
@@ -24,6 +44,11 @@ export default function EventFormSelectInput(props: Props) {
             >
                 {props.options.map((option: any, x: number) => <MenuItem key={x} value={option.value}>{option.text}</MenuItem>)}
             </Select>
+            {props.name === "anonimity" && (
+                <FormHelperText>
+                    {helperTextValue}
+                </FormHelperText>
+            )}
         </FormControl>
     );
 }

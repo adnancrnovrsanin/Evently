@@ -19,7 +19,7 @@ import { LoadingButton } from "@mui/lab";
 
 function EventForm() {
     const { eventStore, userStore: { user } } = useStore();
-    const { createEvent, updateEvent, loadingInitial, loadEvent } = eventStore;
+    const { createEvent, updateEvent, loadingInitial, loadEvent, loading } = eventStore;
     const { id } = useParams();
     const navigate = useNavigate();
     const calendarLabelMatch = useMediaQuery('(max-width: 900px)');
@@ -88,7 +88,7 @@ function EventForm() {
                             <EventFormTextarea placeholder="Describe your event..." name="description" rows={4} />
 
                             <LoadingButton type='submit' 
-                                // disabled={isSubmitting || !isValid || !dirty}
+                                disabled={isSubmitting || !isValid || !dirty}
                                 variant="contained"
                                 sx={{
                                     padding: "3px 25px",
@@ -107,6 +107,7 @@ function EventForm() {
                                         color: 'black',
                                     },
                                 }}
+                                loading={isSubmitting || loading}
                             >
                                 POST
                             </LoadingButton>

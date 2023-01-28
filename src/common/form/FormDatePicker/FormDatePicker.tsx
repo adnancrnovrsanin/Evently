@@ -8,6 +8,7 @@ import './style.css';
 import { useField } from "formik";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../stores/store";
+import { useEffect } from "react";
 
 const ArrowLeft = () => {
   return (
@@ -35,22 +36,12 @@ function FormDatePicker(props: Props) {
     const [meta, field, helpers] = useField(props.name);
     const { eventStore: { usersEvents }} = useStore();
 
-    const checkEventDay = (date: Dayjs) => {
-      let result = false;
-      for (const event of usersEvents) {
-        if (date.diff(dayjs(event.date!), "day") === 0 && date.diff(dayjs(event.date!), "month") === 0 && date.diff(dayjs(event.date!), "year") === 0) {
-          result = true;
-          break;
-        }
-      }
-      return result;
-    }
-
     const renderWeekPickerDay = (
       date: Dayjs,
       selectedDates: Array<Dayjs | null>,
       pickersDayProps: PickersDayProps<Dayjs>
     ) => {
+
       return (
         <PickersDay
           {...pickersDayProps}
@@ -59,8 +50,8 @@ function FormDatePicker(props: Props) {
               backgroundColor: "#7C05F2"
             },
             fontSize: "13px",
-            borderRadius: checkEventDay(date) ? "0" : "100%",
-            borderBottom: checkEventDay(date) ? "3px solid #7C05F2" : "none" 
+            borderRadius: usersEvents.some(e => date.get("date") === dayjs(e.date!).get("date") && date.get("month") === dayjs(e.date!).get("month") && date.get("year") === dayjs(e.date!).get("year")) ? "0" : "100%",
+            borderBottom: usersEvents.some(e => date.get("date") === dayjs(e.date!).get("date") && date.get("month") === dayjs(e.date!).get("month") && date.get("year") === dayjs(e.date!).get("year")) ? "3px solid #7C05F2" : "none" 
           }}
         />
       );

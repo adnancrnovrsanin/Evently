@@ -38,6 +38,7 @@ const AntTab = styled((props: StyledTabProps) => <Tab disableRipple {...props} /
             minWidth: 0,
         },
         fontWeight: theme.typography.fontWeightRegular,
+        fontSize: theme.typography.pxToRem(11),
         marginRight: theme.spacing(1),
         color: 'rgba(0, 0, 0, 0.85)',
         fontFamily: [
@@ -65,7 +66,7 @@ function UserHomePage({ username }: Props) {
     } = useStore();
     const matchMobile = useMediaQuery('(max-width: 600px)');
     const matchEvents = useMediaQuery('(max-width: 1200px)');
-    const [activeTab, setActiveTab] = useState("1");
+    const [activeTab, setActiveTab] = useState(getInviteRequestsForUserByDate.length > 0 ? "1" : "2");
     const matchInvites = useMediaQuery('(max-width: 800px)');
 
     useEffect(() => {
@@ -113,7 +114,7 @@ function UserHomePage({ username }: Props) {
                         <TabList onChange={handleChange} aria-label="lab API tabs example" textColor="secondary" indicatorColor="secondary"
                             scrollButtons variant="scrollable" allowScrollButtonsMobile
                         >
-                            <AntTab label="See your pending requests" value="1" />
+                            {getInviteRequestsForUserByDate.length > 0 && (<AntTab label="See your pending requests" value="1" />)}
                             <AntTab label="See your upcoming events" value="2" />
                             <AntTab label="See which people you follow" value="3" />
                         </TabList>

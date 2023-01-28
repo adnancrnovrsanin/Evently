@@ -207,6 +207,7 @@ export default class EventStore {
     }
 
     createEvent = async (event: EventFormValues) => {
+        this.loading = true;
         const user = store.userStore!.user;
         const profile = new Profile(user!);
 
@@ -225,10 +226,13 @@ export default class EventStore {
             });
         } catch (error) {
             console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
         }
     }
 
     updateEvent = async (event: EventFormValues) => {
+        this.loading = true;
         try {
             await agent.Events.update(event);
             runInAction(() => {
@@ -241,6 +245,8 @@ export default class EventStore {
             });
         } catch (error) {
             console.log(error);
+        } finally {
+            runInAction(() => this.loading = false);
         }
     }
 
