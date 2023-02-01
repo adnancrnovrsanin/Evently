@@ -254,6 +254,19 @@ function EventPage() {
                                 fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
                             }}
                         >
+                            Location: <span style={{ color: "purple", fontStyle: "italic", fontWeight: "bold" }}>{`${selectedEvent.venue}, ${selectedEvent.city}, ${selectedEvent.country}`}</span>
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                color: 'dodgerblue',
+                                textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
+                            }}
+                        >
                             {"Category: " + makeFirstLetterCapital(selectedEvent.category) + " Event"}
                         </Typography>
                     </Grid2>
@@ -591,10 +604,10 @@ function EventPage() {
                                     }}
 
                                     onClick={() => {
-                                        if (selectedEvent?.anonimity === "PUBLIC")
-                                            updateAttendeance();
-                                        else
+                                        if (selectedEvent?.anonimity === "ON INVITE")
                                             requestAnInvite(selectedEvent?.id);
+                                        else
+                                            updateAttendeance();
                                     }}
                                 >
                                     Join Event
