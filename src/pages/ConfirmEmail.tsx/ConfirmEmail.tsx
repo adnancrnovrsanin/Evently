@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import useQuery from "../../common/util/hooks";
 import agent from "../../api/agent";
 import { toast } from "react-toastify";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { useStore } from "../../stores/store";
 import EmailIcon from '@mui/icons-material/Email';
+import { useQuery } from "../../common/util/hooks";
 
 export default function ConfirmEmail() {
     const email = useQuery().get('email') as string;

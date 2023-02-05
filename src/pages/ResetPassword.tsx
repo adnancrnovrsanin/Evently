@@ -6,8 +6,8 @@ import { observer } from "mobx-react-lite";
 import * as Yup from "yup";
 import logo from "../assets/LogoBlack.png";
 import { useStore } from "../stores/store";
-import useQuery from "../common/util/hooks";
 import ValidationError from "../common/form/ValidationError";
+import { useQuery } from "../common/util/hooks";
 
 function EmailSubmit() {
     const { userStore: { resetPassword } } = useStore();

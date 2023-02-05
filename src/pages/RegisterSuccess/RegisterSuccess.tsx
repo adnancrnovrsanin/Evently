@@ -1,9 +1,9 @@
 import { toast } from "react-toastify";
 import agent from "../../api/agent";
-import useQuery from "../../common/util/hooks";
 import Grid2 from "@mui/material/Unstable_Grid2";
 import CheckIcon from '@mui/icons-material/Check';
 import { Typography } from "@mui/material";
+import { useQuery } from "../../common/util/hooks";
 
 export default function RegisterSuccess() {
     const email = useQuery().get("email") as string;

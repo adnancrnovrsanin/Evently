@@ -11,6 +11,7 @@ import LoginDialog from './components/LoginDialog/LoginDialog';
 import RegisterDialog from './components/RegisterDialog/RegisterDialog';
 import InitialLoader from './components/InitialLoader/InitialLoader';
 import UserHomePage from './pages/UserHomePage/UserHomePage';
+import Footer from './components/Footer';
 
 function App() {
   const { commonStore, userStore, loginDialogStore, registerDialogStore, profileStore } = useStore();
@@ -47,6 +48,7 @@ function App() {
       ) : (
         <Outlet />
       )}
+      <Footer />
     </div>
   )
 }

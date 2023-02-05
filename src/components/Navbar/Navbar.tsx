@@ -102,7 +102,7 @@ function Navbar() {
     }
 
     return (
-        <Grid2 xs={12} sm={12} md={12} lg={9} container sx={{
+        <Grid2 xs={12} sm={12} md={10} lg={9} container sx={{
             display: "flex",
             flexDirection: "column",
             padding: "5px 0",
