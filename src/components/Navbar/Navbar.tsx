@@ -111,7 +111,7 @@ function Navbar() {
             component="div"
             ref={mobileMenuRef}
         >
-            <Grid2 xs={11} sm={11} md={11} lg={12} container sx={{
+            <Grid2 xs={11} sm={12} md={12} lg={12} container sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -136,7 +136,8 @@ function Navbar() {
                             endIcon={<KeyboardArrowDownIcon />}
                             color="secondary"
                             sx={{
-                                fontSize: "15px", fontWeight: 600,
+                                fontSize: { xs: "12px", sm: "12px", md: "12px", lg: "15px" }, 
+                                fontWeight: 600,
                                 textDecoration: "none", color: "black", marginRight: "20px"
                             }}
                         >
@@ -161,7 +162,8 @@ function Navbar() {
                         <Typography 
                             component={Link} to={'/events'}
                         sx={{ 
-                            fontSize: "15px", fontWeight: 600,
+                            fontSize: { xs: "12px", sm: "12px", md: "12px", lg: "15px" }, 
+                            fontWeight: 600,
                             textDecoration: "none", color: "black",
                             borderBottom: (location.pathname === '/events') ? "2px solid #7C05F2" : "none",
                         }}>SEARCH</Typography>
@@ -171,7 +173,10 @@ function Navbar() {
                                 borderBottom: (location.pathname === '/events/create') ? "3px solid #7C05F2" : "none",
                             }}
                         >
-                            <AddCircleIcon sx={{ fontSize: "32px", color: "#7C05F2" }}/>
+                            <AddCircleIcon sx={{ 
+                                fontSize: { xs: "20px", sm: "20px", md: "25px", lg: "30px" }, 
+                                color: "#7C05F2"
+                            }}/>
                         </IconButton>
                         <IconButton
                             onClick={handleMenuClick}
@@ -191,7 +196,9 @@ function Navbar() {
                                 },
                             }}
                         >
-                            <PersonIcon sx={{ width: "1.5em", height: "1.5em" }}/>
+                            <PersonIcon sx={{ 
+                                fontSize: { xs: "20px", sm: "20px", md: "25px", lg: "30px" },
+                            }}/>
                         </IconButton>
 
                         <Menu
@@ -326,7 +333,7 @@ function Navbar() {
                 </IconButton>
             </Grid2>
 
-            <Grid2 xs={11} sm={11} md={11} lg={11} xl={11} container
+            <Grid2 xs={11} sm={12} md={12} lg={12} xl={12} container
                 sx={{
                     display: openedNav ? "flex" : "none" ,
                     flexDirection: "column",

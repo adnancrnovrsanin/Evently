@@ -98,7 +98,7 @@ const Events = {
 }
 
 const Account = {
-    current: () => requests.get<User>('account'),
+    current: () => requests.get<User>('/account'),
     login: (user: UserFormValues) => requests.post<User>('/account/login', user),
     register: (user: UserFormValues) => requests.post<User>('/account/register', user),
     googleAuth: (user: GoogleAuthDto) => requests.post<User>('/account/googleAuth', user),

@@ -64,7 +64,7 @@ function UserHomePage({ username }: Props) {
         userStore: { user },
         profileStore: { loadFollowings, followings, profile, loadProfile, loadingProfile, loadingFollowings }
     } = useStore();
-    const matchMobile = useMediaQuery('(max-width: 600px)');
+    const matchMobile = useMediaQuery('(max-width: 750px)');
     const matchEvents = useMediaQuery('(max-width: 1200px)');
     const [activeTab, setActiveTab] = useState(getInviteRequestsForUserByDate.length > 0 ? "1" : "2");
     const matchInvites = useMediaQuery('(max-width: 800px)');
@@ -81,7 +81,7 @@ function UserHomePage({ username }: Props) {
     if (loading || !profile) return <InitialLoader adding="dashboard"/>;
 
     return (
-        <Grid2 xs={12} sm={12} md={12} lg={9} alignSelf="center" container marginTop="20px">
+        <Grid2 xs={12} sm={12} md={12} lg={10} alignSelf="center" container marginTop="20px">
             <Grid2 xs={12} sm={12} md={12} lg={12} xl={12} sx={{
                     display: 'flex',
                     justifyContent: 'center',
@@ -99,7 +99,7 @@ function UserHomePage({ username }: Props) {
                         color: 'black',
                         fontFamily: 'Playfair Display, serif',
                         fontWeight: 'bold',
-                        fontSize: { xs: "25px", sm: "40px", md: "50px", lg: "60px", xl: "70px" },
+                        fontSize: { xs: "2rem", sm: "2rem", md: "2.5rem", lg: "3rem", xl: "3.5rem" },
                         backgroundColor: "rgba(255, 255, 255, 0.4)",
                         padding: { xs: "20px 40px", sm: "20px 60px", md: "20px 70px", lg: "20px 90px", xl: "20px 100px" },
                         borderRadius: "10px",
@@ -311,7 +311,7 @@ function UserHomePage({ username }: Props) {
                                 sx={{ 
                                     fontFamily: 'Playfair Display, serif',
                                     fontWeight: 'bold',
-                                    fontSize: { xs: "1.5rem", sm: "1.5rem", md: "1.5rem", lg: "1.8rem", xl: "1.8rem" },
+                                    fontSize: { xs: "1rem", sm: "1rem", md: "1.25rem", lg: "1.5rem", xl: "1.5rem" },
                                     marginTop: "60px",
                                     textDecoration: "underline",
                                 }}
@@ -336,8 +336,8 @@ function UserHomePage({ username }: Props) {
                                                     <ListItemAvatar>
                                                         <Avatar variant="square" alt="Profile photo" src={following.image} {...stringAvatar(following.displayName!)} sx={{
                                                             bgcolor: stringToColor(following.username!),
-                                                            width: "56px",
-                                                            height: '56px',
+                                                            width: { xs: "35px", sm: "35px", md: "35px", lg: "45px", xl: "56px" },
+                                                            height: { xs: "35px", sm: "35px", md: "35px", lg: "45px", xl: "56px" },
                                                         }} />
                                                     </ListItemAvatar>
                                                     <ListItemText
@@ -347,7 +347,7 @@ function UserHomePage({ username }: Props) {
                                                                     sx={{
                                                                         fontFamily: 'Montserrat, sans-serif',
                                                                         fontWeight: "800",
-                                                                        fontSize: "1.125rem",
+                                                                        fontSize: { xs: "0.8rem", sm: "0.8rem", md: "1rem", lg: "1.1rem", xl: "1.1rem" },
                                                                         marginLeft: "10px",
                                                                         textDecoration: "none",
                                                                         color: "black",
@@ -369,6 +369,7 @@ function UserHomePage({ username }: Props) {
                                                                         fontFamily: 'Montserrat, sans-serif',
                                                                         marginLeft: "10px",
                                                                         textDecoration: "none",
+                                                                        fontSize: { xs: "0.7rem", sm: "0.7rem", md: "0.8rem", lg: "0.9rem", xl: "0.9rem" },
                                                                         color: "gray",
                                                                         fontWeight: "500",
                                                                     }}

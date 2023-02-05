@@ -113,7 +113,7 @@ function EventPage() {
                             fontFamily: 'Playfair Display, serif',
                             fontStyle: "italic",
                             fontWeight: "300",
-                            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem", lg: "3.5rem", xl: "4rem" },
+                            fontSize: { xs: "2rem", sm: "2rem", md: "2.5rem", lg: "3rem", xl: "3.5rem" },
                             backgroundColor: "rgba(0, 0, 0, 0.6)",
                             padding: { xs: "10px 40px", sm: "10px 60px", md: "10px 80px", lg: "10px 100px", xl: "10px 120px" },
                             borderRadius: "10px",
@@ -320,6 +320,7 @@ function EventPage() {
                         <TelegramShareButton children={<TelegramIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
                         <TwitterShareButton children={<TwitterIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
                         <FacebookShareButton children={<FacebookIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        
                         <EmailShareButton children={<EmailIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
                     </Grid2>
 
