@@ -33,11 +33,12 @@ export default function EventFormSelectInput(props: Props) {
 
     return (
         <FormControl variant="standard" sx={{ minWidth: 120, margin: "20px 0 20px 0" }}>
-            <InputLabel id="demo-simple-select-helper-label" sx={{ color: "darkblue", fontFamily: "'Montserrat', sans-serif", fontStyle: "italic" }}>{props.label}</InputLabel>
+            <InputLabel id="demo-simple-select-helper-label" sx={{ color: "darkblue", fontStyle: "italic" }}>{props.label}</InputLabel>
             <Select
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
                 value={field.value || ''}
+                color="secondary"
                 //@ts-ignore
                 onChange={(e, d) => helpers.setValue(d.props.value)}
                 label={props.label || "Category of your event"}

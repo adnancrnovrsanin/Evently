@@ -21,7 +21,7 @@ export default function EventCard({ event, style }: Props) {
     return (
         <div className="eventCard"
             style={{
-                backgroundColor: event.isGoing ? '#ACCAF2' : 'white',
+                backgroundColor: event.isGoing ? '#BCE0FD' : 'white',
                 border: event.isCancelled ? '1px solid red' : 'none',
                 ...style
             }}

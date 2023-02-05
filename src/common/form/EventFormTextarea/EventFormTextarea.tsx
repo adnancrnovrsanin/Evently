@@ -16,6 +16,7 @@ export default function EventFormTextarea(props: Props) {
             {...field}
             {...props}
             multiline
+            color="secondary"
             rows={props.rows}
             sx={{ 
                 borderRadius: "1px",

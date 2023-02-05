@@ -16,6 +16,7 @@ export default function EventFormTextInput(props: Props) {
             {...props}
             {...field}
             error={meta.touched && !!meta.error}
+            color={meta.touched && !!meta.error ? "error" : "secondary"}
             id="standard-error-helper-text"
             variant="standard"
             helperText={meta.touched && meta.error}

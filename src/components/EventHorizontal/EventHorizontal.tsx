@@ -47,7 +47,7 @@ function EventHorizontal ({ event }: Props) {
             <Grid2 lg={12}>
                 <div className="eventHorizontal"
                     style={{
-                        backgroundColor: event.attendees?.some(a => a.username === userStore.user?.username) ? '#ACCAF2' : 'white',
+                        backgroundColor: event.attendees?.some(a => a.username === userStore.user?.username) ? '#BCE0FD' : 'white',
                     }}
                 >
                     <div className="eventImage"

@@ -12,6 +12,10 @@
     width: 350px;
 }
 
+.eventCard:hover {
+    cursor: pointer;
+}
+
 .firstRowCard {
     display: flex;
     align-items: center;

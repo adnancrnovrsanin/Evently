@@ -2,11 +2,15 @@ import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { IEvent } from "../models/event";
 import { store } from "./store";
 import agent from "../api/agent";
+import axios from "axios";
 
 export default class UserDashboardStore {
     eventRegistry = new Map<string, IEvent>();
     loading = false;
     predicate = new Map().set('isGoing', 'true');
+    userCity: string | null = null;
+    userCountry: string | null = null;
+    eventsNearby: IEvent[] = [];
 
     constructor() {
         makeAutoObservable(this);
@@ -137,7 +141,33 @@ export default class UserDashboardStore {
             await store.profileStore.loadProfile(username);
             await this.loadEvents();
             await store.profileStore.loadFollowings("following");
+            const resultLocation = await axios.get(`${import.meta.env.VITE_APP_GEO_API_URL}` + "?api_key=" + `${import.meta.env.VITE_APP_GEO_API_KEY}`);
             runInAction(() => {
+                this.userCity = resultLocation.data.city;
+                this.userCountry = resultLocation.data.country;
+                this.loading = false;
+            })
+        } catch (error) {
+            console.log(error);
+            runInAction(() => {
+                this.loading = false;
+            })
+        }
+    }
+
+    loadEventsNearby = async () => {
+        this.loading = true;
+        this.eventsNearby = [];
+        try {
+            const result = await agent.Events.nearbyEvents(this.userCity!, this.userCountry!);
+            runInAction(() => {
+                result.data.forEach(e => {
+                    e.isHost = e.hostUsername === store.userStore.user?.username;
+                    e.isGoing = e.attendees?.some(a => a.username === store.userStore.user?.username);
+                    e.host = e.attendees?.find(x => x.username === e.hostUsername);
+                    e.date = new Date(e.date!);
+                    this.eventsNearby.push(e);
+                })
                 this.loading = false;
             })
         } catch (error) {

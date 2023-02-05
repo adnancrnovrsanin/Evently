@@ -15,6 +15,8 @@ import dayjs from "dayjs";
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { TransitionProps } from "@mui/material/transitions";
+import { WhatsappShareButton, WhatsappIcon, FacebookMessengerShareButton, FacebookMessengerIcon, LinkedinShareButton, LinkedinIcon, TelegramShareButton, TwitterShareButton, TelegramIcon, TwitterIcon, FacebookShareButton, EmailShareButton, FacebookIcon, EmailIcon } from "react-share";
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -271,7 +273,7 @@ function EventPage() {
                         </Typography>
                     </Grid2>
 
-                    <Grid2>
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
                         <Typography
                             sx={{
                                 fontFamily: 'Montserrat, sans-serif',
@@ -287,6 +289,38 @@ function EventPage() {
                                 fontSize: mobileMatch ? "0.8rem" : "1.2rem"
                             }}>{" " + selectedEvent.anonimity}</span> 
                         </Typography>
+                    </Grid2>
+
+                    <Grid2 xs={12} sm={12} md={12} lg={12}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'Montserrat, sans-serif',
+                                fontWeight: "800",
+                                textAlign: mobileMatch ? "center" : "left",
+                                fontSize: { xs: "0.8rem", sm: "1rem", md: "1rem", lg: "1rem", xl: "1.2rem" },
+                            }}
+                        >
+                            Invite your friends via:
+                        </Typography>
+                    </Grid2>
+
+                    <Grid2 xs={12} sm={12} md={12} lg={12}
+                        sx={{
+                            maxWidth: mobileMatch ? "none" : "300px",
+                            display: "flex",
+                            justifyContent: mobileMatch ? "center" : "flex-start",
+                            alignItems: "center",
+                            gap: "20px",
+                            flexWrap: "wrap",
+                        }}
+                    >
+                        <WhatsappShareButton children={<WhatsappIcon size={50} round={true}/>} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        <FacebookMessengerShareButton children={<FacebookMessengerIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} appId={"1177619656526747"} />
+                        <LinkedinShareButton children={<LinkedinIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        <TelegramShareButton children={<TelegramIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        <TwitterShareButton children={<TwitterIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        <FacebookShareButton children={<FacebookIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
+                        <EmailShareButton children={<EmailIcon size={50} round={true} />} url={`https://evently.herokuapp.com/events/${selectedEvent.id}`} />
                     </Grid2>
 
                     <Grid2 xs={12} sm={12} md={12} lg={12}

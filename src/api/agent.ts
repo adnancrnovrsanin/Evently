@@ -85,6 +85,7 @@ const requests = {
 const Events = {
     list: (params: URLSearchParams) => axios.get<PaginatedResult<IEvent[]>>('/events', { params })
         .then(responseBody),
+    nearbyEvents: (city: string, country: string) => axios.get<IEvent[]>(`/events/near`, { params: { city, country } }),
     details: (id: string) => requests.get<IEvent>(`/events/${id}`),
     create: (event: EventFormValues) => requests.post<void>(`/events`, event),
     update: (event: EventFormValues) => requests.put<void>(`/events/${event.id}`, event),

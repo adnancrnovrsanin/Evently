@@ -16,6 +16,7 @@ import { anonimityOptions } from "../../common/options/anonimityOptions";
 import FormDatePicker from "../../common/form/FormDatePicker/FormDatePicker";
 import EventFormTextarea from "../../common/form/EventFormTextarea/EventFormTextarea";
 import { LoadingButton } from "@mui/lab";
+import SelectCountry from "../../common/form/SelectCountry";
 
 function EventForm() {
     const { eventStore, userStore: { user } } = useStore();
@@ -31,7 +32,7 @@ function EventForm() {
         category: Yup.string().required('The event category is required'),
         description: Yup.string().required(),
         date: Yup.string().required('Date is required').nullable(),
-        country: Yup.string().required(),
+        // country: Yup.string().required(),
         venue: Yup.string().required(),
         city: Yup.string().required(),
         anonimity: Yup.string().required(),
@@ -65,7 +66,7 @@ function EventForm() {
                 initialValues={event}
                 onSubmit={values =>  handleFormSubmit(values)}
             >
-                {({ handleSubmit, isValid, isSubmitting, dirty }) => (
+                {({ handleSubmit, isValid, isSubmitting, dirty, values }) => (
                     <Form onSubmit={handleSubmit} className="createEvent" autoComplete='off'>
                         <Box display="flex" flexDirection="column" width={"300px"}
                             sx={{
@@ -77,7 +78,7 @@ function EventForm() {
 
                             <EventFormSelectInput placeholder="category" name="category" options={categoryOptions} label="Choose a category for your event" />
 
-                            <EventFormTextInput placeholder="Country" name="country" label="Country" />
+                            <SelectCountry placeholder="Country" name="country" label="Country" />
 
                             <EventFormTextInput placeholder="City" name="city" label="City" />
 
@@ -115,21 +116,20 @@ function EventForm() {
 
                         <div className="datePickerForm">
                             <FormDatePicker name="date"/>
-                            {!calendarLabelMatch && (
-                                <Typography sx={{
-                                    padding: { xs: "5px 20px", sm: "5px 20px", md: "5px 20px", lg: "5px 2px", xl: "5px 20px" },
-                                    backgroundColor: "rgb(191, 215, 237)",
-                                    marginTop: "20px",
-                                    // borderRadius: "10px",
-                                    fontFamily: "Montserrat, sans-serif",
-                                    fontStyle: "italic",
-                                    color: "black",
-                                    fontWeight: "400",
-                                    fontSize: { xs: "10px", sm: "14px", md: "14px", lg: "14px", xl: "14px" },
-                                }}>
-                                    Pick a date for your event using the calendar above
-                                </Typography>
-                            )}
+                            <Typography sx={{
+                                padding: { xs: "5px 20px", sm: "5px 20px", md: "5px 20px", lg: "5px 2px", xl: "5px 20px" },
+                                backgroundColor: "#BCE0FD",
+                                marginTop: "20px",
+                                fontFamily: "Montserrat, sans-serif",
+                                fontStyle: "italic",
+                                color: "black",
+                                fontWeight: "400",
+                                fontSize: { xs: "12px", sm: "14px", md: "14px", lg: "16px", xl: "16px" },
+                                width: "270px",
+                                textAlign: "center",
+                            }}>
+                                {values.date ? values.date.toUTCString() : "Choose a date"}
+                            </Typography>
                         </div>
                     </Form>
                 )}

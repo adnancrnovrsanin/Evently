@@ -34,6 +34,7 @@
     "react-dropzone": "^14.2.3",
     "react-infinite-scroller": "^1.2.6",
     "react-router-dom": "^6.4.5",
+    "react-share": "^4.4.1",
     "react-toastify": "^9.1.1",
     "relative-time-format": "^1.1.6",
     "swiper": "^8.4.6",
