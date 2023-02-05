@@ -113,7 +113,7 @@ const Profiles = {
     uploadPhoto: (file: any) => {
         let formData = new FormData();
         formData.append('File', file);
-        return axios.post<Photo>('photos', formData, {
+        return axios.post<Photo>('/photos', formData, {
             headers: { 'Content-Type': 'multipart/form-data' }
         })
     },
